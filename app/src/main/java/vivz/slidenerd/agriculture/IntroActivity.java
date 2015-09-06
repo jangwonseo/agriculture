@@ -13,6 +13,7 @@ public class IntroActivity extends Activity {
     LinearLayout introbtn;
     Handler introHandler;
     //intro activity
+    //in
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
