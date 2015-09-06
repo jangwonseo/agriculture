@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 public class IntroActivity extends Activity {
     LinearLayout introbtn;
     Handler introHandler;
-
+    //intro activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
