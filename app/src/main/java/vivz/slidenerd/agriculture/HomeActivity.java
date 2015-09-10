@@ -22,7 +22,6 @@ public class HomeActivity extends ActionBarActivity{
     private Animation translateLeftAnim;
     private Animation translateRightAnim;
 
-
      //슬라이딩으로 보여지는 페이지 레이아웃
     private LinearLayout slidingPage01;
 
