@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -33,8 +34,15 @@ import com.facebook.internal.ImageDownloader;
 import com.facebook.internal.ImageRequest;
 import com.facebook.internal.ImageResponse;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.lang.reflect.Member;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 
 
@@ -44,6 +52,10 @@ public class SignupActivity extends FragmentActivity {
 
     public TextView ProfileImage;
     private Button backButton;
+
+
+    private MemberItem memberItem; //회원정보를 담은 클래스
+    private phpInsert phpTask;  //php insert 연동 소스
 
     //유저가 입력한 회원가입 정보
     private EditText uName = null;
@@ -74,9 +86,7 @@ public class SignupActivity extends FragmentActivity {
     private String info_Name;
     private String info_Pw;
     private String info_PhoneNum;
-    private String info_Birthday_year;
-    private String info_Birthday_month;
-    private String info_Birthday_day;
+    private String info_Birthday;
     private String info_Sex;
 
 
@@ -103,9 +113,9 @@ public class SignupActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
 
+
         flagIntent = getIntent();
         String isFacebook = flagIntent.getStringExtra("isFacebookFlag");
-
 
         //입력필드 셋팅
         ProfileImage = (TextView) findViewById(R.id.profile_image);
@@ -162,13 +172,15 @@ public class SignupActivity extends FragmentActivity {
                 // "남자"를 선택했다면...
                 if(checkedId==R.id.radio_male)
                 {
-                    Log.d("seojang", "userSex : " + rb.getText().toString());
+                    Log.d("seojang", "userSex1 : " + rb.getText().toString());
+                    info_Sex = "1";
                 }
 
                 // "여자"를 선택했다면...
                 else if(checkedId==R.id.radio_female)
                 {
-                    Log.d("seojang", "userSex : " + rb.getText().toString());
+                    Log.d("seojang", "userSex0 : " + rb.getText().toString());
+                    info_Sex = "0";
                 }
 
             }
@@ -200,9 +212,15 @@ public class SignupActivity extends FragmentActivity {
                     info_Id = uId.getText().toString();
                     info_Pw = uPw.getText().toString();
                     info_PhoneNum = uPhoneNum.getText().toString();
-                    info_Birthday_year = uBirthday_year.getText().toString();
-                    info_Birthday_month = uBirthday_month.getText().toString();
-                    info_Birthday_day = uBirthday_day.getText().toString();
+                    info_Birthday = uBirthday_year.getText().toString()+"_"+uBirthday_month.getText().toString()+"_"+uBirthday_day.getText().toString();
+
+                    memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
+
+                    //저장된 값들을 php를 통해 서버에 db화 시킴
+                    phpTask = new phpInsert();
+                    Log.d("seojang","memberItem : "+memberItem.toString());
+                    phpTask.execute("http://218.150.181.131/seo/jangwontest.php?"+memberItem.toString());
+
                 }
                 Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);
                 startActivity(homeIntent);
@@ -223,6 +241,114 @@ public class SignupActivity extends FragmentActivity {
             }
         });
 
+    }
+
+    // AsyncTask는 generic 클래스이기 때문에 타입을 지정해주어야 한다. < Params, Progress, Result > 부분
+    /*
+        AsyncTask 사용해 background작업을 구현 시 꼭 지켜야 하는 사항
+        AsyncTask클래스는 항상 "subclassing" 하여 사용하여야 한다.
+        AsyncTask 인스턴스는 항상 UI 스레드에서 생성한다.
+        AsyncTask:execute(…) 메소드는 항상 UI 스레드에서 호출한다.
+        AsyncTask:execute(…) 메소드는 생성된 AsyncTask 인스턴스 별로 꼭 한번만 사용 가능하다. 같은 인스턴스가 또 execute(…)를 실행하면 exception이 발생하며, 이는 AsyncTask:cancel(…) 메소드에 의해 작업완료 되기 전 취소된 AsyncTask 인스턴스라도 마찬가지이다. 그럼으로 background 작업이 필요할 때마다 new 연산자를 이용해 해당 작업에 대한 AsyncTask 인스턴스를 새로 생성해야 한다.
+        AsyncTask의 callback 함수 onPreExecute(), doInBackground(…), onProgressUpdate(…), onPostExecute(…)는 직접 호출 하면 안 된다. (꼭 callback으로만 사용)
+     */
+    public class phpInsert extends AsyncTask<String, Integer,String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str){
+            // JSON 구문을 파싱해서 JSONArray 객체를 생성
+/*
+            try {
+                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
+                    JSONObject vilageName = jAr.getJSONObject(i);
+
+                }
+
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }*/
+
+        }
+    }
+
+    class MemberItem implements Serializable {
+        private String info_Name; //이름
+        private String info_Id;  //아이디
+        private String info_Pw;       // 비번
+        private String info_PhoneNum;     // 폰번호
+        private String info_Birthday; //생년월일
+        private String info_Sex;
+
+        public String getInfo_Name() {
+            return info_Name;
+        }
+        public String getInfo_Id() {
+            return info_Id;
+        }
+        public String getInfo_Pw() {
+            return info_Pw;
+        }
+        public String getInfo_PhoneNum() {
+            return info_PhoneNum;
+        }
+        public String getinfo_Birthday() {
+            return info_Birthday;
+        }
+        public String getinfo_Sex(){ return info_Sex; }
+
+        public MemberItem(String info_Name, String info_Id, String info_Pw, String info_PhoneNum, String info_Birthday,String info_Sex) {
+            this.info_Name = info_Name;
+            this.info_Id = info_Id;
+            this.info_Pw = info_Pw;
+            this.info_PhoneNum = info_PhoneNum;
+            this.info_Birthday = info_Birthday;
+            this.info_Sex = info_Sex;
+        }
+
+        public String toString() {
+            return "info_Name=" + info_Name + "&" + "info_Id=" + info_Id + "&" + "info_Pw=" +info_Pw + "&" + "info_PhoneNum=" + info_PhoneNum + "&" + "info_Birthday=" + info_Birthday + "&" + "info_Sex="+info_Sex;
+        }
     }
 
 
