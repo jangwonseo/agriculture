@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -127,7 +128,7 @@ public class SignupActivity extends FragmentActivity {
         uBirthday_year = (EditText) findViewById(R.id.user_birthday_year);
         uBirthday_month = (EditText) findViewById(R.id.user_birthday_month);
         uBirthday_day = (EditText) findViewById(R.id.user_birthday_day);
-        uSex = null;
+        uSex = "1";
         uSexRadioGroup = (RadioGroup) findViewById(R.id.radiogroup1);
         confirmButton = (Button)findViewById(R.id.confirm);
         cancelButton = (Button)findViewById(R.id.cancel);
@@ -203,8 +204,11 @@ public class SignupActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 //비밀번호 입력란과 비밀번호재입력란이 다르면 다르다고 해야함
-                if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
-                        Log.d("seojang","비밀번호불일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
+                if((uId==null) || (uName==null) || (uPw==null) || (uPhoneNum==null) || (uBirthday_year==null) || (uBirthday_month==null) || (uBirthday_day==null)){
+                    Toast.makeText(getApplicationContext(), "빠뜨린 정보가 있어요!", Toast.LENGTH_SHORT).show();
+                }
+                else if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 틀려요!", Toast.LENGTH_SHORT).show();
                 }else{
                     //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
                     Log.d("seojang","비밀번호 일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
@@ -214,16 +218,17 @@ public class SignupActivity extends FragmentActivity {
                     info_PhoneNum = uPhoneNum.getText().toString();
                     info_Birthday = uBirthday_year.getText().toString()+"_"+uBirthday_month.getText().toString()+"_"+uBirthday_day.getText().toString();
 
-                    memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
 
                     //저장된 값들을 php를 통해 서버에 db화 시킴
+                    memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
                     phpTask = new phpInsert();
-                    Log.d("seojang","memberItem : "+memberItem.toString());
-                    phpTask.execute("http://218.150.181.131/seo/jangwontest.php?"+memberItem.toString());
+                    phpTask.execute("http://218.150.181.131/seo/signup.php?"+memberItem.toString());
 
+                    Toast.makeText(getApplicationContext(), "회원가입 완료!.", Toast.LENGTH_SHORT).show();
+                    Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);
+                    startActivity(homeIntent);
                 }
-                Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(homeIntent);
+
             }
         });
         //취소버튼눌럿을때 액티비티 종료
