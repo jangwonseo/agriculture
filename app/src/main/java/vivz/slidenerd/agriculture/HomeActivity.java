@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import vivz.slidenerd.agriculture.recruit.Recruit;
+
 
 public class HomeActivity extends ActionBarActivity{
     private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton;
@@ -95,6 +97,8 @@ public class HomeActivity extends ActionBarActivity{
                     startActivity(intentRegion);
                     break;
                 case R.id.gatheringbutton:
+                    Intent intentRecruit = new Intent(getApplicationContext(), Recruit.class);
+                    startActivity(intentRecruit);
                     break;
                 case R.id.etceterabutton:
                     break;
