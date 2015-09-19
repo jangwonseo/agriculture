@@ -306,6 +306,8 @@ public class SignupActivity extends FragmentActivity {
         }
 
         protected void onPostExecute(String str){
+
+            Log.d("seojang","phpInsert : "+str);
             // JSON 구문을 파싱해서 JSONArray 객체를 생성
 /*
             try {
