@@ -41,9 +41,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Member;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Calendar;
 
 
@@ -83,12 +85,12 @@ public class SignupActivity extends FragmentActivity {
     private JSONObject user;
 
     //DB로 전송할 정보
-    private String info_Id;
-    private String info_Name;
-    private String info_Pw;
-    private String info_PhoneNum;
-    private String info_Birthday;
-    private String info_Sex;
+    private String info_Id = null;
+    private String info_Name = null;
+    private String info_Pw = null;
+    private String info_PhoneNum = null;
+    private String info_Birthday = null;
+    private String info_Sex = null;
 
 
 
@@ -212,17 +214,21 @@ public class SignupActivity extends FragmentActivity {
                 }else{
                     //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
                     Log.d("seojang","비밀번호 일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
-                    info_Name = uName.getText().toString();
-                    info_Id = uId.getText().toString();
-                    info_Pw = uPw.getText().toString();
-                    info_PhoneNum = uPhoneNum.getText().toString();
-                    info_Birthday = uBirthday_year.getText().toString()+"_"+uBirthday_month.getText().toString()+"_"+uBirthday_day.getText().toString();
-
+                    try {
+                        info_Name = URLEncoder.encode(uName.getText().toString(), "UTF-8");
+                        info_Id = uId.getText().toString();
+                        info_Pw = uPw.getText().toString();
+                        info_PhoneNum = uPhoneNum.getText().toString();
+                        info_Birthday = uBirthday_year.getText().toString() + "_" + uBirthday_month.getText().toString() + "_" + uBirthday_day.getText().toString();
+                    }catch (UnsupportedEncodingException e){
+                        e.printStackTrace();
+                    }
 
                     //저장된 값들을 php를 통해 서버에 db화 시킴
                     memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
                     phpTask = new phpInsert();
-                    phpTask.execute("http://218.150.181.131/seo/signup.php?"+memberItem.toString());
+
+                    phpTask.execute("http://218.150.181.131/seo/signup.php?" + memberItem.toString());
 
                     Toast.makeText(getApplicationContext(), "회원가입 완료!.", Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);

@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name=".NormalLoginActivity"
-            android:label="@string/title_activity_normal_login" >
+            android:label="@string/title_activity_normal_login"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
             android:name=".SignupActivity"
