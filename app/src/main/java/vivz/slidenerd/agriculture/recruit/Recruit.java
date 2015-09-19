@@ -338,18 +338,25 @@ public class Recruit extends Activity implements TextWatcher{
                     new Thread(new Runnable() {
                         public void run() {
 
-                            uploadFile(imagepath);
-
+                            if (imagepath == null ) {
+                                imagepath = "";
+                                dialog.dismiss();
+                                Log.e("Uploading file : ", "file is null, User don't select picture.");
+                                return;
+                            } else {
+                                uploadFile(imagepath);
+                            }
                         }
                     }).start();
                     break;
 
 
                 case R.id.selectPicture : // 사진을 선택
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Complete action using"), 1);
+                    startActivityForResult(intent, 1);
 
                     break;
             }
@@ -588,6 +595,7 @@ public class Recruit extends Activity implements TextWatcher{
     }
 
     public int uploadFile(String sourceFileUri) {
+        Log.e("sourceFIle : ", sourceFileUri.toString());
 
 
         String fileName = sourceFileUri;
@@ -601,6 +609,9 @@ public class Recruit extends Activity implements TextWatcher{
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
         File sourceFile = new File(sourceFileUri);
+
+
+
 
         if (!sourceFile.isFile()) {
 
@@ -761,7 +772,15 @@ class List_Adapter extends BaseAdapter {
         RecruitListItem listviewitem=data.get(position);
 
         webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
-        String loadingURL = imgUrl + listviewitem.getImageURL();
+
+        String ImageURL = listviewitem.getImageURL();
+        String loadingURL = null;
+        if (ImageURL.equals("null") || ImageURL == null) {
+            loadingURL = imgUrl + "default.png";
+        } else {
+            loadingURL = imgUrl + listviewitem.getImageURL();
+        }
+
         webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
         Log.e("list image path", loadingURL);
 
