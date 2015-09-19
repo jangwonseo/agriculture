@@ -180,7 +180,8 @@
                                 android:id="@+id/recruit_list_autoComplete"
                                 android:background="@null"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="match_parent"
+                                android:textColor="#4C4C4C"/>
 
                         </LinearLayout>
                         <!-- x button -->
@@ -384,7 +385,7 @@
                                     android:background="@null"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    />
+                                    android:textColor="#4C4C4C"/>
 
                             </LinearLayout>
                             <LinearLayout
@@ -446,7 +447,8 @@
                             android:id="@+id/missionName"
                             android:background="@null"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:textColor="#4C4C4C"/>
 
                     </LinearLayout>
 
@@ -496,7 +498,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="imagePath"/>
+                            android:text="imagePath"
+                            android:textColor="#4C4C4C"/>
 
                     </LinearLayout>
 
@@ -517,7 +520,8 @@
                         android:id="@+id/content"
                         android:background="@null"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:textColor="#4C4C4C"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -543,11 +547,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="160"
                         android:background="@drawable/recruit_start13">
-                        <EditText
+                        <TextView
                             android:id="@+id/termStart"
                             android:background="@null"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:textColor="#4C4C4C"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -561,11 +567,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight="160"
                         android:background="@drawable/recruit_start13">
-                        <EditText
+                        <TextView
                             android:id="@+id/termEnd"
                             android:background="@null"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:textColor="#4C4C4C"
+                            />
 
                     </LinearLayout>
 
@@ -597,7 +606,8 @@
                             android:id="@+id/recruitNum"
                             android:background="@null"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:textColor="#4C4C4C"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -624,7 +634,8 @@
                         android:id="@+id/reward"
                         android:background="@null"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:textColor="#4C4C4C"/>
 
                 </LinearLayout>
                 <LinearLayout

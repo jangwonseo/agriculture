@@ -1,8 +1,18 @@
 package vivz.slidenerd.agriculture.recruit;
 
+// 모집리스트, 모집하기가 FrameLayout으로 되어 있다.
+// php 클래스는
+// 1. 검색할 때, 체험명 리스트를 보기위한 phpDown과 (AutoCompleteTextView)
+// 2. 모집글을 등록하는 phpUp,
+// 3. 모집(미션) 리스트를 보기위한 phpRecruitList
+// 4.사진을 서버에서 가져오는
+
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,12 +20,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.provider.MediaStore;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -24,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,28 +54,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import vivz.slidenerd.agriculture.R;
 
-// 모집리스트, 모집하기가 FrameLayout으로 되어 있다.
-// php 클래스는
-// 1. 검색할 때, 체험명 리스트를 보기위한 phpDown과 (AutoCompleteTextView)
-// 2. 모집글을 등록하는 phpUp,
-// 3. 모집(미션) 리스트를 보기위한 phpRecruitList
-// 4.사진을 서버에서 가져오는
 
-public class Recruit extends Activity implements TextWatcher {
+public class Recruit extends Activity implements TextWatcher{
 
     //EditText search;        // 검색
     EditText missionName;   // 미션이름
     EditText recruitContent;       // 내용
-    EditText termStart;     // 기간(시작)
-    EditText termEnd;       // 기간 (끝)
+    TextView termStart;     // 기간(시작)
+    TextView termEnd;       // 기간 (끝)
     EditText recruitNum;    // 모집인원
     EditText reward;        //보상
 
@@ -103,6 +112,17 @@ public class Recruit extends Activity implements TextWatcher {
     private String imagepath=null;
     String uploadFileName=null;
 
+
+    // TextView 클릭시 날짜 선택
+    static final int DATE_START_ID = 0;
+    static final int DATE_END_ID = 1;
+    private int mStartYear;
+    private int mStartMonth;
+    private int mStartDay;
+    private int mEndYear;
+    private int mEndMonth;
+    private int mEndDay;
+
     TextView filePath;
 
     // 서버에 있는 사진을 가져오기 위한 부분 -------------------------
@@ -118,10 +138,39 @@ public class Recruit extends Activity implements TextWatcher {
 
         missionName = (EditText)findViewById(R.id.missionName);
         recruitContent = (EditText)findViewById(R.id.content);
-        termStart = (EditText)findViewById(R.id.termStart);
-        termEnd = (EditText)findViewById(R.id.termEnd);
+        termStart = (TextView)findViewById(R.id.termStart);
+        termEnd = (TextView)findViewById(R.id.termEnd);
         recruitNum = (EditText)findViewById(R.id.recruitNum);
         reward = (EditText)findViewById(R.id.reward);
+
+        termStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_START_ID);
+            }
+        });
+
+        termEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(DATE_END_ID);
+            }
+        });
+
+        // (3) 현재 날짜 인식
+        final Calendar c = Calendar.getInstance();
+        mStartYear = c.get(Calendar.YEAR);
+        mStartMonth= c.get(Calendar.MONTH);
+        mStartDay  = c.get(Calendar.DAY_OF_MONTH);
+
+        final Calendar c2 = Calendar.getInstance();
+        mEndYear = c2.get(Calendar.YEAR);
+        mEndMonth= c2.get(Calendar.MONTH);
+        mEndDay  = c2.get(Calendar.DAY_OF_MONTH);
+        // (4) 인식된 날짜를 출력
+        updateDisplay();
+
+        // 설정된 날짜를 TextView에 출력
 
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
         recruit_autoComplete.addTextChangedListener(this);
@@ -186,6 +235,58 @@ public class Recruit extends Activity implements TextWatcher {
         filePath = (TextView)findViewById(R.id.filePath);
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch(id){
+            case DATE_START_ID : return new DatePickerDialog(this,mStartDateSetListener,mStartYear,mStartMonth,mStartDay);
+            case DATE_END_ID : return new DatePickerDialog(this,mEndDateSetListener,mEndYear,mEndMonth,mEndDay);
+        }
+        return null;
+    }
+
+    // (8) 다이어로그에 있는 날짜를 설정(set)하면 실행됨
+    private DatePickerDialog.OnDateSetListener mStartDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mStartYear = year;
+            mStartMonth=monthOfYear;
+            mStartDay=dayOfMonth;
+            // 사용자가 지정한 날짜를 출력
+            updateDisplay();
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener mEndDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            mEndYear = year;
+            mEndMonth=monthOfYear;
+            mEndDay=dayOfMonth;
+            // 사용자가 지정한 날짜를 출력
+            updateDisplay();
+        }
+    };
+
+    private void updateDisplay() {
+        // main.xml의 레이아웃에 배치된 날짜 입력 TextView에 인식된 날짜 출력
+        termStart.setText(
+                new StringBuilder()
+                        //월은 시스템에서 0~11로 인식하기 때문에 1을 더해줌
+                        .append(mStartYear).append("-")
+                        .append(mStartMonth+1).append("-")
+                        .append(mStartDay).append(" ")
+        );
+
+        termEnd.setText(
+                new StringBuilder()
+                        //월은 시스템에서 0~11로 인식하기 때문에 1을 더해줌
+                        .append(mEndYear).append("-")
+                        .append(mEndMonth+1).append("-")
+                        .append(mEndDay).append(" ")
+        );
+
+    }
+
     public void afterTextChanged(Editable arg0) {/*AODO Auto-generated method stub*/}
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -218,7 +319,7 @@ public class Recruit extends Activity implements TextWatcher {
                     try {
                         Log.e("regist", "button");
                         // 입력한 정보를 Item 객체에 담는다.
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode(missionName.getText().toString(), "UTF-8"), URLEncoder.encode(recruitContent.getText().toString(), "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), URLEncoder.encode(uploadFileName, "UTF-8"));
+                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode(missionName.getText().toString(), "UTF-8"), URLEncoder.encode(recruitContent.getText().toString(), "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName);
 
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();
@@ -241,22 +342,14 @@ public class Recruit extends Activity implements TextWatcher {
 
                         }
                     }).start();
-
                     break;
 
 
                 case R.id.selectPicture : // 사진을 선택
-//                    Intent intent = new Intent();
-//                    intent.setType("image/*");
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    startActivityForResult(Intent.createChooser(intent, "Complete action using"), 1);
-
-
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 1);
-
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Complete action using"), 1);
 
                     break;
             }
