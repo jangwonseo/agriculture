@@ -1,0 +1,283 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="88"
+        android:focusable="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/list10"
+            android:clickable="false"
+            android:focusable="false"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="389"
+            android:background="@drawable/list11"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="81"
+            android:background="@drawable/list9"></LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1094"
+        android:orientation="horizontal"
+        android:background="@drawable/information9">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="45">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="450"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="35">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="50"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/vilageNameUp"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:text="XX마을 전통문화체험"
+                    android:layout_weight="30"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5">
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/vilageKnd"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="80"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="220"
+                android:background="@drawable/information4">
+
+                <WebView
+                    android:id="@+id/thumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:longClickable="false"
+                    android:scrollbars="none">
+
+                </WebView>
+                <!-- clickable 은 false로 해야 리스트뷰에 영향을 안준다고 한다. -->
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="20">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="40"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150">
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/vilageNameDown"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="300"
+                    android:text="XX마을">
+                </TextView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="40"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150">
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/vilageHomepage"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="300"
+                    android:text="홈페이지 없음"
+                    >
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="65">
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150"
+                    android:background="@drawable/information6"
+                    >
+                </Button>
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150"
+                    android:background="@drawable/information7"
+                    >
+                </Button>
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150"
+                    android:background="@drawable/information8"
+                    >
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="55">
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="500"
+                android:background="@drawable/information5">
+                <WebView
+                    android:id="@+id/main2Web"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    ></WebView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="65">
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="45">
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="40px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/vilageAddr2"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:text="마을"/>
+            <TextView
+                android:id="@+id/vilageAddrInfo"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="440"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:text="전화번호"/>
+            <TextView
+                android:id="@+id/phoneInfo"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="440"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/hmpgUrl"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="100"
+                android:text="홈페이지"/>
+            <TextView
+                android:id="@+id/hmpgUrlInfo"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="440"/>
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/main2Web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></WebView>
+
+    </LinearLayout>
+    -->

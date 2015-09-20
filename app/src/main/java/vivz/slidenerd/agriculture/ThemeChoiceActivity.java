@@ -11,14 +11,21 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import vivz.slidenerd.agriculture.list.ListActivity;
+
 
 public class ThemeChoiceActivity extends ActionBarActivity {
     private Button backButton;
+    private Button natureButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_choice);
+
+        natureButton = (Button)findViewById(R.id.btn_nature);
+        natureButton.setOnClickListener(mClickListener);
+
 
 
         backButton  = (Button)findViewById(R.id.themechoice_backbutton);
@@ -32,6 +39,30 @@ public class ThemeChoiceActivity extends ActionBarActivity {
 
 
     }
+
+    Button.OnClickListener mClickListener = new View.OnClickListener()
+    {
+        public void onClick(View v)
+        {
+            switch (v.getId())
+            {
+                case R.id.btn_nature:
+                    Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+                    intentTheme.putExtra("themeflag","traditional");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.regionbutton:
+
+                    break;
+                case R.id.gatheringbutton:
+
+                    break;
+                case R.id.etceterabutton:
+                    break;
+
+            }
+        }
+    };
 
 
 

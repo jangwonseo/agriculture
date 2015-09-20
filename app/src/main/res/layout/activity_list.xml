@@ -1,0 +1,134 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="66"
+        android:focusable="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="70"
+            android:background="@drawable/list10"
+            android:clickable="false"
+            android:focusable="false"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="389"
+            android:background="@drawable/list11"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="81"
+            android:background="@drawable/list9"></LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="894"
+        android:background="@drawable/list3"
+        android:orientation="vertical">
+
+        <!-- 자연생태 이런 테마이름 들어가는곳-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="115"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="30">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="65">
+                <!-- 테마이름 여따 넣으셈-->
+                <TextView
+                    android:id="@+id/themeKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30dp">
+
+
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="20">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="745"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="27"></LinearLayout>
+
+
+            <!-- 리스트 들어가는 영역 ( 486 x 745 )-->
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="486">
+
+
+                <ListView
+                    android:id="@+id/vilageList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:divider="#00000000"
+                    android:drawSelectorOnTop="true"
+                    android:focusable="true"
+                    android:listSelector="#30303030"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="27"></LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="34">
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

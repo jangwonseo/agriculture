@@ -73,7 +73,17 @@
             android:name=".recruit.Recruit"
             android:label="@string/title_activity_recruit"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".list.ListActivity"
+            android:label="@string/title_activity_list"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+            android:name=".list.ListDetailActivity"
+            android:label="@string/title_activity_list_detail"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
 
