@@ -1,11 +1,13 @@
 package vivz.slidenerd.agriculture.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,10 +16,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.io.Serializable;
-
 import vivz.slidenerd.agriculture.R;
+
+
+
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.Toast;
+
 
 public class ListDetailActivity extends ActionBarActivity {
     /*
@@ -30,11 +40,13 @@ public class ListDetailActivity extends ActionBarActivity {
        TextView vilageHmpgUrl;
        String line;
    */
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
 
     TextView vilageHomepage;
     TextView vilageNameDown;
     TextView vilageKnd;
-
+    View btnView;
     Button call;
 
     WebView main2Web;
@@ -46,6 +58,28 @@ public class ListDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_detail);
 
+        btnView=(View)findViewById(R.id.btnView);
+        // 제스처를 사용하기 위해 미리 선언.
+        gestureDetector = new GestureDetector(this, new SwipeGestureDetector(){
+            @Override
+            void onUpSwipe()
+            {
+                btnView.setVisibility(View.VISIBLE);
+            }
+            void onDownSwipe()
+            {
+                btnView.setVisibility(View.GONE);
+            }
+
+        });
+        gestureListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+
 
         // mianActivity에서 넘겨준 인텐트정보를 받는다.
         Intent intent = getIntent();
@@ -54,10 +88,11 @@ public class ListDetailActivity extends ActionBarActivity {
         Item i = (Item)item;
 
 
+
         vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
         vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름
 
-        vilageKnd = (TextView)findViewById(R.id.vilageKnd); // 마을 종류
+        vilageKnd = (TextView) findViewById(R.id.vilageKnd); // 마을 종류
         vilageKnd.setText(i.getVilageKndNm());  // Main에서 가져온 마을 종류
 
 
@@ -70,6 +105,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
         // 파이널 변수로 만들지 않으면 리스너 함수내부에서 사용이 불가능해서 임시변수 하나 만듦
         final String phoneNumber = i.getPrcafsManMoblphon();
+
+        // 다이얼에 전화번호 올려놓기
         call.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +171,15 @@ public class ListDetailActivity extends ActionBarActivity {
         main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?theme=" + i.getThemeType() + "&vilageId=" + i.getVilageId());
 
 
+
+        // 제스처 등록
+
+        main2Web.setOnTouchListener(gestureListener);
+        thumb.setOnTouchListener(gestureListener);
+        vilageHomepage.setOnTouchListener(gestureListener);
+        vilageNameDown.setOnTouchListener(gestureListener);
+        vilageKnd.setOnTouchListener(gestureListener);
+
         // 보류
         //phpJson = new phpDown();
         //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
@@ -143,7 +189,7 @@ public class ListDetailActivity extends ActionBarActivity {
         sb.append("<HEAD>");
         sb.append("</HEAD>");
         sb.append("<BODY style='text-align:center;'>");    //중앙정렬
-        sb.append("<img  width='100%' height='100%'  src=\"" + imagUrl+"\">"); //가득차게 나옴
+        sb.append("<img  width='90%' height='90%'  src=\"" + imagUrl+"\">"); //가득차게 나옴
         sb.append("</BODY>");
         sb.append("</HTML>");
         Log.e("zzzzz", "z");
@@ -240,5 +286,75 @@ public class ListDetailActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+}
+
+
+
+class SwipeGestureDetector extends SimpleOnGestureListener {
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2,
+                           float velocityX, float velocityY) {
+
+        switch (getSlope(e1.getX(), e1.getY(), e2.getX(), e2.getY())) {
+            case 1:
+                onDownSwipe();
+                Log.d("aaaaaaa", "top");
+                return true;
+            case 2:
+                onRightSwipe();
+                Log.d("aaaaaaa", "left");
+                return true;
+            case 3:
+                onUpSwipe();
+                Log.d("aaaaaaa", "down");
+                return true;
+            case 4:
+                onLeftSwipe();
+                Log.d("aaaaaaa", "right");
+                return true;
+        }
+        return false;
+    }
+
+    private int getSlope(float x1, float y1, float x2, float y2) {
+        Double angle = Math.toDegrees(Math.atan2(y1 - y2, x2 - x1));
+        if (angle > 45 && angle <= 135)
+            // top
+            return 1;
+        if (angle >= 135 && angle < 180 || angle < -135 && angle > -180)
+            // left
+            return 2;
+        if (angle < -45 && angle >= -135)
+            // down
+            return 3;
+        if (angle > -45 && angle <= 45)
+            // right
+            return 4;
+        return 0;
+    }
+
+    void onRightSwipe()
+    {
+
+
+    }
+    void onLeftSwipe()
+    {
+
+
+    }
+    void onUpSwipe()
+    {
+
+
+    }
+    void onDownSwipe()
+    {
+
+
+    }
+
 
 }
