@@ -1,14 +1,18 @@
 package vivz.slidenerd.agriculture.list;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -26,11 +30,12 @@ public class ListDetailActivity extends ActionBarActivity {
        TextView vilageHmpgUrl;
        String line;
    */
-    TextView vilageNameUp;
-    TextView vilageHomepage;
 
+    TextView vilageHomepage;
     TextView vilageNameDown;
     TextView vilageKnd;
+
+    Button call;
 
     WebView main2Web;
     WebView thumb;
@@ -49,10 +54,7 @@ public class ListDetailActivity extends ActionBarActivity {
         Item i = (Item)item;
 
 
-        vilageNameUp = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
-        vilageNameUp.setText(i.getName());  // Main에서 가져온 마을 이름
-
-        vilageNameDown = (TextView)findViewById(R.id.vilageNameUp); // 마을 이름
+        vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
         vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름
 
         vilageKnd = (TextView)findViewById(R.id.vilageKnd); // 마을 종류
@@ -63,6 +65,18 @@ public class ListDetailActivity extends ActionBarActivity {
         vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
         Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
 
+        // 전화 걸기 버튼
+        call = (Button)findViewById(R.id.call);
+
+        // 파이널 변수로 만들지 않으면 리스너 함수내부에서 사용이 불가능해서 임시변수 하나 만듦
+        final String phoneNumber = i.getPrcafsManMoblphon();
+        call.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_DIAL).setData    // ACTION_CALL로 바꾸면
+                        (Uri.parse("tel:" + phoneNumber.toString())));  // 전화 바로 걸린다.
+            }
+        });
 
         thumb = (WebView)findViewById(R.id.thumb);
 
@@ -108,11 +122,14 @@ public class ListDetailActivity extends ActionBarActivity {
 
         main2Web = (WebView)findViewById(R.id.main2Web);
 
+        //웹뷰의 글씨들 크기 조정해줌. good;
+        main2Web.getSettings().setDefaultFontSize(40);
+
         // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
         main2Web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         main2Web.getSettings().setLoadWithOverviewMode(true);
         main2Web.getSettings().setUseWideViewPort(true);
-        //main2Web.getSettings().setDefaultFontSize(50); // 웹뷰 텍스트 크기
+        main2Web.getSettings().setJavaScriptEnabled(true);
 
         main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?theme=" + i.getThemeType() + "&vilageId=" + i.getVilageId());
 
@@ -125,7 +142,7 @@ public class ListDetailActivity extends ActionBarActivity {
         StringBuffer sb = new StringBuffer("<HTML>");
         sb.append("<HEAD>");
         sb.append("</HEAD>");
-        sb.append("<BODY style='vertical-align:middle; text-align:center;'>");    //중앙정렬
+        sb.append("<BODY style='text-align:center;'>");    //중앙정렬
         sb.append("<img  width='100%' height='100%'  src=\"" + imagUrl+"\">"); //가득차게 나옴
         sb.append("</BODY>");
         sb.append("</HTML>");
