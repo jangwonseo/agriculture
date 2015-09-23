@@ -23,7 +23,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile project(':com.skp.Tmap_1.0.33')
 }

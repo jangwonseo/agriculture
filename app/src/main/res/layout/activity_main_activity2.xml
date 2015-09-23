@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginBottom="40px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/poiName2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:text="마을"/>
+        <TextView
+            android:id="@+id/poiName"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="440"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/poiAddr2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:text="위치"/>
+        <TextView
+            android:id="@+id/poiAddr"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="440"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/distance2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:text="거리"/>
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="440"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/lat2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:text="위도" />
+
+        <TextView
+            android:id="@+id/lat"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="440" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/lon2"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="100"
+            android:text="경도" />
+
+        <TextView
+            android:id="@+id/lon"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="440" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100px">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="50"></LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출발지 설정"
+            android:id="@+id/startPoint" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="도착지 설정"
+            android:id="@+id/endPoint" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="50"></LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
