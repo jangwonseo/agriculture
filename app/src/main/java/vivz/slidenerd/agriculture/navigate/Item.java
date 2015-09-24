@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 package vivz.slidenerd.agriculture.navigate;
-
-=======
-package vivz.slidenerd.agriculture.n//sdfsdfsdafsdafsdaffdsaa
->>>>>>> c8e18aa53312990e1d7f77aa8477c2cc809b4489
 
 import java.io.Serializable;
 
-/**
- * Created by makejin on 2015-09-20.
- */
+
 class Item implements Serializable {
     private String name;
     private String addr;
