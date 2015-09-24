@@ -11,8 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import vivz.slidenerd.agriculture.navigate.BaseActivity;
-import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.recruit.Recruit;
 
 
@@ -103,8 +101,6 @@ public class HomeActivity extends ActionBarActivity{
                     startActivity(intentRecruit);
                     break;
                 case R.id.etceterabutton:
-                    Intent intentNavigate = new Intent(getApplicationContext(), NavigateActivity.class);
-                    startActivity(intentNavigate);
                     break;
 
             }

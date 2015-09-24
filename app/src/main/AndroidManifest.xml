@@ -10,9 +10,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.WRITE_OWNER_DATA"></uses-permission>
-    <uses-permission android:name="android.permission.READ_OWNER_DATA"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
 
     <application
         android:name=".MyApplication"
@@ -82,22 +79,11 @@
         <activity
             android:name=".list.ListActivity"
             android:label="@string/title_activity_list"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
             android:name=".list.ListDetailActivity"
             android:label="@string/title_activity_list_detail"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
-        <activity
-            android:name=".navigate.NavigateActivity"
-            android:label="@string/title_activity_navigate"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity
-            android:name=".navigate.MainActivity2Activity"
-            android:label="@string/title_activity_main_activity2"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
