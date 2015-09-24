@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 package vivz.slidenerd.agriculture.navigate;
 
+=======
+package vivz.slidenerd.agriculture.n//sdfsdfsdafsdafsdaffdsaa
+>>>>>>> c8e18aa53312990e1d7f77aa8477c2cc809b4489
 
 import java.io.Serializable;
 
