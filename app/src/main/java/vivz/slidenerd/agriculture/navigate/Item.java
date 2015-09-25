@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture.n//sdfsdfsdafsdafsdaffdsaa
+package vivz.slidenerd.agriculture.navigate;
 
 import java.io.Serializable;
 
