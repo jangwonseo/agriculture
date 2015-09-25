@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="66"
+        android:layout_weight="88"
         android:focusable="false"
         android:orientation="horizontal">
 
@@ -22,7 +22,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/information_22"
+            android:background="@drawable/list10"
             android:clickable="false"
             android:focusable="false"></LinearLayout>
 
@@ -30,13 +30,13 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="389"
-            android:background="@drawable/information_20"></LinearLayout>
+            android:background="@drawable/list11"></LinearLayout>
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="81"
-            android:background="@drawable/information_21"></LinearLayout>
+            android:background="@drawable/list9"></LinearLayout>
 
     </LinearLayout>
 
@@ -44,9 +44,9 @@
         android:id="@+id/listLayout"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="894"
+        android:layout_weight="1094"
         android:orientation="horizontal"
-        android:background="@drawable/information_9">
+        android:background="@drawable/information9">
 
         <LinearLayout
             android:layout_width="0px"
@@ -61,12 +61,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="50">
+                android:layout_weight="35">
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="44"
+                android:layout_weight="50"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -78,15 +78,12 @@
                     android:id="@+id/vilageKnd"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:text="체험 종류"
-                    android:textColor="#808184">
-                    </TextView>
+                    android:layout_weight="80"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="194"
+                android:layout_weight="220"
                 android:background="@drawable/information4">
 
                 <WebView
@@ -110,7 +107,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="43"
+                android:layout_weight="40"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0px"
@@ -122,15 +119,14 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="300"
-                    android:text="XX마을"
-                    android:textColor="#808184">
+                    android:text="XX마을">
                 </TextView>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="43"
+                android:layout_weight="40"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0px"
@@ -143,7 +139,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="300"
                     android:text="홈페이지 없음"
-                    android:textColor="#808184">
+                    >
                 </TextView>
 
             </LinearLayout>
@@ -151,20 +147,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="70">
+                android:layout_weight="65">
                 <Button
                     android:id="@+id/call"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="225"
-                    android:background="@drawable/information_5"
+                    android:layout_weight="150"
+                    android:background="@drawable/information6"
                     >
                 </Button>
                 <Button
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="225"
-                    android:background="@drawable/information_6"
+                    android:layout_weight="150"
+                    android:background="@drawable/information7"
+                    >
+                </Button>
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150"
+                    android:background="@drawable/information8"
                     >
                 </Button>
             </LinearLayout>
@@ -172,13 +175,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="48">
+                android:layout_weight="55">
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="342"
+                android:layout_weight="500"
                 android:background="@drawable/information5">
                 <WebView
                     android:id="@+id/main2Web"
@@ -190,7 +193,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="60">
+                android:layout_weight="65">
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -282,158 +285,36 @@
         android:visibility="gone"
         android:orientation="vertical"
         >
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="755"
+            android:layout_weight="4"
            >
         </FrameLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="205"
-            android:orientation="horizontal"
-            >
-
-            <!-- 왼쪽 공백 부분 시작 -->
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+           >
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="65">
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:background="@drawable/information10">
+
             </LinearLayout>
 
-
-            <!--가운데 부분 시작 -->
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="410"
-                android:orientation="vertical">
-
-
-                    <!-- 첫번째 버튼 시작 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="70"
-                        android:background="@drawable/information_19"
-                        android:orientation="vertical">
-
-                        <!-- 위 공백 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="15">
-                        </LinearLayout>
-
-
-                        <!-- 버튼부-->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="52">
-                            </LinearLayout>
-                            <Button
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="40"
-                                android:background="@drawable/information_10">
-                            </Button>
-                            <!--첫번째 버튼 끝-->
-
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="49">
-                            </LinearLayout>
-                            <Button
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="40"
-                                android:background="@drawable/information_12">
-                            </Button>
-                            <!-- 두번째 버튼 끝 -->
-
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="48">
-                            </LinearLayout>
-                            <Button
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="40"
-                                android:background="@drawable/information_14">
-                            </Button>
-                            <!-- 세번째 버튼 끝 -->
-
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="49">
-                            </LinearLayout>
-                            <Button
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="40"
-                                android:background="@drawable/information_16">
-                            </Button>
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="52">
-                            </LinearLayout>
-                            <!-- 네번째 버튼 끝-->
-
-                        </LinearLayout> <!-- 버튼부 끝 -->
-
-
-                        <!-- 밑 공백 -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="15">
-                        </LinearLayout>
-
-
-                    </LinearLayout> <!-- 이미지 중간부분 끝 -->
-
-
-                <!-- 두번째 버튼 시작 -->
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1">
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="70"
-                    android:background="@drawable/information_7">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/information11">
                 </Button>
-
-                <!-- 하단 공백 부분 시작 -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="65">
-                </LinearLayout>
-
-             <!-- 가운데 부분 끝 -->
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="65">
             </LinearLayout>
 
         </LinearLayout>

@@ -127,7 +127,7 @@ public class ListDetailActivity extends ActionBarActivity {
         thumb.setVerticalScrollBarEnabled(false);
         thumb.setInitialScale(100);
         thumb.setFocusable(false);
-
+        thumb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         thumb.getSettings().setLoadWithOverviewMode(true);
         thumb.getSettings().setUseWideViewPort(true);
         Log.e("zzzzz", "sdfsdfdsf");
