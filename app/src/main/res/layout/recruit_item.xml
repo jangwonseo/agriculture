@@ -1,140 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal"
-    android:background="@drawable/list2"
-    >
+    android:layout_height="110dp"
+    android:background="@drawable/list1"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="80"
-        android:focusable="false"
-        >
-        <WebView
-            android:id="@+id/recruit_list_webView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="1dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:scrollbars="none"
-            android:clickable="false"
-            android:focusable="false"
-            android:longClickable="false"
-            />
-        <!-- clickable 은 false로 해야 리스트뷰에 영향을 안준다고 한다. -->
+        android:layout_weight="10">
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="173"
-        android:layout_marginLeft="1dp"
-        android:orientation="vertical"
-        android:focusable="false">
+        android:layout_weight="129"
+        android:focusable="false"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp">
+            android:layout_height="0px"
+            android:layout_weight="10">
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:focusable="false">
+            android:layout_height="0px"
+            android:layout_weight="129"
+            android:background="@drawable/list4">
 
-            <TextView
-                android:id="@+id/list_missionName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="17dp"
+            <WebView
+                android:id="@+id/recruit_list_webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:clickable="false"
                 android:focusable="false"
-                android:textStyle="bold"
-                />
+                android:longClickable="false"
+                android:scrollbars="none" />
+            <!-- clickable 은 false로 해야 리스트뷰에 영향을 안준다고 한다. -->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10">
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+    </LinearLayout>
+
+    <!-- detail contents-->
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="267"
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="129"
+            android:focusable="false"
+            android:orientation="vertical">
+
+            <!--vilagename-->
             <LinearLayout
-                android:layout_width="5dp"
-                android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="45"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="267">
+
+                    <TextView
+                        android:id="@+id/list_missionName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
 
             </LinearLayout>
-            <TextView
-                android:id="@+id/vilageKind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="11dp"
-                android:focusable="false"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="3dp">
-        </LinearLayout>
-        <TextView
-            android:id="@+id/vilageAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sub Title"
-            android:textSize="12dp"
-            android:focusable="false"
-            android:textColor="#FFFFFF"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="3dp">
-        </LinearLayout>
+
+            <!-- sub vilagename  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="40">
+
+                <TextView
+                    android:id="@+id/vilageAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:text="Sub Title"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"/>
 
 
-        <TextView
-            android:id="@+id/vilageAddr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sub Title"
-            android:textSize="12dp"
-            android:focusable="false"
-            android:textColor="#FFFFFF"
-            />
-        <!--android:textColor="#BB6622"-->
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="5">
+
+            </LinearLayout>
+
+            <!-- address-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="39">
+
+                <TextView
+                    android:id="@+id/vilageAddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:text="Sub Title"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12dp"
+                    android:gravity="center_vertical"/>
+                <!--android:textColor="#BB6622"-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="10">
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
+
+    <!-- buttons -->
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="30"
-        android:orientation="vertical"
-        android:gravity="left"
-        android:focusable="false">
+        android:layout_weight="60"
+        android:focusable="false"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="20"
-            >
+            android:layout_height="0px"
+            android:layout_weight="10">
+
         </LinearLayout>
-        <Button
-            android:id="@+id/video"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            android:layout_weight="40"
-            android:focusable="false"
-            android:background="@drawable/list7"
-            />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            >
+            android:layout_height="0px"
+            android:layout_weight="60"
+            android:background="@drawable/list5">
+            <Button
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:focusable="false" />
+
         </LinearLayout>
-        <Button
-            android:id="@+id/addItem"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            android:layout_weight="40"
-            android:focusable="false"
-            android:background="@drawable/list5"
-            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="79">
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="10">
+
     </LinearLayout>
 </LinearLayout>
