@@ -34,6 +34,7 @@ public class ListActivity extends ActionBarActivity {
     TextView txtView;
     Button video;   // 리스트뷰에 있는 재생버튼
     Button addItem; // 리스트뷰에 있는 관심있는 항목 추가 버튼
+    Button backButton;
     TextView keys;
     phpDown task;
     String themeName;
@@ -90,6 +91,16 @@ public class ListActivity extends ActionBarActivity {
         video = (Button) findViewById(R.id.video);
         //addItem = (Button) findViewById(R.id.addItem);
         keys = (TextView) findViewById(R.id.themeKey);
+
+        backButton  = (Button)findViewById(R.id.list_backbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
 
         keys.setText(tempThemeName);
 

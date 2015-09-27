@@ -17,6 +17,9 @@ import vivz.slidenerd.agriculture.list.ListActivity;
 public class ThemeChoiceActivity extends ActionBarActivity {
     private Button backButton;
     private Button natureButton;
+    private Button exprienceButton;
+    private Button traditionalButton;
+    private Button wellBeingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +29,17 @@ public class ThemeChoiceActivity extends ActionBarActivity {
         natureButton = (Button)findViewById(R.id.btn_nature);
         natureButton.setOnClickListener(mClickListener);
 
+        exprienceButton = (Button)findViewById(R.id.btn_exprience);
+        exprienceButton.setOnClickListener(mClickListener);
+
+        traditionalButton = (Button)findViewById(R.id.btn_traditional);
+        traditionalButton.setOnClickListener(mClickListener);
+
+        wellBeingButton = (Button)findViewById(R.id.btn_wellBeing);
+        wellBeingButton.setOnClickListener(mClickListener);
 
 
         backButton  = (Button)findViewById(R.id.themechoice_backbutton);
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,20 +54,24 @@ public class ThemeChoiceActivity extends ActionBarActivity {
     {
         public void onClick(View v)
         {
+            Intent intentTheme = new Intent(getApplication(),ListActivity.class);
             switch (v.getId())
             {
                 case R.id.btn_nature:
-                    Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+                    intentTheme.putExtra("themeflag","nature");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_traditional:
                     intentTheme.putExtra("themeflag","traditional");
                     startActivity(intentTheme);
                     break;
-                case R.id.regionbutton:
-
+                case R.id.btn_exprience:
+                    intentTheme.putExtra("themeflag","exprience");
+                    startActivity(intentTheme);
                     break;
-                case R.id.gatheringbutton:
-
-                    break;
-                case R.id.etceterabutton:
+                case R.id.btn_wellBeing:
+                    intentTheme.putExtra("themeflag","wellBeing");
+                    startActivity(intentTheme);
                     break;
 
             }

@@ -48,6 +48,7 @@ public class ListDetailActivity extends ActionBarActivity {
     TextView vilageKnd;
     View btnView;
     Button call;
+    Button backButton;
 
     WebView main2Web;
     WebView thumb;
@@ -87,7 +88,13 @@ public class ListDetailActivity extends ActionBarActivity {
 
         Item i = (Item)item;
 
-
+        backButton  = (Button)findViewById(R.id.listDeail_backbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
         vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름

@@ -24,7 +24,13 @@
             android:layout_weight="70"
             android:background="@drawable/information_22"
             android:clickable="false"
-            android:focusable="false"></LinearLayout>
+            android:focusable="false">
+            <Button
+                android:id="@+id/listDeail_backbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0px"

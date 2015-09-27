@@ -17,7 +17,13 @@
             android:layout_weight="70"
             android:background="@drawable/list10"
             android:clickable="false"
-            android:focusable="false"></LinearLayout>
+            android:focusable="false">
+            <Button
+                android:id="@+id/list_backbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0px"
