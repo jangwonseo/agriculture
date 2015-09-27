@@ -56,7 +56,7 @@ public class ListActivity extends ActionBarActivity {
 
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
 
-        if(themeName.equals("exprience"))
+        if(themeName.equals("experience"))
              tempThemeName = "체험여행";
         else if(themeName.equals("nature"))
             tempThemeName = "자연여행";
@@ -124,7 +124,7 @@ public class ListActivity extends ActionBarActivity {
             }
         });
         // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
-        if(themeName.equals("exprience")||themeName.equals("nature")||themeName.equals("traditional")||
+        if(themeName.equals("experience")||themeName.equals("nature")||themeName.equals("traditional")||
                 themeName.equals("wellBeing"))
             task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
