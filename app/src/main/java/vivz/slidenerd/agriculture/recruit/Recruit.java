@@ -174,12 +174,12 @@ public class Recruit extends Activity implements TextWatcher{
 
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
         recruit_autoComplete.addTextChangedListener(this);
-        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, search_item));
+        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item));
         recruit_autoComplete.setTextColor(Color.BLACK);
 
         recruit_list_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_list_autoComplete);
         recruit_list_autoComplete.addTextChangedListener(this);
-        recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, search_list_item));
+        recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
         recruit_list_autoComplete.setTextColor(Color.BLACK);
 
         // 모집, 모집하기 버튼
@@ -198,13 +198,20 @@ public class Recruit extends Activity implements TextWatcher{
         autoComTask = new phpDown();
         autoComTask.execute("http://218.150.181.131/seo/publicData.php");
         listAutoComTask = new phpListAutoText();
-        listAutoComTask.execute("");
+        listAutoComTask.execute("http://218.150.181.131/seo/recruitListAutoText.php");
 
         recruit_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String str = (String) parent.getItemAtPosition(position); // 클릭한 체험이름 미션이름으로 넣기
                 missionName.setText(str);
+            }
+        });
+
+        recruit_list_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
         });
 
@@ -541,12 +548,14 @@ public class Recruit extends Activity implements TextWatcher{
             try {
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
-                    JSONObject vilageName = jAr.getJSONObject(i);
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
-                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"), vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"));
-                    search_item.add(item.getName());
-                }
+                    JSONObject recruitListAutoText = jAr.getJSONObject(i);
 
+                    // 모집하기 리스트의 검색하기에서, 미션이름들을 DB에서 가져와 search_item에 추가한다.
+                    String recruitListAutoTextStr;
+                    recruitListAutoTextStr = recruitListAutoText.getString("missionName");
+                    Log.e("recruitListAuto", recruitListAutoTextStr);
+                    search_list_item.add(recruitListAutoTextStr);
+                }
 
             } catch (Exception ex) {
                 ex.printStackTrace();
