@@ -72,6 +72,7 @@
                 android:layout_weight="80">
 
                 <Button
+                    android:id="@+id/btn_kangwon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_gangwon"/>
@@ -109,6 +110,7 @@
                 android:layout_weight="95">
 
                 <Button
+                    android:id="@+id/btn_kyungki"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_gyeonggi"/>
@@ -146,6 +148,7 @@
                 android:layout_weight="70">
 
                 <Button
+                    android:id="@+id/btn_chungbuk"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_choongbuk"/>
@@ -177,6 +180,7 @@
                 android:layout_weight="95">
 
                 <Button
+                    android:id="@+id/btn_chungnam"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_choongnam"/>
@@ -208,6 +212,7 @@
                 android:layout_weight="95">
 
                 <Button
+                    android:id="@+id/btn_kyungbuk"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_gyeongbuk"/>
@@ -245,6 +250,7 @@
                 android:layout_weight="70">
 
                 <Button
+                    android:id="@+id/btn_jeonbuk"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_geonbuk"/>
@@ -282,6 +288,7 @@
                 android:layout_weight="95">
 
                 <Button
+                    android:id="@+id/btn_kyungnam"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_gyeongnam"/>
@@ -319,6 +326,7 @@
                 android:layout_weight="95">
 
                 <Button
+                    android:id="@+id/btn_jeonnam"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_geonnam"/>

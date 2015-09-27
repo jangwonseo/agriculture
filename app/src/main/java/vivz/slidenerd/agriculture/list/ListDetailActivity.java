@@ -168,7 +168,8 @@ public class ListDetailActivity extends ActionBarActivity {
         main2Web.getSettings().setUseWideViewPort(true);
         main2Web.getSettings().setJavaScriptEnabled(true);
 
-        main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?theme=" + i.getThemeType() + "&vilageId=" + i.getVilageId());
+
+        main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?tableName=" + i.getTableName() + "&vilageId=" + i.getVilageId());
 
 
 

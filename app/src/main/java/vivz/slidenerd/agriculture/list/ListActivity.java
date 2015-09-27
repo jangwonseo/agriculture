@@ -51,7 +51,37 @@ public class ListActivity extends ActionBarActivity {
 
         Intent themeIntent = getIntent();
         themeName = themeIntent.getExtras().getString("themeflag");
-        tempThemeName = "자연생태";
+
+
+        // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
+
+        if(themeName.equals("exprience"))
+             tempThemeName = "체험여행";
+        else if(themeName.equals("nature"))
+            tempThemeName = "자연여행";
+        else if(themeName.equals("traditional"))
+            tempThemeName = "전통문화여행";
+        else if(themeName.equals("wellBeing"))
+            tempThemeName = "웰빙여행";
+        else if(themeName.equals("kangwon"))
+            tempThemeName = "강원도";
+        else if(themeName.equals("kyungki"))
+            tempThemeName = "경기/인천";
+        else if(themeName.equals("chungnam"))
+            tempThemeName = "충남/대전";
+        else if(themeName.equals("chungbuk"))
+            tempThemeName = "충북";
+        else if(themeName.equals("jeonnam"))
+            tempThemeName = "전남/광주";
+        else if(themeName.equals("jeonbuk"))
+            tempThemeName = "전북";
+        else if(themeName.equals("kyungnam"))
+            tempThemeName = "경남/부산";
+        else if(themeName.equals("kyungbuk"))
+            tempThemeName = "경북/대구";
+        else
+            tempThemeName = "기타";
+
         //listview
         //m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
         //m_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
@@ -82,8 +112,16 @@ public class ListActivity extends ActionBarActivity {
 
             }
         });
+        // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
+        if(themeName.equals("exprience")||themeName.equals("nature")||themeName.equals("traditional")||
+                themeName.equals("wellBeing"))
+            task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
-        task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
+        else if(themeName.equals("kangwon")||themeName.equals("kyungki")||themeName.equals("chungnam")||
+                themeName.equals("chungbuk")||themeName.equals("jeonnam")||themeName.equals("jeonbuk")||
+                themeName.equals("kyungnam")||themeName.equals("kyungbuk"))
+            task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
+
     }
 
 
@@ -155,7 +193,7 @@ public class ListActivity extends ActionBarActivity {
                     Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageKndNm"), vilageName.getString("vilageSlgn"), themeName, vilageName.getString("id"));
+                            vilageName.getString("vilageKndNm"), vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
                     data.add(item);
@@ -292,7 +330,7 @@ class Item implements Serializable {
     private String vilageHmpgUrl;       // 마을 홈피 주소
     private String vilageKndNm;         // 마을 종류
     private String vilageSlgn;          // 마을 간단 소개
-    private String themeType;           // 테마
+    private String tableName;           // 테마
     private String vilageId;
 
     public String getThumbUrl() {
@@ -327,8 +365,8 @@ class Item implements Serializable {
         return vilageSlgn;
     }
 
-    public String getThemeType() {
-        return themeType;
+    public String getTableName() {
+        return tableName;
     }
 
     public String getVilageId() {
@@ -336,7 +374,7 @@ class Item implements Serializable {
     }
 
     public Item(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageKndNm, String vilageSlgn, String themeType, String VilageId) {
+                String vilageKndNm, String vilageSlgn, String tableName, String VilageId) {
 
         this.thumbUrl = thumbUrl;
         this.name = name;
@@ -346,7 +384,7 @@ class Item implements Serializable {
         this.vilageHmpgUrl = vilageHmpgUrl;
         this.vilageKndNm = vilageKndNm;
         this.vilageSlgn = vilageSlgn;
-        this.themeType = themeType;
+        this.tableName = tableName;
         this.vilageId = VilageId;
     }
 }

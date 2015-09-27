@@ -11,20 +11,50 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import vivz.slidenerd.agriculture.list.ListActivity;
+
 
 public class RegionChoiceActivity extends ActionBarActivity {
     private Button backButton;
-
+    private View kangwonBtn;
+    private View kyungkiBtn;
+    private View chungnamBtn;
+    private View chungbukBtn;
+    private View jeonnamBtn;
+    private View jeonbukBtn;
+    private View kyungnamBtn;
+    private View kyungbukBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_choice);
 
+        kangwonBtn=findViewById(R.id.btn_kangwon);
+        kangwonBtn.setOnClickListener(mClickListener);
+
+        kyungkiBtn=findViewById(R.id.btn_kyungki);
+        kyungkiBtn.setOnClickListener(mClickListener);
+
+        chungnamBtn=findViewById(R.id.btn_chungnam);
+        chungnamBtn.setOnClickListener(mClickListener);
+
+        chungbukBtn=findViewById(R.id.btn_chungbuk);
+        chungbukBtn.setOnClickListener(mClickListener);
+
+        jeonnamBtn=findViewById(R.id.btn_jeonnam);
+        jeonnamBtn.setOnClickListener(mClickListener);
+
+        jeonbukBtn=findViewById(R.id.btn_jeonbuk);
+        jeonbukBtn.setOnClickListener(mClickListener);
+
+        kyungnamBtn=findViewById(R.id.btn_kyungnam);
+        kyungnamBtn.setOnClickListener(mClickListener);
+
+        kyungbukBtn=findViewById(R.id.btn_kyungbuk);
+        kyungbukBtn.setOnClickListener(mClickListener);
+
         backButton  = (Button)findViewById(R.id.regionchoice_backbutton);
-
-
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,6 +63,56 @@ public class RegionChoiceActivity extends ActionBarActivity {
         });
     }
 
+    Button.OnClickListener mClickListener = new View.OnClickListener()
+    {
+        public void onClick(View v)
+        {
+            Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+            switch (v.getId())
+            {
+                case R.id.btn_kangwon:
+
+                    intentTheme.putExtra("themeflag","kangwon");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_kyungki:
+
+                    intentTheme.putExtra("themeflag","kyungki");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_chungnam:
+
+                    intentTheme.putExtra("themeflag","chungnam");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_chungbuk:
+
+                    intentTheme.putExtra("themeflag","chungbuk");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_jeonnam:
+
+                    intentTheme.putExtra("themeflag","jeonnam");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_jeonbuk:
+
+                    intentTheme.putExtra("themeflag","jeonbuk");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_kyungnam:
+
+                    intentTheme.putExtra("themeflag","kyungnam");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btn_kyungbuk:
+
+                    intentTheme.putExtra("themeflag","kyungbuk");
+                    startActivity(intentTheme);
+                    break;
+            }
+        }
+    };
 
 
     @Override
