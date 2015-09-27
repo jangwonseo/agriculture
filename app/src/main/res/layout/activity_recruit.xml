@@ -181,7 +181,8 @@
                                 android:background="@null"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textColor="#4C4C4C"/>
+                                android:textColor="#4C4C4C"
+                                android:completionThreshold="1"/>
 
                         </LinearLayout>
                         <!-- x button -->
@@ -289,12 +290,18 @@
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:layout_weight="480"
-                    android:background="#CCA6A6A6">
+                    android:layout_weight="480">
+
                     <ListView
                         android:id="@+id/recruit_listview"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"></ListView>
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:divider="#00000000"
+                        android:drawSelectorOnTop="true"
+                        android:focusable="true"
+                        android:listSelector="#30303030"
+                        android:scrollbars="none" ></ListView>
 
                 </LinearLayout>
                 <LinearLayout
@@ -385,7 +392,8 @@
                                     android:background="@null"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:textColor="#4C4C4C"/>
+                                    android:textColor="#000000"
+                                    android:completionThreshold="1"/>
 
                             </LinearLayout>
                             <LinearLayout

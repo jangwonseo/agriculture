@@ -80,14 +80,14 @@ public class Recruit extends Activity implements TextWatcher{
     phpUp recruitTask;
     RecruitItem recruitItem;
 
-    // DB에서 불러오기
-    phpDown autoComTask;
-
     // 자동완성기능
-    AutoCompleteTextView recruit_autoComplete;
+    phpDown autoComTask;// DB에서 불러오기
+    phpListAutoText listAutoComTask;// DB에서 불러오기
+    AutoCompleteTextView recruit_autoComplete; // 모집하기 자동완성
+    private ArrayList<String> search_item = new ArrayList<String>(); // 모집하기 목록
+    AutoCompleteTextView recruit_list_autoComplete; // 모집 리스트 자동완성
+    private ArrayList<String> search_list_item = new ArrayList<String>();
 
-    // test
-    private ArrayList<String> search_item = new ArrayList<String>();
 
     //모집리스트버튼, 모집하기버튼, 뒤로가기버튼
     Button recruitListBtn, recruitStartBtn, backBtn;
@@ -174,8 +174,13 @@ public class Recruit extends Activity implements TextWatcher{
 
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
         recruit_autoComplete.addTextChangedListener(this);
-        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, search_item));
+        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item));
         recruit_autoComplete.setTextColor(Color.BLACK);
+
+        recruit_list_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_list_autoComplete);
+        recruit_list_autoComplete.addTextChangedListener(this);
+        recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
+        recruit_list_autoComplete.setTextColor(Color.BLACK);
 
         // 모집, 모집하기 버튼
         backBtn = (Button)findViewById(R.id.backbtn);
@@ -192,12 +197,21 @@ public class Recruit extends Activity implements TextWatcher{
 
         autoComTask = new phpDown();
         autoComTask.execute("http://218.150.181.131/seo/publicData.php");
+        listAutoComTask = new phpListAutoText();
+        listAutoComTask.execute("http://218.150.181.131/seo/recruitListAutoText.php");
 
         recruit_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String str = (String) parent.getItemAtPosition(position); // 클릭한 체험이름 미션이름으로 넣기
                 missionName.setText(str);
+            }
+        });
+
+        recruit_list_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
         });
 
@@ -363,11 +377,6 @@ public class Recruit extends Activity implements TextWatcher{
         }
     };
 
-    public void autoFillContent(View v) {
-        //String str = v.getResources().toString();
-        //missionName.setText(str);
-    }
-
     // 모집하기 insert 부분
     public class phpUp extends AsyncTask<String, Integer,String> {
 
@@ -427,7 +436,7 @@ public class Recruit extends Activity implements TextWatcher{
         }
     }
 
-    // 모집하기 검색에서 체험 이름을 가져오는 부분
+    // 모집하기 검색(자동완성)에서 체험 이름을 가져오는 부분
     public class phpDown extends AsyncTask<String, Integer,String> {
 
         @Override
@@ -482,6 +491,71 @@ public class Recruit extends Activity implements TextWatcher{
                     search_item.add(item.getName());
                 }
 
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+    }
+
+    // 리스트 목록에서 검색(자동완성) php 부르는 부분
+    public class phpListAutoText extends AsyncTask<String, Integer,String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str){
+            // JSON 구문을 파싱해서 JSONArray 객체를 생성
+
+            try {
+                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
+                    JSONObject recruitListAutoText = jAr.getJSONObject(i);
+
+                    // 모집하기 리스트의 검색하기에서, 미션이름들을 DB에서 가져와 search_item에 추가한다.
+                    String recruitListAutoTextStr;
+                    recruitListAutoTextStr = recruitListAutoText.getString("missionName");
+                    Log.e("recruitListAuto", recruitListAutoTextStr);
+                    search_list_item.add(recruitListAutoTextStr);
+                }
 
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -772,6 +846,18 @@ class List_Adapter extends BaseAdapter {
         RecruitListItem listviewitem=data.get(position);
 
         webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
+        // 배경이 하얕게 나오는데 투명하게 만들어줌
+        webView.setBackgroundColor(0);
+        // 웹뷰 설정
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setVerticalScrollbarOverlay(false);
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.setHorizontalScrollbarOverlay(false);
+        webView.setFocusableInTouchMode(false);
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setInitialScale(100);
+        webView.setFocusable(false);
 
         String ImageURL = listviewitem.getImageURL();
         String loadingURL = null;
@@ -797,7 +883,8 @@ class List_Adapter extends BaseAdapter {
         sb.append("</HEAD>");
         sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
         //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
-        sb.append("<img width='100%' height='100%' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
+        sb.append("<img width='100%' height='100%' style='border-radius: 220px; -moz-border-radius: 220px; -khtml-border-radius: 220px;" +
+                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
         sb.append("</BODY>");
         sb.append("</HTML>");
         return sb.toString();

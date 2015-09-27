@@ -88,7 +88,7 @@ public class ListActivity extends ActionBarActivity {
         vilageList = (ListView) findViewById(R.id.vilageList);
 
         video = (Button) findViewById(R.id.video);
-        addItem = (Button) findViewById(R.id.addItem);
+        //addItem = (Button) findViewById(R.id.addItem);
         keys = (TextView) findViewById(R.id.themeKey);
 
         keys.setText(tempThemeName);
