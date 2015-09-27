@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\seo\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-06981840fbe5b0fe0f40dd1d1ecd662de2d312f4.jar" />
+    </item>
+    <item
+        jar="E:\git\agriculture\com.skp.Tmap_1.0.33\com.skp.Tmap_1.0.33.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1a3cc61fc1a0fbdfb33d5b2494e4b1d67e7a1a6b">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\com.skp.Tmap_1.0.33-1090966ce86f5bb8acd4788147d99ee194cba2e6.jar" />
+    </item>
+    <item
+        jar="C:\Users\seo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-b38329a14404244c84c620d89244cb8eefe3fe03.jar" />
+    </item>
+    <item
+        jar="E:\git\agriculture\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\classes-07f39f2055699b624231540c92036f3857d83996.jar" />
+    </item>
+    <item
+        jar="E:\git\agriculture\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\classes-64fda120eb0077405bd04588dc427e47056765d7.jar" />
+    </item>
+    <item
+        jar="E:\git\agriculture\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\classes-6b1a79fb973a160b8e301c80b3f6d07fbfef881a.jar" />
+    </item>
+    <item
+        jar="E:\git\agriculture\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\jars\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="E:\git\agriculture\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-d34a5fe64130d5ed8438eb81575e60bec9834327.jar" />
+    </item>
+
+</items>
