@@ -1,0 +1,12 @@
+diff a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml	(rejected hunks)
+@@ -104,6 +104,10 @@
+             android:name=".map.mapActivity"
+             android:label="@string/title_activity_map" >
+         </activity>
++        <activity
++            android:name=".MyDiaryActivity"
++            android:label="@string/title_activity_my_diary" >
++        </activity>
+     </application>
+ 
+ </manifest>
