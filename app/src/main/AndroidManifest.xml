@@ -104,6 +104,10 @@
             android:name=".map.mapActivity"
             android:label="@string/title_activity_map" >
         </activity>
+        <activity
+            android:name=".recruit.RecruitPopupActivity"
+            android:label="@string/title_activity_recruit_popup" >
+        </activity>
     </application>
 
 </manifest>

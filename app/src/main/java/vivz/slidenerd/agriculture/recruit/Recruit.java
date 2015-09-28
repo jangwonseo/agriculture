@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,6 +65,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.list.ListDetailActivity;
 
 
 public class Recruit extends Activity implements TextWatcher{
@@ -228,11 +230,22 @@ public class Recruit extends Activity implements TextWatcher{
         phpList.execute("http://218.150.181.131/seo/recruitList.php");
 
 
+        // 모집 리스트 항목 클릭시 팝업뷰가 뜨는 작업 ----------------------------------------------
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        float deviceDensityDIP = displayMetrics.densityDpi;
+        Log.d("recPopUp", "dpi : " + deviceDensityDIP);
+
         // 리스트 항목 (참가할 미션)클릭시 이벤트
         recruit_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
 
+                Intent intent = new Intent(getApplicationContext(), RecruitPopupActivity.class);
+                intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 모집에 대한 Item 클래스를 넘겨준다.
+                // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+                startActivity(intent);
             }
         });
 
