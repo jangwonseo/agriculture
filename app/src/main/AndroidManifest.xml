@@ -104,10 +104,6 @@
             android:name=".map.mapActivity"
             android:label="@string/title_activity_map" >
         </activity>
-        <activity
-            android:name=".MyDiaryActivity"
-            android:label="@string/title_activity_my_diary" >
-        </activity>
     </application>
 
 </manifest>
