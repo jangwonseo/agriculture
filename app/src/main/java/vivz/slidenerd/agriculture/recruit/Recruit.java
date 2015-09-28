@@ -280,8 +280,14 @@ public class Recruit extends Activity implements TextWatcher{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
 
+                RecruitListItem cleckedListItem;
+                cleckedListItem = adapter.getItem(position);
+
+                phpRecListClickUpdate recruitClick = new phpRecListClickUpdate();
+                recruitClick.execute("http://218.150.181.131/seo/RecruitClickUpdate.php?" + cleckedListItem.toString());
+
                 Intent intent = new Intent(getApplicationContext(), RecruitPopupActivity.class);
-                intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 모집에 대한 Item 클래스를 넘겨준다.
+                intent.putExtra("item", cleckedListItem); // 리스트를 클릭하면 현재 클릭한 모집에 대한 Item 클래스를 넘겨준다.
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 startActivity(intent);
             }
@@ -489,6 +495,54 @@ public class Recruit extends Activity implements TextWatcher{
         }
     }
 
+    // 조회수 추가하는 php
+    public class phpRecListClickUpdate extends AsyncTask<String, Integer,String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str){
+            Log.e("RecLstClick", str);
+        }
+    }
+
     // 모집하기 검색(자동완성)에서 체험 이름을 가져오는 부분
     public class phpDown extends AsyncTask<String, Integer,String> {
 
@@ -667,9 +721,9 @@ public class Recruit extends Activity implements TextWatcher{
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject RecruitListJson = jAr.getJSONObject(i);
-                    RecruitListItem item = new RecruitListItem(RecruitListJson.getString("missionName"), RecruitListJson.getString("recruitContent"),
+                    RecruitListItem item = new RecruitListItem(Integer.parseInt(RecruitListJson.getString("idrecruit")),  RecruitListJson.getString("missionName"), RecruitListJson.getString("recruitContent"),
                             RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")));
-                    Log.e("RecruitItem", "missionName : " + RecruitListJson.getString("missionName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
+                    Log.e("RecruitItem", "idrecruit : " + RecruitListJson.getString("idrecruit") + " missionName : " + RecruitListJson.getString("missionName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
                             RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL") + " clickNum : " + RecruitListJson.getString("clickNum"));
                     data.add(item);
                     Log.e("data<RecruitItem> : ", Integer.toString(data.size())); // 몇개 인지 확인
@@ -1014,6 +1068,7 @@ class RecruitItem implements Serializable {
 }
 
 class RecruitListItem implements Serializable {
+    private int idRecruit;
     private String missionName;
     private String recruitContent;
     private String termStart;
@@ -1022,6 +1077,7 @@ class RecruitListItem implements Serializable {
     private String reward;
     private String ImageURL;
     private int clickNum;
+    public int getIdRecruit() {return idRecruit;}
     public String getMissionName(){return missionName;}
     public String getRecuritContent(){return recruitContent;}
     public String getTermStart(){return termStart;}
@@ -1030,7 +1086,8 @@ class RecruitListItem implements Serializable {
     public String getReward(){return reward;}
     public String getImageURL() {return ImageURL;}
     public int getClickNum() {return clickNum;}
-    public RecruitListItem(String missionName,String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum){
+    public RecruitListItem(int idRecruit, String missionName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum){
+        this.idRecruit = idRecruit;
         this.missionName = missionName;
         this.recruitContent = recruitContent;
         this.termStart = termStart;
@@ -1039,6 +1096,10 @@ class RecruitListItem implements Serializable {
         this.reward = reward;
         this.ImageURL = ImageURL;
         this.clickNum = clickNum;
+    }
+    public String toString() {
+
+        return "idrecruit=" + idRecruit + "&missionName=" + missionName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum;
     }
 }
 
