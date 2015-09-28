@@ -25,11 +25,9 @@
     <string name="title_activity_item">Item</string>
     <string name="title_activity_main_activity2">MainActivity2Activity</string>
     <string name="title_activity_map">mapActivity</string>
-<<<<<<< HEAD
     <string name="title_activity_recruit_popup">RecruitPopupActivity</string>
-=======
     <string name="title_activity_my_diary">MyDiaryActivity</string>
->>>>>>> 8998b4f9d6377920738fea227da68053982072a5
+
 
     <!--    <string name="com_facebook_loginview_log_in_button_long">Login</string>
         <string name="com_facebook_loginview_log_out_button">Logout</string>

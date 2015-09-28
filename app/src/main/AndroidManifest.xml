@@ -105,13 +105,13 @@
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".recruit.RecruitPopupActivity"
             android:label="@string/title_activity_recruit_popup" >
-=======
+        </activity>
+
+        <activity
             android:name=".MyDiaryActivity"
             android:label="@string/title_activity_my_diary" >
->>>>>>> 8998b4f9d6377920738fea227da68053982072a5
         </activity>
     </application>
 
