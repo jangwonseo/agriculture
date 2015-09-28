@@ -64,8 +64,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.R;
@@ -108,6 +111,11 @@ public class Recruit extends Activity implements TextWatcher{
     ArrayList<RecruitListItem> data=new ArrayList<>();
     List_Adapter adapter;
     phpRecruitList phpList;
+    // 정렬을 위한 배열
+    List_Adapter termAdapter;
+    List_Adapter clickAdapter;
+    ArrayList<RecruitListItem> orderByTerm;
+    ArrayList<RecruitListItem> orderByClick;
 
     // 체크박스 -> 날짜순(최신), 조회순
     // 라디오 버튼으로 하려다가 라디오 그룹과 직속관계가 되어야 하는 구조상, 우리 레이아웃 포맷으로 하기에 시간이
@@ -243,22 +251,63 @@ public class Recruit extends Activity implements TextWatcher{
         // 라디오 버튼 확인, 날짜순/조회순 (디폴트 날짜순)
         chkBxBtnTerm = (CheckBox)findViewById(R.id.chkBxBtnTerm);
         chkBxBtnClick = (CheckBox)findViewById(R.id.chkBxBtnClick);
-        chkBxBtnTerm.setChecked(true); // 디폴트 날짜순
-        chkBxBtnClick.setChecked(false);
 
         CheckBox.OnCheckedChangeListener chkBxListener = new CheckBox.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
+                orderByTerm = new ArrayList<>();
+                orderByClick = new ArrayList<>();
+
+                // 정렬을 위한 sort 과정
+                for (int i=0 ; i < data.size() ; i++) {
+                    // 일단 데이터를 복사한다.
+                    orderByTerm.add(data.get(i)); // 날짜순
+                    orderByClick.add(data.get(i)); // 조회순
+                }
+
+                // 정렬을 위한 Comparator
+                Comparator<RecruitListItem> termComparator= new Comparator<RecruitListItem>() {
+                    private Collator collator = Collator.getInstance();
+
+                    @Override
+                    public int compare(RecruitListItem a, RecruitListItem b) {
+                        return collator.compare(a.getTermStart(), b.getTermStart());
+                    }
+                };
+
+                Comparator<RecruitListItem> clickComparator= new Comparator<RecruitListItem>() {
+                    private Collator collator = Collator.getInstance();
+
+                    @Override
+                    public int compare(RecruitListItem a, RecruitListItem b) {
+                        return collator.compare(Integer.toString(b.getClickNum()), Integer.toString(a.getClickNum()));
+                    }
+                };
+
                 switch(btn.getId()) {
                     case R.id.chkBxBtnTerm:
-                        Toast.makeText(getApplicationContext(), "Term checked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "날짜순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
                         chkBxBtnTerm.setChecked(true);
                         chkBxBtnClick.setChecked(false);
+
+                        Collections.sort(orderByTerm, termComparator);
+                        Log.e("orderByTerm", orderByTerm.toString());
+
+                        termAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByTerm);
+                        ListView listTerm = (ListView)findViewById(R.id.recruit_listview);
+                        listTerm.setAdapter(termAdapter);
                         break;
 
                     case R.id.chkBxBtnClick:
-                        Toast.makeText(getApplicationContext(), "Click checked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "조회순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
                         chkBxBtnClick.setChecked(true);
                         chkBxBtnTerm.setChecked(false);
+
+                        Collections.sort(orderByClick, clickComparator);
+                        Log.e("orderByClick", orderByClick.toString());
+
+                        clickAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByClick);
+                        ListView listClick = (ListView)findViewById(R.id.recruit_listview);
+                        listClick.setAdapter(clickAdapter);
                         break;
                 }
             }
@@ -875,7 +924,7 @@ public class Recruit extends Activity implements TextWatcher{
 
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            String msg = "File Upload Completed";
+                            String msg = "등록이 완료 되었습니다.";
                             Log.e("upload message : ",msg);
                             Toast.makeText(Recruit.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
                         }
