@@ -17,7 +17,7 @@ import vivz.slidenerd.agriculture.list.ListActivity;
 public class ThemeChoiceActivity extends ActionBarActivity {
     private Button backButton;
     private Button natureButton;
-    private Button experienceButton;
+    private Button exprienceButton;
     private Button traditionalButton;
     private Button wellBeingButton;
 
@@ -29,8 +29,8 @@ public class ThemeChoiceActivity extends ActionBarActivity {
         natureButton = (Button)findViewById(R.id.btn_nature);
         natureButton.setOnClickListener(mClickListener);
 
-        experienceButton = (Button)findViewById(R.id.btn_experience);
-        experienceButton.setOnClickListener(mClickListener);
+        exprienceButton = (Button)findViewById(R.id.btn_exprience);
+        exprienceButton.setOnClickListener(mClickListener);
 
         traditionalButton = (Button)findViewById(R.id.btn_traditional);
         traditionalButton.setOnClickListener(mClickListener);
@@ -65,8 +65,8 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                     intentTheme.putExtra("themeflag","traditional");
                     startActivity(intentTheme);
                     break;
-                case R.id.btn_experience:
-                    intentTheme.putExtra("themeflag","experience");
+                case R.id.btn_exprience:
+                    intentTheme.putExtra("themeflag","exprience");
                     startActivity(intentTheme);
                     break;
                 case R.id.btn_wellBeing:

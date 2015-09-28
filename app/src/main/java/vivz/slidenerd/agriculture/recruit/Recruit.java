@@ -211,7 +211,9 @@ public class Recruit extends Activity implements TextWatcher{
         recruit_list_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                String getString = adapterView.toString();
+                Log.e("recLstAutoClk", getString);
+                recruit_list.setAdapter(adapter);
             }
         });
 
@@ -368,8 +370,8 @@ public class Recruit extends Activity implements TextWatcher{
                 case R.id.selectPicture : // 사진을 선택
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(intent, 1);
 
                     break;
