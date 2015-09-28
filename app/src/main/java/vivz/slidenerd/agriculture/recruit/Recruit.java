@@ -36,11 +36,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,6 +82,7 @@ public class Recruit extends Activity implements TextWatcher{
     EditText recruitNum;    // 모집인원
     EditText reward;        //보상
 
+
     // DB에 저장
     phpUp recruitTask;
     RecruitItem recruitItem;
@@ -104,6 +109,10 @@ public class Recruit extends Activity implements TextWatcher{
     List_Adapter adapter;
     phpRecruitList phpList;
 
+    // 체크박스 -> 날짜순(최신), 조회순
+    // 라디오 버튼으로 하려다가 라디오 그룹과 직속관계가 되어야 하는 구조상, 우리 레이아웃 포맷으로 하기에 시간이
+    // 걸릴 것 같아 체크박스로 교체
+    CheckBox chkBxBtnTerm, chkBxBtnClick;
 
     // 사진업로드 부분 ------------------------------------------
     private Button uploadButton, btnselectpic;
@@ -138,20 +147,22 @@ public class Recruit extends Activity implements TextWatcher{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
 
+        // 모집하기 글쓰는 부분 ---------------------------------------------------------
         missionName = (EditText)findViewById(R.id.missionName);
         recruitContent = (EditText)findViewById(R.id.content);
         termStart = (TextView)findViewById(R.id.termStart);
         termEnd = (TextView)findViewById(R.id.termEnd);
         recruitNum = (EditText)findViewById(R.id.recruitNum);
         reward = (EditText)findViewById(R.id.reward);
+        //clickNum = (TextView)findViewById(R.id.clickNum);
 
+        // 날짜 클릭할 수 있도록 설정함(집적 입력하지 않고, 휠로 날짜 맞춤 (디폴트로 오늘 날짜))
         termStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(DATE_START_ID);
             }
         });
-
         termEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,12 +184,10 @@ public class Recruit extends Activity implements TextWatcher{
         updateDisplay();
 
         // 설정된 날짜를 TextView에 출력
-
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
         recruit_autoComplete.addTextChangedListener(this);
         recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item));
         recruit_autoComplete.setTextColor(Color.BLACK);
-
         recruit_list_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_list_autoComplete);
         recruit_list_autoComplete.addTextChangedListener(this);
         recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
@@ -220,7 +229,8 @@ public class Recruit extends Activity implements TextWatcher{
         });
 
 
-        // 모집하기 리스트
+
+        // 모집하기 리스트  ---------------------------------------------------------------
         recruit_list = (ListView)findViewById(R.id.recruit_listview); // 리스트뷰
         adapter = new List_Adapter(this, R.layout.recruit_item, data);
 
@@ -228,6 +238,34 @@ public class Recruit extends Activity implements TextWatcher{
 
         phpList = new phpRecruitList();
         phpList.execute("http://218.150.181.131/seo/recruitList.php");
+
+
+        // 라디오 버튼 확인, 날짜순/조회순 (디폴트 날짜순)
+        chkBxBtnTerm = (CheckBox)findViewById(R.id.chkBxBtnTerm);
+        chkBxBtnClick = (CheckBox)findViewById(R.id.chkBxBtnClick);
+        chkBxBtnTerm.setChecked(true); // 디폴트 날짜순
+        chkBxBtnClick.setChecked(false);
+
+        CheckBox.OnCheckedChangeListener chkBxListener = new CheckBox.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton btn, boolean isChecked) {
+                switch(btn.getId()) {
+                    case R.id.chkBxBtnTerm:
+                        Toast.makeText(getApplicationContext(), "Term checked", Toast.LENGTH_SHORT).show();
+                        chkBxBtnTerm.setChecked(true);
+                        chkBxBtnClick.setChecked(false);
+                        break;
+
+                    case R.id.chkBxBtnClick:
+                        Toast.makeText(getApplicationContext(), "Click checked", Toast.LENGTH_SHORT).show();
+                        chkBxBtnClick.setChecked(true);
+                        chkBxBtnTerm.setChecked(false);
+                        break;
+                }
+            }
+        };
+
+        chkBxBtnTerm.setOnCheckedChangeListener(chkBxListener);
+        chkBxBtnClick.setOnCheckedChangeListener(chkBxListener);
 
 
         // 모집 리스트 항목 클릭시 팝업뷰가 뜨는 작업 ----------------------------------------------
@@ -630,11 +668,11 @@ public class Recruit extends Activity implements TextWatcher{
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject RecruitListJson = jAr.getJSONObject(i);
                     RecruitListItem item = new RecruitListItem(RecruitListJson.getString("missionName"), RecruitListJson.getString("recruitContent"),
-                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"));
+                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")));
                     Log.e("RecruitItem", "missionName : " + RecruitListJson.getString("missionName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
-                            RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL"));
+                            RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL") + " clickNum : " + RecruitListJson.getString("clickNum"));
                     data.add(item);
-                    Log.e("data<RecruitItem> : ", Integer.toString(data.size()));
+                    Log.e("data<RecruitItem> : ", Integer.toString(data.size())); // 몇개 인지 확인
                 }
                 recruit_list.setAdapter(adapter);
 
@@ -834,10 +872,12 @@ class List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<RecruitListItem> data;
     private int layout;
-    WebView thumb;
 
     // 리스트에 들어갈 이미지를 가져올때 쓰이는 변수들
+    TextView txtvRecListTerm;
+    TextView txtvRecListRecNum;
     WebView webView ;
+
     //phpGetImage getImage = new phpGetImage();
     String imgUrl = "http://218.150.181.131/seo/image/";
     Bitmap bmImg;
@@ -861,6 +901,7 @@ class List_Adapter extends BaseAdapter {
         RecruitListItem listviewitem=data.get(position);
 
         webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
+
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webView.setBackgroundColor(0);
         // 웹뷰 설정
@@ -887,6 +928,10 @@ class List_Adapter extends BaseAdapter {
 
         TextView name=(TextView)convertView.findViewById(R.id.list_missionName);
         name.setText(listviewitem.getMissionName());
+        txtvRecListTerm = (TextView)convertView.findViewById(R.id.txtvRecListTerm);
+        txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
+        txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
+        txtvRecListRecNum.setText(listviewitem.getRecruitNum() + " 명");
 
         return convertView;
     }
@@ -976,6 +1021,7 @@ class RecruitListItem implements Serializable {
     private String recruitNum;
     private String reward;
     private String ImageURL;
+    private int clickNum;
     public String getMissionName(){return missionName;}
     public String getRecuritContent(){return recruitContent;}
     public String getTermStart(){return termStart;}
@@ -983,7 +1029,8 @@ class RecruitListItem implements Serializable {
     public String getRecruitNum(){return recruitNum;}
     public String getReward(){return reward;}
     public String getImageURL() {return ImageURL;}
-    public RecruitListItem(String missionName,String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL){
+    public int getClickNum() {return clickNum;}
+    public RecruitListItem(String missionName,String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum){
         this.missionName = missionName;
         this.recruitContent = recruitContent;
         this.termStart = termStart;
@@ -991,6 +1038,7 @@ class RecruitListItem implements Serializable {
         this.recruitNum = recruitNum;
         this.reward = reward;
         this.ImageURL = ImageURL;
+        this.clickNum = clickNum;
     }
 }
 

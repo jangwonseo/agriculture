@@ -109,6 +109,7 @@
     </LinearLayout>
 
     <!--모집,모집하기 버튼 및 영역 -->
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
@@ -240,10 +241,12 @@
                     android:layout_weight="17"
                     android:background="@drawable/recruit_list8">
 
+                    <!-- 날짜순 -->
                     <CheckBox
+                        android:id="@+id/chkBxBtnTerm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null"/>
+                        android:background="@null" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -257,7 +260,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="17"
                     android:background="@drawable/recruit_list8">
+
+                    <!-- 조회순 -->
                     <CheckBox
+                        android:id="@+id/chkBxBtnClick"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"/>
@@ -333,7 +339,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="52">
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="0px"
