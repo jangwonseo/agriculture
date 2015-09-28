@@ -75,7 +75,7 @@
                 android:layout_weight="65">
             </LinearLayout>
             <Button
-                android:id="@+id/btn_experience"
+                android:id="@+id/btn_exprience"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
