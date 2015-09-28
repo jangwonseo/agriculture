@@ -92,8 +92,6 @@ public class SignupActivity extends FragmentActivity {
     private String info_Birthday = null;
     private String info_Sex = null;
 
-
-
     private Drawable userProfilePic;
     private String userProfilePicID;
 
