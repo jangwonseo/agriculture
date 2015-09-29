@@ -20,6 +20,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.text.Editable;
@@ -107,6 +109,9 @@ public class Recruit extends Activity implements TextWatcher{
 
     // 등록하기 버튼
     Button registButton;
+    public static final int registSucceeded = 1; // 0이면 등록미완료, 1이면 등록완료
+    public static final int registNoSucceeded = 0;
+    private RegistHandler myRegistHandler = null;
 
     // 모집하기 리스트 부분 -----------------------------------
     Button btnSearchMission; // 찾기 버튼
@@ -216,6 +221,10 @@ public class Recruit extends Activity implements TextWatcher{
         // 등록하기 버튼
         registButton = (Button)findViewById(R.id.regist_button);
         registButton.setOnClickListener(recruitClickListener);
+
+        // 등록하기에 관한 핸들러 - 등록 성공/실패에 관한 것
+        myRegistHandler = new RegistHandler();
+
 
         autoComTask = new phpDown();
         autoComTask.execute("http://218.150.181.131/seo/SearchVilage.php");
@@ -498,6 +507,7 @@ public class Recruit extends Activity implements TextWatcher{
                         params = URLEncoder.encode(recruitItem.toString(), "utf-8");
 
                         recruitTask.execute("http://218.150.181.131/seo/recruit.php?" + recruitItem.toString());
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Log.e("URLEncoder", "PHP params Encoder error");
@@ -533,8 +543,60 @@ public class Recruit extends Activity implements TextWatcher{
         }
     };
 
+    // Handler 클래스
+    class RegistHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case registSucceeded:
+
+                    // 입력한 정보 초기화
+                    recruit_autoComplete.setText("");
+                    missionName.setText("");
+                    recruitContent.setText("");
+                    recruitNum.setText("");
+                    reward.setText("");
+
+                    final Calendar c = Calendar.getInstance();
+                    mStartYear = c.get(Calendar.YEAR);
+                    mStartMonth= c.get(Calendar.MONTH);
+                    mStartDay  = c.get(Calendar.DAY_OF_MONTH);
+
+                    termStart.setText(new StringBuilder()
+                                    //월은 시스템에서 0~11로 인식하기 때문에 1을 더해줌
+                                    .append(mStartYear).append("-")
+                                    .append(mStartMonth + 1).append("-")
+                                    .append(mStartDay).append(" ")
+                    );
+                    termEnd.setText(new StringBuilder()
+                                    //월은 시스템에서 0~11로 인식하기 때문에 1을 더해줌
+                                    .append(mStartYear).append("-")
+                                    .append(mStartMonth + 1).append("-")
+                                    .append(mStartDay).append(" ")
+                    );
+
+                    Toast.makeText(getApplicationContext(), "모집 등록을 완료하였습니다.", Toast.LENGTH_SHORT).show();
+                    // 등록에 성공했기 때문에 등록 미완료로 초기화
+                    break;
+
+                case registNoSucceeded:
+                    Toast.makeText(getApplicationContext(), "모집 등록을 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    };
+
     // 모집하기 insert 부분
     public class phpUp extends AsyncTask<String, Integer,String> {
+
+        Message msg = myRegistHandler.obtainMessage(); // 등록 성공/실패를 위한 핸들러
 
         @Override
         protected String doInBackground(String... urls) {
@@ -570,25 +632,16 @@ public class Recruit extends Activity implements TextWatcher{
                 }
             } catch(Exception ex){
                 ex.printStackTrace();
+                msg.what = registNoSucceeded;
             }
+            msg.what = registSucceeded;
             return jsonHtml.toString();
 
 
         }
 
         protected void onPostExecute(String str){
-            // JSON 구문을 파싱해서 JSONArray 객체를 생성
-/*
-            try {
-                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
-                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
-                    JSONObject vilageName = jAr.getJSONObject(i);
-
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }*/
-
+            myRegistHandler.sendMessage(msg);
         }
     }
 
@@ -803,12 +856,11 @@ public class Recruit extends Activity implements TextWatcher{
                     conn.disconnect();
 
                 }
+
             } catch(Exception ex){
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str){
@@ -974,7 +1026,7 @@ public class Recruit extends Activity implements TextWatcher{
                         public void run() {
                             String msg = "등록이 완료 되었습니다.";
                             Log.e("upload message : ",msg);
-                            Toast.makeText(Recruit.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Recruit.this, "사진 업로드 완료", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -992,7 +1044,7 @@ public class Recruit extends Activity implements TextWatcher{
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Log.e("upload message : ", "MalformedURLException Exception : check script url.");
-                        Toast.makeText(Recruit.this, "MalformedURLException", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Recruit.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -1005,7 +1057,7 @@ public class Recruit extends Activity implements TextWatcher{
                 runOnUiThread(new Runnable() {
                     public void run() {
                         Log.e("upload message : ","Got Exception : see logcat ");
-                        Toast.makeText(Recruit.this, "Got Exception : see logcat ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Recruit.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
                 Log.e("Upload file Exception", "Exception : "  + e.getMessage(), e);
