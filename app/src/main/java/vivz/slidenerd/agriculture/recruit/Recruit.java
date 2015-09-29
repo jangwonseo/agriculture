@@ -94,7 +94,8 @@ public class Recruit extends Activity implements TextWatcher{
     phpDown autoComTask;// DB에서 불러오기
     phpListAutoText listAutoComTask;// DB에서 불러오기
     AutoCompleteTextView recruit_autoComplete; // 모집하기 자동완성
-    private ArrayList<String> search_item = new ArrayList<String>(); // 모집하기 목록
+    private ArrayList<String> search_item_vilageName = new ArrayList<String>(); // 모집하기 이름목록
+    private ArrayList<Item> search_item = new ArrayList<Item>();
     AutoCompleteTextView recruit_list_autoComplete; // 모집 리스트 자동완성
     private ArrayList<String> search_list_item = new ArrayList<String>();
 
@@ -195,7 +196,7 @@ public class Recruit extends Activity implements TextWatcher{
         // 설정된 날짜를 TextView에 출력
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
         recruit_autoComplete.addTextChangedListener(this);
-        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item));
+        recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item_vilageName));
         recruit_autoComplete.setTextColor(Color.BLACK);
         recruit_list_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_list_autoComplete);
         recruit_list_autoComplete.addTextChangedListener(this);
@@ -216,15 +217,24 @@ public class Recruit extends Activity implements TextWatcher{
         registButton.setOnClickListener(recruitClickListener);
 
         autoComTask = new phpDown();
-        autoComTask.execute("http://218.150.181.131/seo/publicData.php");
+        autoComTask.execute("http://218.150.181.131/seo/SearchVilage.php");
         listAutoComTask = new phpListAutoText();
         listAutoComTask.execute("http://218.150.181.131/seo/recruitListAutoText.php");
 
         recruit_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                String str = (String) parent.getItemAtPosition(position); // 클릭한 체험이름 미션이름으로 넣기
-                missionName.setText(str);
+                String vilageNm = (String) parent.getItemAtPosition(position); // 클릭한 체험이름 미션이름으로 넣기
+
+                for ( int i=0 ; i<search_item.size() ; i++ ) {
+                    Item searchItem = search_item.get(i);
+                    if ( searchItem.getName().equals(vilageNm)) { // 현재 클릭한 체험을 찾아서
+                        missionName.setText(searchItem.getName()); // 미션이름 넣고
+                        recruitContent.setText(searchItem.getVilageSlgn() + "\n주소 : " + searchItem.getAddr() + "\n전화번호 : " + searchItem.getPrcafsManMoblphon() + "\n홈페이지 : " + searchItem.getVilageHmpgUrl()); // 세부내용에 마을설명, 홈페이지, 주소, 전화번호 삽입
+
+                        break;
+                    }
+                }
             }
         });
 
@@ -677,9 +687,9 @@ public class Recruit extends Activity implements TextWatcher{
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
-                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"), vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"));
-                    search_item.add(item.getName());
+                    Item item = new Item(vilageName.getString("vilageNm"), vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"), vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageSlgn"));
+                    search_item_vilageName.add(item.getName()); // 자동완성을 위한 마을 이름
+                    search_item.add(item); // 나중에 정보를 넘겨받기 위해 item을 따로 저장
                 }
 
 
@@ -1187,24 +1197,21 @@ class RecruitListItem implements Serializable {
 }
 
 class Item implements Serializable{
-    private String thumbUrl;
     private String name;
     private String addr;
     private String prcafsManMoblphon;
-    private String vilageHmpgEnnc;
     private String vilageHmpgUrl;
-    public String getThumbUrl(){return thumbUrl;}
+    private String vilageSlgn;
     public String getName(){return name;}
     public String getAddr(){return addr;}
     public String getPrcafsManMoblphon() {return prcafsManMoblphon;}
-    public String getVilageHmpgEnnc(){return vilageHmpgEnnc;}
     public String getVilageHmpgUrl(){return vilageHmpgUrl;}
-    public Item(String thumbUrl,String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl){
-        this.thumbUrl = thumbUrl;
+    public String getVilageSlgn() {return vilageSlgn;}
+    public Item(String name, String addr, String prcafsManMoblphon, String vilageHmpgUrl, String vilageSlgn){
         this.name = name;
         this.addr = addr;
         this.prcafsManMoblphon = prcafsManMoblphon;
-        this.vilageHmpgEnnc = vilageHmpgEnnc;
         this.vilageHmpgUrl = vilageHmpgUrl;
+        this.vilageSlgn = vilageSlgn;
     }
 }
