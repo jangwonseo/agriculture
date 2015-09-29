@@ -95,6 +95,7 @@
                             android:background="@drawable/home8">
 
                             <Button
+                                android:id="@+id/btnLeftVilage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@null" />
@@ -125,7 +126,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="198"
                     android:background="@drawable/home4">
-
+                    <WebView
+                        android:id="@+id/webvHomeImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"></WebView>
 
                 </LinearLayout>
 
@@ -162,6 +167,7 @@
                             android:background="@drawable/home9">
 
                             <Button
+                                android:id="@+id/btnRightVilage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@null" />
