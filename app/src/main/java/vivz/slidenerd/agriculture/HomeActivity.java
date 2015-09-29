@@ -186,8 +186,9 @@ public class HomeActivity extends ActionBarActivity{
         sb.append("</HEAD>");
         sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
         //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
-        sb.append("<img width='100%' height='100%' style='border-radius: 198px; -moz-border-radius: 198px; -khtml-border-radius: 198px;" +
-                "-webkit-border-radius: 198px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
+        sb.append("<img width='100%' height='100%' style='-moz-border-radius: 220px;" +
+                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
+
         sb.append("</BODY>");
         sb.append("</HTML>");
         return sb.toString();
