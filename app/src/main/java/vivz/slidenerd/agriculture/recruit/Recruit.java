@@ -87,6 +87,7 @@ public class Recruit extends Activity implements TextWatcher{
     TextView termEnd;       // 기간 (끝)
     EditText recruitNum;    // 모집인원
     EditText reward;        //보상
+    EditText etxtPhone;     // 휴대폰 번호
 
 
     // DB에 저장
@@ -170,7 +171,7 @@ public class Recruit extends Activity implements TextWatcher{
         termEnd = (TextView)findViewById(R.id.termEnd);
         recruitNum = (EditText)findViewById(R.id.recruitNum);
         reward = (EditText)findViewById(R.id.reward);
-
+        etxtPhone = (EditText)findViewById(R.id.etxtPhone);
 
         // 날짜 클릭할 수 있도록 설정함(집적 입력하지 않고, 휠로 날짜 맞춤 (디폴트로 오늘 날짜))
         termStart.setOnClickListener(new View.OnClickListener() {
@@ -321,12 +322,12 @@ public class Recruit extends Activity implements TextWatcher{
 
                 // 정렬을 위한 Comparator
                 Comparator<RecruitListItem> termComparator= new Comparator<RecruitListItem>() {
-                    private Collator collator = Collator.getInstance();
+                    //private Collator collator = Collator.getInstance();
 
                     @Override
                     // 등록순으로 정렬
                     public int compare(RecruitListItem a, RecruitListItem b) {
-                        return collator.compare(Integer.toString(b.getIdRecruit()), Integer.toString(a.getIdRecruit()));
+                        return b.getIdRecruit() < a.getIdRecruit() ? -1 : b.getIdRecruit() > a.getIdRecruit() ? 1:0;
                     }
                 };
 
@@ -498,7 +499,7 @@ public class Recruit extends Activity implements TextWatcher{
                         Log.e("regist", "button");
                         // 입력한 정보를 Item 객체에 담는다.
                         String lineEnding = recruitContent.getText().toString().replace("\n", "99line99end99");
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName);
+                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(etxtPhone.getText().toString(), "UTF-8"));
 
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();
@@ -1190,6 +1191,7 @@ class RecruitItem implements Serializable {
     private String recruitNum;    // 모집인원
     private String reward;        //보상
     private String ImageURL ="";         // 이미지 경로
+    private String phoneNum;
     public String getsearch(){return search;}
     public String getmissionName(){return missionName;}
     public String getVilageName() {return vilageName;}
@@ -1199,8 +1201,9 @@ class RecruitItem implements Serializable {
     public String getrecruitNum(){return recruitNum;}
     public String getreward(){return reward;}
     public String getimageURl() {return ImageURL;}
+    public String getPhoneNum() {return phoneNum;}
 
-    public RecruitItem(String search,String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL){
+    public RecruitItem(String search,String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, String phoneNum){
         this.search = search;
         this.missionName = missionName;
         this.vilageName = vilageName;
@@ -1210,11 +1213,12 @@ class RecruitItem implements Serializable {
         this.recruitNum = recruitNum;
         this.reward = reward;
         this.ImageURL = ImageURL;
+        this.phoneNum = phoneNum;
     }
 
     public String toString() {
 
-        return "search=" + search + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL;
+        return "search=" + search + "&missionName=" + missionName + "&vilageName=" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&phoneNum=" + phoneNum;
     }
 }
 

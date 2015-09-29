@@ -627,8 +627,18 @@
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="268">
-
+                        android:layout_weight="90"></LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="178"
+                        android:background="@drawable/recruit_start25">
+                        <EditText
+                            android:id="@+id/etxtPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:textColor="#4C4C4C"/>
                     </LinearLayout>
 
                 </LinearLayout>
