@@ -37,6 +37,9 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 public class ListDetailActivity extends ActionBarActivity {
     /*
@@ -62,10 +65,13 @@ public class ListDetailActivity extends ActionBarActivity {
     Button myDiary;
     Button vod;
     phpUp recruitTask;
+    phpDown task;
 
     WebView main2Web;
     WebView thumb;
 
+
+    String vodUrls;
     //phpDown phpJson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,7 @@ public class ListDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_list_detail);
 
         btnView=(View)findViewById(R.id.btnView);
+
         // 제스처를 사용하기 위해 미리 선언.
         gestureDetector = new GestureDetector(this, new SwipeGestureDetector(){
             @Override
@@ -92,7 +99,6 @@ public class ListDetailActivity extends ActionBarActivity {
                 return gestureDetector.onTouchEvent(event);
             }
         };
-
 
 
         // mianActivity에서 넘겨준 인텐트정보를 받는다.
@@ -153,13 +159,12 @@ public class ListDetailActivity extends ActionBarActivity {
         thumb.setFocusable(false);
 
         Log.e("zzzzz", "sdfsdfdsf");
-        Log.e("zzzzz",i.getThumbUrl());
+        Log.e("zzzzz", i.getThumbUrl());
         if(thumb != null)
         {
             thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrl()), "text/html", "utf-8", null);
 
         }
-
 
 /*
         vilageName = (TextView)findViewById(R.id.txt1); // 마을 이름
@@ -206,6 +211,11 @@ public class ListDetailActivity extends ActionBarActivity {
         // 보류
         //phpJson = new phpDown();
         //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
+
+        task=new phpDown();
+        Log.e("zzzzzzzz","Agriculture!");
+        task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + i.getVilageId() + "");
+        Log.e("zzzzzzzz", "Agriculture1!");
     }
     public  String creHtmlBody(String imagUrl){
         StringBuffer sb = new StringBuffer("<HTML>");
@@ -223,7 +233,7 @@ public class ListDetailActivity extends ActionBarActivity {
     {
         public void onClick(View v)
         {
-            Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+
             switch (v.getId())
             {
                 case R.id.btn_myDiary:
@@ -245,7 +255,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
                     break;
                 case R.id.btn_vod:
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=cxLG2wtE7TM")));
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://" + vodUrls )));
                     break;
 
             }
@@ -319,7 +330,71 @@ public class ListDetailActivity extends ActionBarActivity {
 */
 
 
+    public class phpDown extends AsyncTask<String, Integer, String> {
 
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line = "";
+            try {
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                // 연결되었으면.
+
+                if (conn != null) {
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for (; ; ) {
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if (line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+
+                        }
+
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str) {
+            // JSON 구문을 파싱해서 JSONArray 객체를 생성
+            try {
+
+                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+
+                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
+                    JSONObject vodUrl = jAr.getJSONObject(i);
+
+                    vodUrls=vodUrl.getString("cn");
+                    Log.e("zzzzzzzz",vodUrls);
+
+                }
+
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -355,7 +430,7 @@ class phpUp extends AsyncTask<String, Integer,String> {
             // 텍스트 연결 url 설정
             URL url = new URL(urls[0]);
             // 이미지 url
-            Log.e("tag", "url : " + urls[0]);
+
             // URL 페이지 커넥션 객체 생성
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             // 연결되었으면.
@@ -364,7 +439,7 @@ class phpUp extends AsyncTask<String, Integer,String> {
                 conn.setConnectTimeout(10000);
                 conn.setUseCaches(false);
                 // 연결되었음 코드가 리턴되면.
-                Log.e("tag", "setUseCaches is false");
+
                 if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                     for (; ; ) {
