@@ -241,7 +241,7 @@ public class Recruit extends Activity implements TextWatcher{
                         missionName.setText(searchItem.getName()); // 미션이름 넣고
                         vilageName = searchItem.getName(); // 마을이름에도 체험이름 저장해두기
                         recruitContent.setText(searchItem.getVilageSlgn() + "\n주소 : " + searchItem.getAddr() + "\n전화번호 : " + searchItem.getPrcafsManMoblphon() + "\n홈페이지 : " + searchItem.getVilageHmpgUrl()); // 세부내용에 마을설명, 홈페이지, 주소, 전화번호 삽입
-
+                        etxtPhone.setText(searchItem.getPrcafsManMoblphon().replace("-", ""));
                         break;
                     }
                 }
