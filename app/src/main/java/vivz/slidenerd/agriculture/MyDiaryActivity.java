@@ -42,7 +42,7 @@ public class MyDiaryActivity extends ActionBarActivity {
     String tempThemeName;
     // listview
     private ListView vilageList;
-    ArrayList<Item> data = new ArrayList<>();
+    ArrayList<DiaryItem> data = new ArrayList<>();
     List_Adapter adapter;
 
     @Override
@@ -165,7 +165,7 @@ public class MyDiaryActivity extends ActionBarActivity {
                     Log.d("seojang", "this is a apple4444");
                     Log.d("seojang", "정보확인하기 : " + vilageName.getString("prcafsManMoblphon"));
 
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
+                    DiaryItem item = new DiaryItem(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
                             vilageName.getString("vilageKndNm"), vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
@@ -185,11 +185,11 @@ public class MyDiaryActivity extends ActionBarActivity {
 
 class List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ArrayList<Item> data;
+    private ArrayList<DiaryItem> data;
     private int layout;
     WebView thumb;
 
-    public List_Adapter(Context context, int layout, ArrayList<Item> data) {
+    public List_Adapter(Context context, int layout, ArrayList<DiaryItem> data) {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
         this.layout = layout;
@@ -201,7 +201,7 @@ class List_Adapter extends BaseAdapter {
     }
 
     @Override
-    public Item getItem(int position) {
+    public DiaryItem getItem(int position) {
         return data.get(position);
     }
 
@@ -215,7 +215,7 @@ class List_Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(layout, parent, false);
         }
-        Item listviewitem = data.get(position);
+        DiaryItem listviewitem = data.get(position);
         thumb = (WebView) convertView.findViewById(R.id.thumb);
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
@@ -295,7 +295,7 @@ class List_Adapter extends BaseAdapter {
 /**
  * 리스트의 데이터 클래스
  */
-class Item implements Serializable {
+class DiaryItem implements Serializable {
     private String thumbUrl;            // 이미지 경로
     private String name;                // 마을 이름
     private String addr;                // 주소
@@ -347,7 +347,7 @@ class Item implements Serializable {
         return vilageId;
     }
 
-    public Item(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
+    public DiaryItem(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
                 String vilageKndNm, String vilageSlgn, String tableName, String VilageId) {
 
         this.thumbUrl = thumbUrl;
