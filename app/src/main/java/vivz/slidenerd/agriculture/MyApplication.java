@@ -20,6 +20,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        printKeyHash();
     }
 
     /**
@@ -27,7 +29,7 @@ public class MyApplication extends Application {
      */
     public void printKeyHash() {
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.seo.agriculture", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("vivz.slidenerd.agriculture", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
