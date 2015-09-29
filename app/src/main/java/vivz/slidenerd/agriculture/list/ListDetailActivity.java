@@ -370,8 +370,6 @@ public class ListDetailActivity extends ActionBarActivity {
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str) {
@@ -463,7 +461,7 @@ class phpUp extends AsyncTask<String, Integer,String> {
 }
 
 
-
+// 이건 새로 만든 프로젝트 테스트
 class SwipeGestureDetector extends SimpleOnGestureListener {
 
     @Override
