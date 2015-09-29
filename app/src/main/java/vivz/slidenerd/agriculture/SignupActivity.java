@@ -52,6 +52,7 @@ import java.util.Calendar;
 
 public class SignupActivity extends FragmentActivity {
 
+    //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
