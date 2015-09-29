@@ -47,6 +47,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         txtvRecruitNum.setText(item.getRecruitNum());
         txtvRecruitContent = (TextView)findViewById(R.id.txtvRecruitContent);
         txtvRecruitContent.setText(item.getRecuritContent());
+        Log.e("txtvRecruitContent", item.getRecuritContent());
         txtvReward = (TextView)findViewById(R.id.txtvReward);
         txtvReward.setText(item.getReward());
 

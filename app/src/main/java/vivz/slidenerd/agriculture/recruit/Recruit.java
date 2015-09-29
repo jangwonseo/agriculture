@@ -486,7 +486,8 @@ public class Recruit extends Activity implements TextWatcher{
                     try {
                         Log.e("regist", "button");
                         // 입력한 정보를 Item 객체에 담는다.
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode(missionName.getText().toString(), "UTF-8"), URLEncoder.encode(recruitContent.getText().toString(), "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName);
+                        String lineEnding = missionName.getText().toString().replace("\n", "99line99end99");
+                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(recruitContent.getText().toString(), "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName);
 
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();

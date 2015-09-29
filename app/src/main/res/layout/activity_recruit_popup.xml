@@ -33,13 +33,14 @@
                 android:layout_height="0px"
                 android:layout_weight="25">
 
-                <!-- 지역이름(체험이름) 어떻게 할지 확실하게 결정하고 할것. 디비 문제 떄문에 고민해야 할듯-->
+                <!-- 체험이 있다면 추가-->
                 <TextView
+                    android:id="@+id/txtvVilageName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textSize="18dp"
-                    android:text=""
-                    android:textColor="#5A5A5D"/>
+                    android:textColor="#5A5A5D"
+                    />
 
             </LinearLayout>
             <LinearLayout
@@ -95,7 +96,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="300">
+                    android:layout_weight="220">
                     <TextView
                         android:id="@+id/txtvMissionName"
                         android:layout_width="match_parent"
