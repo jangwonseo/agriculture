@@ -269,8 +269,9 @@ public class Recruit extends Activity implements TextWatcher{
                     private Collator collator = Collator.getInstance();
 
                     @Override
+                    // 등록순으로 정렬
                     public int compare(RecruitListItem a, RecruitListItem b) {
-                        return collator.compare(a.getTermStart(), b.getTermStart());
+                        return collator.compare(Integer.toString(b.getIdRecruit()), Integer.toString(a.getIdRecruit()));
                     }
                 };
 
@@ -286,8 +287,8 @@ public class Recruit extends Activity implements TextWatcher{
                 switch(btn.getId()) {
                     case R.id.chkBxBtnTerm:
                         Toast.makeText(getApplicationContext(), "날짜순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
-                        chkBxBtnTerm.setChecked(true);
-                        chkBxBtnClick.setChecked(false);
+                        chkBxBtnTerm.setBackgroundColor(Color.BLACK);
+                        chkBxBtnClick.setBackgroundColor(Color.WHITE);
 
                         Collections.sort(orderByTerm, termComparator);
                         Log.e("orderByTerm", orderByTerm.toString());
@@ -299,8 +300,8 @@ public class Recruit extends Activity implements TextWatcher{
 
                     case R.id.chkBxBtnClick:
                         Toast.makeText(getApplicationContext(), "조회순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
-                        chkBxBtnClick.setChecked(true);
-                        chkBxBtnTerm.setChecked(false);
+                        chkBxBtnClick.setBackgroundColor(Color.BLACK);
+                        chkBxBtnTerm.setBackgroundColor(Color.WHITE);
 
                         Collections.sort(orderByClick, clickComparator);
                         Log.e("orderByClick", orderByClick.toString());
@@ -969,7 +970,6 @@ public class Recruit extends Activity implements TextWatcher{
     }
 
 }
-
 
 class List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
