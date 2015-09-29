@@ -147,6 +147,7 @@
                     >
                 </Button>
                 <Button
+                    android:id="@+id/btn_vod"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="225"

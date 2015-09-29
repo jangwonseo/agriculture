@@ -60,6 +60,7 @@ public class ListDetailActivity extends ActionBarActivity {
     Button call;
     Button backButton;
     Button myDiary;
+    Button vod;
     phpUp recruitTask;
 
     WebView main2Web;
@@ -133,6 +134,9 @@ public class ListDetailActivity extends ActionBarActivity {
 
         myDiary= (Button) findViewById(R.id.btn_myDiary);
         myDiary.setOnClickListener(mClickListener);
+
+        vod=(Button) findViewById(R.id.btn_vod);
+        vod.setOnClickListener(mClickListener);
 
         thumb = (WebView)findViewById(R.id.thumb);
 
@@ -239,6 +243,9 @@ public class ListDetailActivity extends ActionBarActivity {
                         Log.e("URLEncoder", "PHP params Encoder error");
                     }
 
+                    break;
+                case R.id.btn_vod:
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=cxLG2wtE7TM")));
                     break;
 
             }
