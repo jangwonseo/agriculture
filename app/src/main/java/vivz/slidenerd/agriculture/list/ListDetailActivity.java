@@ -247,6 +247,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
                         recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
                         Log.e("regist", i.toString());
+                        Toast toasts = Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT);
+                        toasts.show();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -255,8 +257,13 @@ public class ListDetailActivity extends ActionBarActivity {
 
                     break;
                 case R.id.btn_vod:
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://" + vodUrls )));
+                    if(vodUrls==null) {
+                        Toast toasts = Toast.makeText(getApplicationContext(), "동영상 정보가 없습니다.", Toast.LENGTH_SHORT);
+                        toasts.show();
+                    }
+                    else
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("http://" + vodUrls )));
                     break;
 
             }
@@ -370,8 +377,6 @@ public class ListDetailActivity extends ActionBarActivity {
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str) {
@@ -463,7 +468,7 @@ class phpUp extends AsyncTask<String, Integer,String> {
 }
 
 
-
+// 이건 새로 만든 프로젝트 테스트
 class SwipeGestureDetector extends SimpleOnGestureListener {
 
     @Override
