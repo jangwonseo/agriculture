@@ -255,7 +255,6 @@
                     android:background="@drawable/joinin_4">
 
                     <Button
-                        android:id="@+id/btnMissionJoin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"/>
