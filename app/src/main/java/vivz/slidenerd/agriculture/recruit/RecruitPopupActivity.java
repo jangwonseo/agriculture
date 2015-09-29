@@ -20,6 +20,7 @@ import vivz.slidenerd.agriculture.R;
 
 public class RecruitPopupActivity extends Activity implements View.OnClickListener{
 
+    TextView txtvVilageName;
     TextView txtvMissionName;
     TextView txtvRecruitNum;
     TextView txtvRecruitContent;
@@ -39,14 +40,19 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         RecruitListItem item = (RecruitListItem)intent.getSerializableExtra("item");
         Log.e("popup", "successed");
 
+        txtvVilageName = (TextView)findViewById(R.id.txtvVilageName);
+        txtvVilageName.setText(item.getVilageName());
         txtvMissionName = (TextView)findViewById(R.id.txtvMissionName);
         txtvMissionName.setText(item.getMissionName());
         txtvRecruitTerm = (TextView)findViewById(R.id.txtvRecruitTerm);
         txtvRecruitTerm.setText(item.getTermStart() + " ~ " + item.getTermEnd());
         txtvRecruitNum = (TextView)findViewById(R.id.txtvRecruitNum);
         txtvRecruitNum.setText(item.getRecruitNum());
+
+        // 줄바꿈
+        String lineEnding = item.getRecuritContent().replace("99line99end99", "\n");
         txtvRecruitContent = (TextView)findViewById(R.id.txtvRecruitContent);
-        txtvRecruitContent.setText(item.getRecuritContent());
+        txtvRecruitContent.setText(lineEnding);
         Log.e("txtvRecruitContent", item.getRecuritContent());
         txtvReward = (TextView)findViewById(R.id.txtvReward);
         txtvReward.setText(item.getReward());

@@ -33,7 +33,7 @@
                 android:layout_height="0px"
                 android:layout_weight="25">
 
-                <!-- 체험이 있다면 추가-->
+                <!-- 마을이 있다면(검색어를 입력했다면) 추가-->
                 <TextView
                     android:id="@+id/txtvVilageName"
                     android:layout_width="match_parent"
@@ -194,11 +194,17 @@
                 android:layout_weight="65"
                 android:background="@drawable/joinin_6">
 
-                <TextView
-                    android:id="@+id/txtvRecruitContent"
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null"/>
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/txtvRecruitContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:autoLink="web"/>
+
+                </ScrollView>
 
             </LinearLayout>
             <LinearLayout
