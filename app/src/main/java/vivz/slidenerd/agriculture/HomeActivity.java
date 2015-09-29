@@ -60,6 +60,10 @@ public class HomeActivity extends ActionBarActivity{
     public int recommendNum = 0;
 
 
+    //두번 눌러 종료
+    private BackPressCloseHandler backPressCloseHandler;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,6 +181,15 @@ public class HomeActivity extends ActionBarActivity{
                 return false;
             }
         });
+
+        //두번눌러 종료
+        backPressCloseHandler = new BackPressCloseHandler(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 
     // 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
