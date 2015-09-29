@@ -247,6 +247,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
                         recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
                         Log.e("regist", i.toString());
+                        Toast toasts = Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT);
+                        toasts.show();
 
                     } catch (Exception e) {
                         e.printStackTrace();
