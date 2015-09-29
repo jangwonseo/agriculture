@@ -107,6 +107,7 @@ public class Recruit extends Activity implements TextWatcher{
     Button registButton;
 
     // 모집하기 리스트 부분 -----------------------------------
+    Button btnSearchMission; // 찾기 버튼
     private ListView recruit_list;
     ArrayList<RecruitListItem> data=new ArrayList<>();
     List_Adapter adapter;
@@ -229,10 +230,43 @@ public class Recruit extends Activity implements TextWatcher{
 
         recruit_list_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String getString = adapterView.toString();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String getString = (String) adapterView.getItemAtPosition(position); // 미션이름을 가지고 온다.
                 Log.e("recLstAutoClk", getString);
-                recruit_list.setAdapter(adapter);
+
+                // 클릭한 아이템의 미션이름을 가져와서, 그 이름이 들어간 모든 체험들을 찾는다.
+                ArrayList<RecruitListItem> searchMission = new ArrayList<RecruitListItem>();
+                RecruitListItem searchMissionItem;
+
+                for (int i = 0; i < data.size(); i++) {
+                    searchMissionItem = data.get(i); // data(현재 모집리스트)에 있는 각 하나 하나의 요소들을 꺼내어
+                    if (searchMissionItem.getMissionName().contains(getString)) { // 선택한 미션의 이름을 포함하고 있다면
+                        searchMission.add(searchMissionItem); // 새로운 배열에 추가
+                    }
+                }
+                List_Adapter searchAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, searchMission);
+                recruit_list.setAdapter(searchAdapter);
+            }
+        });
+
+        btnSearchMission = (Button)findViewById(R.id.btnSearchMission);
+        btnSearchMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchStr = recruit_list_autoComplete.getText().toString(); // 현재 입력한 검색어를 가지고
+
+                // 클릭한 아이템의 미션이름을 가져와서, 그 이름이 들어간 모든 체험들을 찾는다.
+                ArrayList<RecruitListItem> searchMission = new ArrayList<RecruitListItem>();
+                RecruitListItem searchMissionItem;
+
+                for (int i = 0; i < data.size(); i++) {
+                    searchMissionItem = data.get(i); // data(현재 모집리스트)에 있는 각 하나 하나의 요소들을 꺼내어
+                    if (searchMissionItem.getMissionName().contains(searchStr)) { // 선택한 미션의 이름을 포함하고 있다면
+                        searchMission.add(searchMissionItem); // 새로운 배열에 추가
+                    }
+                }
+                List_Adapter searchAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, searchMission);
+                recruit_list.setAdapter(searchAdapter);
             }
         });
 
