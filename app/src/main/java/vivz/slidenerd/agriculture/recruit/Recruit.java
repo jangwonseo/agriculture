@@ -121,8 +121,6 @@ public class Recruit extends Activity implements TextWatcher{
     List_Adapter adapter;
     phpRecruitList phpList;
     // 정렬을 위한 배열
-    List_Adapter termAdapter;
-    List_Adapter clickAdapter;
     ArrayList<RecruitListItem> orderByTerm;
     ArrayList<RecruitListItem> orderByClick;
 
@@ -350,9 +348,9 @@ public class Recruit extends Activity implements TextWatcher{
                         Collections.sort(orderByTerm, termComparator);
                         Log.e("orderByTerm", orderByTerm.toString());
 
-                        termAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByTerm);
+                        adapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByTerm);
                         ListView listTerm = (ListView)findViewById(R.id.recruit_listview);
-                        listTerm.setAdapter(termAdapter);
+                        listTerm.setAdapter(adapter);
                         break;
 
                     case R.id.chkBxBtnClick:
@@ -363,9 +361,9 @@ public class Recruit extends Activity implements TextWatcher{
                         Collections.sort(orderByClick, clickComparator);
                         Log.e("orderByClick", orderByClick.toString());
 
-                        clickAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByClick);
+                        adapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, orderByClick);
                         ListView listClick = (ListView)findViewById(R.id.recruit_listview);
-                        listClick.setAdapter(clickAdapter);
+                        listClick.setAdapter(adapter);
                         break;
                 }
             }
@@ -388,7 +386,7 @@ public class Recruit extends Activity implements TextWatcher{
                 /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
 
                 RecruitListItem cleckedListItem;
-                cleckedListItem = adapter.getItem(position);
+                cleckedListItem = adapter.getItem(position); // 클릭한 아이템을 가져온다.
 
                 phpRecListClickUpdate recruitClick = new phpRecListClickUpdate();
                 recruitClick.execute("http://218.150.181.131/seo/RecruitClickUpdate.php?" + cleckedListItem.toString());
