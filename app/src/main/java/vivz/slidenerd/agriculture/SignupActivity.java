@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -50,6 +51,9 @@ import java.util.Calendar;
 
 
 public class SignupActivity extends FragmentActivity {
+
+    public SharedPreferences setting;
+    public SharedPreferences.Editor editor;
 
     private Intent flagIntent;
 
@@ -113,6 +117,9 @@ public class SignupActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
 
+        //sharedPreference로 전역 공유공간을 만듬
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
 
         flagIntent = getIntent();
         String isFacebook = flagIntent.getStringExtra("isFacebookFlag");
@@ -217,15 +224,29 @@ public class SignupActivity extends FragmentActivity {
                         info_Pw = uPw.getText().toString();
                         info_PhoneNum = uPhoneNum.getText().toString();
                         info_Birthday = uBirthday_year.getText().toString() + "_" + uBirthday_month.getText().toString() + "_" + uBirthday_day.getText().toString();
+
+
+
                     }catch (UnsupportedEncodingException e){
                         e.printStackTrace();
                     }
+
 
                     //저장된 값들을 php를 통해 서버에 db화 시킴
                     memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
                     phpTask = new phpInsert();
 
                     phpTask.execute("http://218.150.181.131/seo/signup.php?" + memberItem.toString());
+
+
+                    //sharedPreference 입력부분
+                    editor.putString("info_Id", "" + info_Id);
+                    editor.putString("info_Pw", "" + info_Pw);
+                    editor.commit();
+
+
+                    //sharedPreference 출력부분
+                    Log.d("seojang", "gogogogogogo : " + setting.getString("info_Id", ""));
 
                     Toast.makeText(getApplicationContext(), "회원가입 완료!.", Toast.LENGTH_SHORT).show();
 

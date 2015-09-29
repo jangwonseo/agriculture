@@ -2,8 +2,10 @@ package vivz.slidenerd.agriculture;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -16,6 +18,9 @@ public class IntroActivity extends Activity {
     Handler introHandler;
     //intro activity
     //in
+
+    SharedPreferences setting;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +28,11 @@ public class IntroActivity extends Activity {
         introHandler = new Handler();
         introHandler.postDelayed(irun, 1000);//약 1.0초동안 인트로 화면
         //haha
+
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+
+        Log.d("seojang", "gogogogogogo : " + setting.getString("info_Id", ""));
     }
     Runnable irun = new Runnable() {
         @Override
