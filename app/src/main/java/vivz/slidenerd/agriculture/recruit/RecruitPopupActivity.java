@@ -63,7 +63,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.btnPhoneCall:
-                        startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel"+item.getPhoneNum())));
+                        startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+item.getPhoneNum())));
                         break;
                 }
             }
