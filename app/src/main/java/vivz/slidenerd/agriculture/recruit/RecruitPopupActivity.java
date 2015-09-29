@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.recruit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -20,6 +22,8 @@ import vivz.slidenerd.agriculture.R;
 
 public class RecruitPopupActivity extends Activity implements View.OnClickListener{
 
+    RecruitListItem item;
+
     TextView txtvVilageName;
     TextView txtvMissionName;
     TextView txtvRecruitNum;
@@ -28,7 +32,10 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     TextView txtvReward;
     WebView webvRecPopup;
 
+    Button btnPhoneCall;
+
     String imgUrl = "http://218.150.181.131/seo/image/"; // 사진이 없을 경우 디폴트 사진 띄우는 경로
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +44,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         setContentView(R.layout.activity_recruit_popup);
 
         Intent intent = getIntent();
-        RecruitListItem item = (RecruitListItem)intent.getSerializableExtra("item");
+        item = (RecruitListItem)intent.getSerializableExtra("item");
         Log.e("popup", "successed");
 
         txtvVilageName = (TextView)findViewById(R.id.txtvVilageName);
@@ -48,6 +55,19 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         txtvRecruitTerm.setText(item.getTermStart() + " ~ " + item.getTermEnd());
         txtvRecruitNum = (TextView)findViewById(R.id.txtvRecruitNum);
         txtvRecruitNum.setText(item.getRecruitNum());
+
+        btnPhoneCall = (Button)findViewById(R.id.btnPhoneCall);
+
+        btnPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.btnPhoneCall:
+                        startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel"+item.getPhoneNum())));
+                        break;
+                }
+            }
+        });
 
         // 줄바꿈
         String lineEnding = item.getRecuritContent().replace("99line99end99", "\n");

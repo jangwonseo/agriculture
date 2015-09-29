@@ -325,7 +325,7 @@ public class Recruit extends Activity implements TextWatcher{
                     //private Collator collator = Collator.getInstance();
 
                     @Override
-                    // 등록순으로 정렬
+                    // 등록순으로 정렬 - 인트형으로 비교
                     public int compare(RecruitListItem a, RecruitListItem b) {
                         return b.getIdRecruit() < a.getIdRecruit() ? -1 : b.getIdRecruit() > a.getIdRecruit() ? 1:0;
                     }
@@ -336,6 +336,7 @@ public class Recruit extends Activity implements TextWatcher{
 
                     @Override
                     public int compare(RecruitListItem a, RecruitListItem b) {
+                        // 자리수가 똑같기 때문에 인트형으로 비교할 필요 없음. 스트링형으로 비교
                         return collator.compare(Integer.toString(b.getClickNum()), Integer.toString(a.getClickNum()));
                     }
                 };
@@ -499,7 +500,12 @@ public class Recruit extends Activity implements TextWatcher{
                         Log.e("regist", "button");
                         // 입력한 정보를 Item 객체에 담는다.
                         String lineEnding = recruitContent.getText().toString().replace("\n", "99line99end99");
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(etxtPhone.getText().toString(), "UTF-8"));
+                        String phoneNumber = etxtPhone.getText().toString();
+                        String phoneNumber1 = phoneNumber.substring(0, 3);
+                        String phoneNumber2 = phoneNumber.substring(3, 7);
+                        String phoneNumber3 = phoneNumber.substring(7, 11);
+                        String phoneNumbers = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
+                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
 
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();
@@ -560,6 +566,7 @@ public class Recruit extends Activity implements TextWatcher{
                     recruitContent.setText("");
                     recruitNum.setText("");
                     reward.setText("");
+                    etxtPhone.setText("");
 
                     final Calendar c = Calendar.getInstance();
                     mStartYear = c.get(Calendar.YEAR);
@@ -872,9 +879,9 @@ public class Recruit extends Activity implements TextWatcher{
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject RecruitListJson = jAr.getJSONObject(i);
                     RecruitListItem item = new RecruitListItem(Integer.parseInt(RecruitListJson.getString("idrecruit")),  RecruitListJson.getString("missionName"), RecruitListJson.getString("vilageName"), RecruitListJson.getString("recruitContent"),
-                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")));
+                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")), RecruitListJson.getString("phoneNum"));
                     Log.e("RecruitItem", "idrecruit : " + RecruitListJson.getString("idrecruit") + " missionName : " + RecruitListJson.getString("missionName") + " vilageName : " + RecruitListJson.getString("vilageName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
-                            RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL") + " clickNum : " + RecruitListJson.getString("clickNum"));
+                            RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL") + " clickNum : " + RecruitListJson.getString("clickNum") + " phoneNum : " + RecruitListJson.getString("phoneNum"));
                     data.add(item);
                     Log.e("data<RecruitItem> : ", Integer.toString(data.size())); // 몇개 인지 확인
                 }
@@ -1233,6 +1240,7 @@ class RecruitListItem implements Serializable {
     private String reward;
     private String ImageURL;
     private int clickNum;
+    private String phoneNum;
     public int getIdRecruit() {return idRecruit;}
     public String getMissionName(){return missionName;}
     public String getVilageName() {return vilageName;}
@@ -1243,7 +1251,8 @@ class RecruitListItem implements Serializable {
     public String getReward(){return reward;}
     public String getImageURL() {return ImageURL;}
     public int getClickNum() {return clickNum;}
-    public RecruitListItem(int idRecruit, String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum){
+    public String getPhoneNum() {return phoneNum;}
+    public RecruitListItem(int idRecruit, String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum, String phoneNum){
         this.idRecruit = idRecruit;
         this.missionName = missionName;
         this.vilageName = vilageName;
@@ -1254,10 +1263,11 @@ class RecruitListItem implements Serializable {
         this.reward = reward;
         this.ImageURL = ImageURL;
         this.clickNum = clickNum;
+        this.phoneNum = phoneNum;
     }
     public String toString() {
 
-        return "idrecruit=" + idRecruit + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum;
+        return "idrecruit=" + idRecruit + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum + "&phoneNum=" + phoneNum;
     }
 }
 
