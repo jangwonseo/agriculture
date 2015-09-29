@@ -1,8 +1,10 @@
 package vivz.slidenerd.agriculture.list;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.util.Linkify;
@@ -16,7 +18,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
 import vivz.slidenerd.agriculture.R;
 
 
@@ -43,12 +52,15 @@ public class ListDetailActivity extends ActionBarActivity {
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
+    Item i;
+
     TextView vilageHomepage;
     TextView vilageNameDown;
-    TextView vilageKnd;
     View btnView;
     Button call;
     Button backButton;
+    Button myDiary;
+    phpUp recruitTask;
 
     WebView main2Web;
     WebView thumb;
@@ -86,7 +98,8 @@ public class ListDetailActivity extends ActionBarActivity {
         Intent intent = getIntent();
         Serializable item = intent.getSerializableExtra("item"); // 클래스를 넘길 때는 Serializable을 이용함
 
-        Item i = (Item)item;
+        i = (Item)item;
+
 
         backButton  = (Button)findViewById(R.id.listDeail_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +111,6 @@ public class ListDetailActivity extends ActionBarActivity {
 
         vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
         vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름
-
-        vilageKnd = (TextView) findViewById(R.id.vilageKnd); // 마을 종류
-        vilageKnd.setText(i.getVilageKndNm());  // Main에서 가져온 마을 종류
-
 
         vilageHomepage = (TextView)findViewById(R.id.vilageHomepage); // 마을 홈페이지
         vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
@@ -122,6 +131,9 @@ public class ListDetailActivity extends ActionBarActivity {
             }
         });
 
+        myDiary= (Button) findViewById(R.id.btn_myDiary);
+        myDiary.setOnClickListener(mClickListener);
+
         thumb = (WebView)findViewById(R.id.thumb);
 
         // 웹뷰 설정
@@ -132,11 +144,10 @@ public class ListDetailActivity extends ActionBarActivity {
         thumb.setFocusableInTouchMode(false);
         thumb.setHorizontalScrollBarEnabled(false);
         thumb.setVerticalScrollBarEnabled(false);
+
         thumb.setInitialScale(100);
         thumb.setFocusable(false);
 
-        thumb.getSettings().setLoadWithOverviewMode(true);
-        thumb.getSettings().setUseWideViewPort(true);
         Log.e("zzzzz", "sdfsdfdsf");
         Log.e("zzzzz",i.getThumbUrl());
         if(thumb != null)
@@ -186,7 +197,7 @@ public class ListDetailActivity extends ActionBarActivity {
         thumb.setOnTouchListener(gestureListener);
         vilageHomepage.setOnTouchListener(gestureListener);
         vilageNameDown.setOnTouchListener(gestureListener);
-        vilageKnd.setOnTouchListener(gestureListener);
+
 
         // 보류
         //phpJson = new phpDown();
@@ -196,14 +207,43 @@ public class ListDetailActivity extends ActionBarActivity {
         StringBuffer sb = new StringBuffer("<HTML>");
         sb.append("<HEAD>");
         sb.append("</HEAD>");
-        sb.append("<BODY style='text-align:center;'>");    //중앙정렬
-        sb.append("<img  width='90%' height='90%'  src=\"" + imagUrl+"\">"); //가득차게 나옴
+        sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");    //중앙정렬
+        sb.append("<img  width='100%' height='100%'  src=\"" + imagUrl+"\">"); //가득차게 나옴
         sb.append("</BODY>");
         sb.append("</HTML>");
         Log.e("zzzzz", "z");
         return sb.toString();
     }
 
+    Button.OnClickListener mClickListener = new View.OnClickListener()
+    {
+        public void onClick(View v)
+        {
+            Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+            switch (v.getId())
+            {
+                case R.id.btn_myDiary:
+
+                    try {
+                        Log.e("regist", "정보입력!");
+                        // 입력한 정보를 Item 객체에 담는다.
+
+                        // 입력한 정보들을 php에 get방식으로 보낸다.
+                        recruitTask = new phpUp();
+
+                        recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
+                        Log.e("regist", i.toString());
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("URLEncoder", "PHP params Encoder error");
+                    }
+
+                    break;
+
+            }
+        }
+    };
 
 /* // json 파싱하려고 했지만 잘 모르겠음
    // MainActivity 에서는 line = br.. 이 잘 되는데, 여기서는 안됨 url에 접속해서 코드를 하나도 가져오지 못하는데 원인을 모르겠음
@@ -295,6 +335,49 @@ public class ListDetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+}
+
+// 모집하기 insert 부분
+class phpUp extends AsyncTask<String, Integer,String> {
+
+    @Override
+    protected String doInBackground(String... urls) {
+        StringBuilder jsonHtml = new StringBuilder();
+        String line = "";
+        try {
+            // 텍스트 연결 url 설정
+            URL url = new URL(urls[0]);
+            // 이미지 url
+            Log.e("tag", "url : " + urls[0]);
+            // URL 페이지 커넥션 객체 생성
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // 연결되었으면.
+
+            if (conn != null) {
+                conn.setConnectTimeout(10000);
+                conn.setUseCaches(false);
+                // 연결되었음 코드가 리턴되면.
+                Log.e("tag", "setUseCaches is false");
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    for (; ; ) {
+                        // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                        line = br.readLine();
+                        if (line == null) break;
+                        // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                        jsonHtml.append(line);
+                    }
+                    br.close();
+                }
+                conn.disconnect();
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return jsonHtml.toString();
+
+    }
 }
 
 

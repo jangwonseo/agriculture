@@ -23,8 +23,10 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
@@ -56,7 +58,7 @@ public class ListActivity extends ActionBarActivity {
 
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
 
-        if(themeName.equals("exprience"))
+        if(themeName.equals("experience"))
              tempThemeName = "체험여행";
         else if(themeName.equals("nature"))
             tempThemeName = "자연여행";
@@ -124,7 +126,7 @@ public class ListActivity extends ActionBarActivity {
             }
         });
         // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
-        if(themeName.equals("exprience")||themeName.equals("nature")||themeName.equals("traditional")||
+        if(themeName.equals("experience")||themeName.equals("nature")||themeName.equals("traditional")||
                 themeName.equals("wellBeing"))
             task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
@@ -204,7 +206,7 @@ public class ListActivity extends ActionBarActivity {
                     Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageKndNm"), vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
+                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
                     data.add(item);
@@ -339,7 +341,6 @@ class Item implements Serializable {
     private String prcafsManMoblphon;   // 실무자 전화번호
     private String vilageHmpgEnnc;      // 마을 홈피 유무
     private String vilageHmpgUrl;       // 마을 홈피 주소
-    private String vilageKndNm;         // 마을 종류
     private String vilageSlgn;          // 마을 간단 소개
     private String tableName;           // 테마
     private String vilageId;
@@ -368,10 +369,6 @@ class Item implements Serializable {
         return vilageHmpgUrl;
     }
 
-    public String getVilageKndNm() {
-        return vilageKndNm;
-    }
-
     public String getVilageSlgn() {
         return vilageSlgn;
     }
@@ -384,8 +381,32 @@ class Item implements Serializable {
         return vilageId;
     }
 
+    public String toString() {
+
+        String addrEncoded = null;
+        String vilageSlgnEncoded = null;
+//        String vilageHmpgEnncEncoded = null;
+//        String vilageHmpgUrlEncoded = null;
+//        String vilageKndNmEncoded = null;
+        try {
+              addrEncoded = URLEncoder.encode(addr, "UTF-8");
+              vilageSlgnEncoded = URLEncoder.encode(vilageSlgn,"UTF-8");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("regist", "thumbUrl=" + thumbUrl + "&name=" + name + "&addr=" + addrEncoded + "&prcafsManMoblphon=" + prcafsManMoblphon +
+                "&vilageHmpgEnnc=" + vilageHmpgEnnc + "&vilageHmpgUrl=" + vilageHmpgUrl +
+                "&vilageSlgn=" + vilageSlgnEncoded +  "&tableName=" + tableName +  "&vilageId=" + vilageId);
+        return ("thumbUrl=" + thumbUrl + "&name=" + name + "&addr=" + addrEncoded + "&prcafsManMoblphon=" + prcafsManMoblphon +
+                "&vilageHmpgEnnc=" + vilageHmpgEnnc + "&vilageHmpgUrl=" + vilageHmpgUrl +
+                "&vilageSlgn=" + vilageSlgnEncoded +  "&tableName=" + tableName +  "&vilageId=" + vilageId);
+
+    }
+
     public Item(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageKndNm, String vilageSlgn, String tableName, String VilageId) {
+                String vilageSlgn, String tableName, String vilageId) {
 
         this.thumbUrl = thumbUrl;
         this.name = name;
@@ -393,9 +414,8 @@ class Item implements Serializable {
         this.prcafsManMoblphon = prcafsManMoblphon;
         this.vilageHmpgEnnc = vilageHmpgEnnc;
         this.vilageHmpgUrl = vilageHmpgUrl;
-        this.vilageKndNm = vilageKndNm;
         this.vilageSlgn = vilageSlgn;
         this.tableName = tableName;
-        this.vilageId = VilageId;
+        this.vilageId = vilageId;
     }
 }

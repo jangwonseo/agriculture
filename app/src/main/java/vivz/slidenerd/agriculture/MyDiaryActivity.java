@@ -51,38 +51,7 @@ public class MyDiaryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_list);
         task = new phpDown();
 
-        Intent themeIntent = getIntent();
-        themeName = themeIntent.getExtras().getString("themeflag");
-
-
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
-
-        if(themeName.equals("experience"))
-            tempThemeName = "체험여행";
-        else if(themeName.equals("nature"))
-            tempThemeName = "자연여행";
-        else if(themeName.equals("traditional"))
-            tempThemeName = "전통문화여행";
-        else if(themeName.equals("wellBeing"))
-            tempThemeName = "웰빙여행";
-        else if(themeName.equals("kangwon"))
-            tempThemeName = "강원도";
-        else if(themeName.equals("kyungki"))
-            tempThemeName = "경기/인천";
-        else if(themeName.equals("chungnam"))
-            tempThemeName = "충남/대전";
-        else if(themeName.equals("chungbuk"))
-            tempThemeName = "충북";
-        else if(themeName.equals("jeonnam"))
-            tempThemeName = "전남/광주";
-        else if(themeName.equals("jeonbuk"))
-            tempThemeName = "전북";
-        else if(themeName.equals("kyungnam"))
-            tempThemeName = "경남/부산";
-        else if(themeName.equals("kyungbuk"))
-            tempThemeName = "경북/대구";
-        else
-            tempThemeName = "기타";
 
         //listview
         //m_Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1);
@@ -125,13 +94,7 @@ public class MyDiaryActivity extends ActionBarActivity {
             }
         });
         // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
-        if(themeName.equals("experience")||themeName.equals("nature")||themeName.equals("traditional")||
-                themeName.equals("wellBeing"))
-            task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
-        else if(themeName.equals("kangwon")||themeName.equals("kyungki")||themeName.equals("chungnam")||
-                themeName.equals("chungbuk")||themeName.equals("jeonnam")||themeName.equals("jeonbuk")||
-                themeName.equals("kyungnam")||themeName.equals("kyungbuk"))
             task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
 
     }
@@ -328,7 +291,6 @@ class List_Adapter extends BaseAdapter {
         return sb.toString();
     }
 }
-
 
 /**
  * 리스트의 데이터 클래스

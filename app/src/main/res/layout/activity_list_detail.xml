@@ -69,41 +69,17 @@
                 android:layout_height="0px"
                 android:layout_weight="50">
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="44"
-                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5">
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/vilageKnd"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="80"
-                    android:text="체험 종류"
-                    android:textColor="#808184">
-                    </TextView>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="194"
+                android:layout_weight="238"
                 android:background="@drawable/information4">
 
                 <WebView
                     android:id="@+id/thumb"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|center_horizontal"
-                    android:clickable="false"
-                    android:focusable="false"
-                    android:longClickable="false"
-                    android:scrollbars="none">
+                    android:layout_height="match_parent">
 
                 </WebView>
                 <!-- clickable 은 false로 해야 리스트뷰에 영향을 안준다고 한다. -->
@@ -116,7 +92,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="43"
+                android:layout_weight="35"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0px"
@@ -129,14 +105,15 @@
                     android:layout_height="match_parent"
                     android:layout_weight="300"
                     android:text="XX마을"
-                    android:textColor="#808184">
+                    android:textColor="#808184"
+                    android:layout_gravity="bottom">
                 </TextView>
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="43"
+                android:layout_weight="35"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0px"
@@ -153,7 +130,10 @@
                 </TextView>
 
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="5"></LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
@@ -174,11 +154,15 @@
                     >
                 </Button>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="4"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="48">
+                android:layout_weight="53">
             </LinearLayout>
 
             <LinearLayout
@@ -418,6 +402,7 @@
 
                 <!-- 두번째 버튼 시작 -->
                 <Button
+                    android:id="@+id/btn_myDiary"
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="70"

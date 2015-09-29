@@ -66,7 +66,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                     startActivity(intentTheme);
                     break;
                 case R.id.btn_exprience:
-                    intentTheme.putExtra("themeflag","exprience");
+                    intentTheme.putExtra("themeflag","experience");
                     startActivity(intentTheme);
                     break;
                 case R.id.btn_wellBeing:
