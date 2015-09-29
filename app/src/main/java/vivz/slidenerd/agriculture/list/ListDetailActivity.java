@@ -255,8 +255,13 @@ public class ListDetailActivity extends ActionBarActivity {
 
                     break;
                 case R.id.btn_vod:
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://" + vodUrls )));
+                    if(vodUrls==null) {
+                        Toast toasts = Toast.makeText(getApplicationContext(), "동영상 정보가 없습니다.", Toast.LENGTH_SHORT);
+                        toasts.show();
+                    }
+                    else
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("http://" + vodUrls )));
                     break;
 
             }
