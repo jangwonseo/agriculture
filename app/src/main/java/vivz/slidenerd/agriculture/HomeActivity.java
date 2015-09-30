@@ -1,6 +1,7 @@
 package vivz.slidenerd.agriculture;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -36,6 +37,11 @@ import vivz.slidenerd.agriculture.recruit.Recruit;
 
 
 public class HomeActivity extends ActionBarActivity{
+
+    //sharedPreference 선언부
+    public SharedPreferences setting;
+    public SharedPreferences.Editor editor;
+
     private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton;
 
     //페이지가 열려 있는지 알기 위한 플래그
@@ -62,6 +68,9 @@ public class HomeActivity extends ActionBarActivity{
 
     //두번 눌러 종료
     private BackPressCloseHandler backPressCloseHandler;
+
+    // 프로필 사진
+    WebView webvProfile;
 
 
     @Override
@@ -184,6 +193,28 @@ public class HomeActivity extends ActionBarActivity{
 
         //두번눌러 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+
+        // 프로필사진
+        //sharedPreference로 전역 공유공간을 만듬
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+        String userId = setting.getString("info_Id", "");
+
+        webvProfile = (WebView)findViewById(R.id.webvProfile);
+        // 배경이 하얕게 나오는데 투명하게 만들어줌
+        webvProfile.setBackgroundColor(0);
+        // 웹뷰 설정
+        webvProfile.setVerticalScrollBarEnabled(false);
+        webvProfile.setVerticalScrollbarOverlay(false);
+        webvProfile.setHorizontalScrollBarEnabled(false);
+        webvProfile.setHorizontalScrollbarOverlay(false);
+        webvProfile.setFocusableInTouchMode(false);
+        webvProfile.setHorizontalScrollBarEnabled(false);
+        webvProfile.setVerticalScrollBarEnabled(false);
+        webvProfile.setInitialScale(100);
+        webvProfile.setFocusable(false);
+        webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+userId+"Profile.jpg"), "text/html", "utf-8", null);
     }
 
     @Override
