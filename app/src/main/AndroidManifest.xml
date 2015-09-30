@@ -63,7 +63,8 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_singup"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".ThemeChoiceActivity"

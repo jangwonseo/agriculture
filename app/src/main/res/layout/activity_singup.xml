@@ -75,10 +75,11 @@
                     android:layout_weight="160"
                     android:background="@drawable/userinformation3">
 
-                    <TextView
+                    <ImageView
                         android:id="@+id/profile_image"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:clickable="true"/>
 
                 </LinearLayout>
 

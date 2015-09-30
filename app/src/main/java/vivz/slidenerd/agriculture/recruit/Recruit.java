@@ -135,8 +135,7 @@ public class Recruit extends Activity implements TextWatcher{
     CheckBox chkBxBtnTerm, chkBxBtnClick;
 
     // 사진업로드 부분 ------------------------------------------
-    private Button uploadButton, btnselectpic;
-    private ImageView imageview;
+    private Button btnselectpic;
     private int serverResponseCode = 0;
     private ProgressDialog dialog = null;
     private String upLoadServerUri = null;
