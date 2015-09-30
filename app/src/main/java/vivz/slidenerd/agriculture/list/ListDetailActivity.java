@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import vivz.slidenerd.agriculture.MyDiaryActivity;
 import vivz.slidenerd.agriculture.R;
 
 
@@ -233,11 +234,9 @@ public class ListDetailActivity extends ActionBarActivity {
     {
         public void onClick(View v)
         {
-
             switch (v.getId())
             {
                 case R.id.btn_myDiary:
-
                     try {
                         Log.e("regist", "정보입력!");
                         // 입력한 정보를 Item 객체에 담는다.
@@ -247,8 +246,12 @@ public class ListDetailActivity extends ActionBarActivity {
 
                         recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
                         Log.e("regist", i.toString());
-                        Toast toasts = Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT);
-                        toasts.show();
+                        //searchingseojang
+                        Log.d("seojang","11111");
+                        Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
+                        startActivity(moveIntent);
+                        Log.d("seojang", "22222");
+                        Toast.makeText (getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
 
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -48,7 +48,7 @@ public class MyDiaryActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_my_diary);
         task = new phpDown();
 
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
@@ -62,7 +62,7 @@ public class MyDiaryActivity extends ActionBarActivity {
         //addItem = (Button) findViewById(R.id.addItem);
         keys = (TextView) findViewById(R.id.themeKey);
 
-        backButton  = (Button)findViewById(R.id.list_backbutton);
+        backButton  = (Button)findViewById(R.id.myDiary_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
