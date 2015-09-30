@@ -246,7 +246,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
                         recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
                         Log.e("regist", i.toString());
-
+                        //searchingseojang
                         Log.d("seojang","11111");
                         Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
                         startActivity(moveIntent);

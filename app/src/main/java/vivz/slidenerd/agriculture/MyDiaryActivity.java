@@ -62,7 +62,7 @@ public class MyDiaryActivity extends ActionBarActivity {
         //addItem = (Button) findViewById(R.id.addItem);
         keys = (TextView) findViewById(R.id.themeKey);
 
-        backButton  = (Button)findViewById(R.id.list_backbutton);
+        backButton  = (Button)findViewById(R.id.myDiary_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
