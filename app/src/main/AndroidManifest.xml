@@ -104,7 +104,10 @@
         </activity>
         <activity
             android:name=".recruit.RecruitPopupActivity"
-            android:label="@string/title_activity_recruit_popup" >
+            android:label="@string/title_activity_recruit_popup"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|keyboardHidden">
         </activity>
 
         <activity

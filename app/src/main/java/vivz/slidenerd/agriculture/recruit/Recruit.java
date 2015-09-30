@@ -391,7 +391,7 @@ public class Recruit extends Activity implements TextWatcher{
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         float deviceDensityDIP = displayMetrics.densityDpi;
-        Log.d("recPopUp", "dpi : " + deviceDensityDIP);
+
 
         // 리스트 항목 (참가할 미션)클릭시 이벤트
         recruit_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -482,6 +482,7 @@ public class Recruit extends Activity implements TextWatcher{
     public void afterTextChanged(Editable arg0) {/*AODO Auto-generated method stub*/}
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
 
     //모집,모집하기 버튼누름에 따라 framelayout이 보였다 안보엿다 바뀜
     Button.OnClickListener recruitClickListener = new View.OnClickListener() {
