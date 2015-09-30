@@ -231,15 +231,14 @@ public class SignupActivity extends FragmentActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //비밀번호 입력란과 비밀번호재입력란이 다르면 다르다고 해야함
+                //입력란에 빈공간이 있으면 안됨
                 if((uId.getText().toString().equals("")) || (uName.getText().toString().equals("")) || (uPw.getText().toString().equals("")) || (uPhoneNum.getText().toString().equals("")) || (uBirthday_year.getText().toString().equals("")) || (uBirthday_month.getText().toString().equals("")) || (uBirthday_day.getText().toString().equals(""))){
                     Toast.makeText(getApplicationContext(), "빠뜨린 정보가 있어요!", Toast.LENGTH_SHORT).show();
                 }
+                //비밀번호 입력란과 비밀번호재입력란이 다르면 다르다고 해야함
                 else if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
                     Toast.makeText(getApplicationContext(), "비밀번호가 달라요!", Toast.LENGTH_SHORT).show();
                 }else{
-                    //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
-                    Log.d("seojang","비밀번호 일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
                     try {
                         info_Name = URLEncoder.encode(uName.getText().toString(), "UTF-8");
                         info_Id = uId.getText().toString();
@@ -247,12 +246,9 @@ public class SignupActivity extends FragmentActivity {
                         info_PhoneNum = uPhoneNum.getText().toString();
                         info_Birthday = uBirthday_year.getText().toString() + "_" + uBirthday_month.getText().toString() + "_" + uBirthday_day.getText().toString();
 
-
-
                     }catch (UnsupportedEncodingException e){
                         e.printStackTrace();
                     }
-
 
                     //저장된 값들을 php를 통해 서버에 db화 시킴
                     memberItem = new MemberItem(info_Name,info_Id,info_Pw,info_PhoneNum,info_Birthday,info_Sex);
