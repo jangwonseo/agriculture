@@ -86,7 +86,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         txtvRecruitTerm = (TextView)findViewById(R.id.txtvRecruitTerm);
         txtvRecruitTerm.setText(item.getTermStart() + " ~ " + item.getTermEnd());
         txtvRecruitNum = (TextView)findViewById(R.id.txtvRecruitNum);
-        txtvRecruitNum.setText(item.getRecruitNum());
+        txtvRecruitNum.setText(Integer.toString(item.getJoinedNum()) + " / " + Integer.toString(item.getRecruitNum()) + " 명");
 
         btnPhoneCall = (Button)findViewById(R.id.btnPhoneCall);
         btnMissionJoin = (Button)findViewById(R.id.btnMissionJoin);
@@ -96,10 +96,10 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
 
         // 줄바꿈
-        String lineEnding = item.getRecuritContent().replace("99line99end99", "\n");
+        String lineEnding = item.getRecruitContent().replace("99line99end99", "\n");
         txtvRecruitContent = (TextView)findViewById(R.id.txtvRecruitContent);
         txtvRecruitContent.setText(lineEnding);
-        Log.e("txtvRecruitContent", item.getRecuritContent());
+        Log.e("txtvRecruitContent", item.getRecruitContent());
         txtvReward = (TextView)findViewById(R.id.txtvReward);
         txtvReward.setText(item.getReward());
 

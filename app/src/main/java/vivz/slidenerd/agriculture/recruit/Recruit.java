@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -78,6 +79,10 @@ import vivz.slidenerd.agriculture.list.ListDetailActivity;
 
 
 public class Recruit extends Activity implements TextWatcher{
+    //로그인 정보 가져오기
+    SharedPreferences setting;
+    SharedPreferences.Editor editor;
+    String sharedUserId;
 
     //EditText search;        // 검색
     EditText missionName;   // 미션이름
@@ -161,6 +166,15 @@ public class Recruit extends Activity implements TextWatcher{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
+
+        // 로그인 정보 가져오는 부분
+        // sharedUserId 는 로그인 한 회원의 id 정보
+        // 문자열이 "" 일 경우, 미 로그인, 아니라면 로그인 중이라 가정
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+
+        sharedUserId = setting.getString("info_Id", "");
+        Log.e("userId : ", sharedUserId);
 
         // 모집하기 글쓰는 부분 ---------------------------------------------------------
         missionName = (EditText)findViewById(R.id.missionName);
@@ -484,11 +498,19 @@ public class Recruit extends Activity implements TextWatcher{
 
                     break;
                 case R.id.recruit_start:
-                    recruitListBtn.setBackgroundResource(R.drawable.recruit_button1);
-                    recruitStartBtn.setBackgroundResource(R.drawable.recruit_button2);
-                    recruitListLayout.setVisibility(LinearLayout.GONE);  //gone은 눈에 안보일뿐 아니라 영역도 없어짐
-                    recruitStartLayout.setVisibility(LinearLayout.VISIBLE);
+                    // 로그인 정보 확인하여 미로그인시 로그인 권유 창
+
+                    if ( sharedUserId.equals("") ) { // 미로그인 시 Toast
+                        Toast.makeText(getApplicationContext(), "모집을 위해 로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        recruitListBtn.setBackgroundResource(R.drawable.recruit_button1);
+                        recruitStartBtn.setBackgroundResource(R.drawable.recruit_button2);
+                        recruitListLayout.setVisibility(LinearLayout.GONE);  //gone은 눈에 안보일뿐 아니라 영역도 없어짐
+                        recruitStartLayout.setVisibility(LinearLayout.VISIBLE);
+                    }
                     break;
+
                 case R.id.backbtn:
                     onBackPressed();
                     break;
@@ -503,7 +525,7 @@ public class Recruit extends Activity implements TextWatcher{
                         String phoneNumber2 = phoneNumber.substring(3, 7);
                         String phoneNumber3 = phoneNumber.substring(7, 11);
                         String phoneNumbers = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), URLEncoder.encode(recruitNum.getText().toString(), "UTF-8"), URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
+                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNum.getText().toString()), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
 
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();
@@ -876,9 +898,9 @@ public class Recruit extends Activity implements TextWatcher{
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject RecruitListJson = jAr.getJSONObject(i);
-                    RecruitListItem item = new RecruitListItem(Integer.parseInt(RecruitListJson.getString("idrecruit")),  RecruitListJson.getString("missionName"), RecruitListJson.getString("vilageName"), RecruitListJson.getString("recruitContent"),
-                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), RecruitListJson.getString("recruitNum"), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")), RecruitListJson.getString("phoneNum"));
-                    Log.e("RecruitItem", "idrecruit : " + RecruitListJson.getString("idrecruit") + " missionName : " + RecruitListJson.getString("missionName") + " vilageName : " + RecruitListJson.getString("vilageName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
+                    RecruitListItem item = new RecruitListItem(Integer.parseInt(RecruitListJson.getString("idrecruit")),RecruitListJson.getString("userId")  ,RecruitListJson.getString("missionName"), RecruitListJson.getString("vilageName"), RecruitListJson.getString("recruitContent"),
+                            RecruitListJson.getString("termStart"), RecruitListJson.getString("termEnd"), Integer.parseInt(RecruitListJson.getString("recruitNum")), Integer.parseInt(RecruitListJson.getString("joinedNum")), RecruitListJson.getString("reward"), RecruitListJson.getString("ImageURL"), Integer.parseInt(RecruitListJson.getString("clickNum")), RecruitListJson.getString("phoneNum"));
+                    Log.e("RecruitItem", "idrecruit : " + RecruitListJson.getString("idrecruit") + " UserId : " + RecruitListJson.getString("userId") + " missionName : " + RecruitListJson.getString("missionName") + " vilageName : " + RecruitListJson.getString("vilageName") + " recruitContent : " + RecruitListJson.getString("recruitContent") + " termStart : " +
                             RecruitListJson.getString("termStart") + " termEnd : " + RecruitListJson.getString("termEnd") + " recruitNum : " + RecruitListJson.getString("recruitNum") + " reward : " + RecruitListJson.getString("reward") + " ImageURL : " + RecruitListJson.getString("ImageURL") + " clickNum : " + RecruitListJson.getString("clickNum") + " phoneNum : " + RecruitListJson.getString("phoneNum"));
                     data.add(item);
                     Log.e("data<RecruitItem> : ", Integer.toString(data.size())); // 몇개 인지 확인
@@ -1139,7 +1161,7 @@ class List_Adapter extends BaseAdapter {
         txtvRecListTerm = (TextView)convertView.findViewById(R.id.txtvRecListTerm);
         txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
         txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
-        txtvRecListRecNum.setText(listviewitem.getRecruitNum() + " 명");
+        txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
 
         return convertView;
     }
@@ -1188,34 +1210,40 @@ class List_Adapter extends BaseAdapter {
 
 class RecruitItem implements Serializable {
     private String search;
+    private String userId;
     private String missionName;
     private String vilageName;
     private String recruitContent;       // 내용
     private String termStart;     // 기간(시작)
     private String termEnd;       // 기간 (끝)
-    private String recruitNum;    // 모집인원
+    private int recruitNum;    // 모집인원
+    private int joinedNum = 0;       // 참가인원
     private String reward;        //보상
     private String ImageURL ="";         // 이미지 경로
     private String phoneNum;
     public String getsearch(){return search;}
+    public String getUserId() {return userId;}
     public String getmissionName(){return missionName;}
     public String getVilageName() {return vilageName;}
     public String getrecruitContent(){return recruitContent;}
     public String gettermStart(){return termStart;}
     public String gettermEnd(){return termEnd;}
-    public String getrecruitNum(){return recruitNum;}
+    public int getrecruitNum(){return recruitNum;}
+    public int getJoinedNum() {return joinedNum;}
     public String getreward(){return reward;}
     public String getimageURl() {return ImageURL;}
     public String getPhoneNum() {return phoneNum;}
 
-    public RecruitItem(String search,String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, String phoneNum){
+    public RecruitItem(String search, String userId, String missionName, String vilageName, String recruitContent, String termStart, String termEnd, int recruitNum, int joinedNum, String reward, String ImageURL, String phoneNum){
         this.search = search;
+        this.userId = userId;
         this.missionName = missionName;
         this.vilageName = vilageName;
         this.recruitContent = recruitContent;
         this.termStart = termStart;
         this.termEnd = termEnd;
         this.recruitNum = recruitNum;
+        this.joinedNum = joinedNum;
         this.reward = reward;
         this.ImageURL = ImageURL;
         this.phoneNum = phoneNum;
@@ -1223,41 +1251,47 @@ class RecruitItem implements Serializable {
 
     public String toString() {
 
-        return "search=" + search + "&missionName=" + missionName + "&vilageName=" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&phoneNum=" + phoneNum;
+        return "search=" + search + "&UserId=" + userId + "&missionName=" + missionName + "&vilageName=" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + Integer.toString(recruitNum) + "&joinedNum=" + Integer.toString(joinedNum) + "&reward=" + reward + "&ImageURL=" + ImageURL + "&phoneNum=" + phoneNum;
     }
 }
 
 class RecruitListItem implements Serializable {
     private int idRecruit;
+    private String userId;
     private String missionName;
     private String vilageName;
     private String recruitContent;
     private String termStart;
     private String termEnd;
-    private String recruitNum;
+    private int recruitNum;
+    private int joinedNum;
     private String reward;
     private String ImageURL;
     private int clickNum;
     private String phoneNum;
     public int getIdRecruit() {return idRecruit;}
+    public String getUserId() {return userId;}
     public String getMissionName(){return missionName;}
     public String getVilageName() {return vilageName;}
-    public String getRecuritContent(){return recruitContent;}
+    public String getRecruitContent(){return recruitContent;}
     public String getTermStart(){return termStart;}
     public String getTermEnd() {return termEnd;}
-    public String getRecruitNum(){return recruitNum;}
+    public int getRecruitNum(){return recruitNum;}
+    public int getJoinedNum() {return joinedNum;}
     public String getReward(){return reward;}
     public String getImageURL() {return ImageURL;}
     public int getClickNum() {return clickNum;}
     public String getPhoneNum() {return phoneNum;}
-    public RecruitListItem(int idRecruit, String missionName, String vilageName, String recruitContent, String termStart, String termEnd, String recruitNum, String reward, String ImageURL, int clickNum, String phoneNum){
+    public RecruitListItem(int idRecruit, String userId ,String missionName, String vilageName, String recruitContent, String termStart, String termEnd, int recruitNum, int joinedNum, String reward, String ImageURL, int clickNum, String phoneNum){
         this.idRecruit = idRecruit;
+        this.userId = userId;
         this.missionName = missionName;
         this.vilageName = vilageName;
         this.recruitContent = recruitContent;
         this.termStart = termStart;
         this.termEnd = termEnd;
         this.recruitNum = recruitNum;
+        this.joinedNum = joinedNum;
         this.reward = reward;
         this.ImageURL = ImageURL;
         this.clickNum = clickNum;
@@ -1265,7 +1299,7 @@ class RecruitListItem implements Serializable {
     }
     public String toString() {
 
-        return "idrecruit=" + idRecruit + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + recruitNum + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum + "&phoneNum=" + phoneNum;
+        return "idrecruit=" + idRecruit + "&UserId=" + userId + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + Integer.toString(recruitNum) + "&joinedNum=" + Integer.toString(joinedNum) + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum + "&phoneNum=" + phoneNum;
     }
 }
 

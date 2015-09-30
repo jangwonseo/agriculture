@@ -110,7 +110,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="40"
+                android:layout_weight="45"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -152,7 +152,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="39"
+                android:layout_weight="34"
                 android:orientation="horizontal">
 
                 <LinearLayout
