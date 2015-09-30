@@ -109,7 +109,8 @@
 
         <activity
             android:name=".MyDiaryActivity"
-            android:label="@string/title_activity_my_diary" >
+            android:label="@string/title_activity_my_diary"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
     </application>
 
