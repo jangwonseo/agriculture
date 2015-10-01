@@ -60,6 +60,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -135,6 +136,12 @@ public class SignupActivity extends FragmentActivity {
     private String imagepath=null;
     String uploadFileName=null;
     //-----------------------------------------------------------
+
+    // 아이디 체크하는 부분
+    phpIdCheck idCheckphp;
+    Button btnIdCheck;
+    ArrayList<String> idCheckArr;
+    private static int repetitionId = 0; // 아이디 중복 확인 1이면 등록시 오케이, 0이면 등록시 아이디 중복확인하세요 메세지
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,8 +232,6 @@ public class SignupActivity extends FragmentActivity {
             }
         });
 
-
-
         //확인 버튼을 눌렀을때 값 저장
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,8 +239,9 @@ public class SignupActivity extends FragmentActivity {
                 //비밀번호 입력란과 비밀번호재입력란이 다르면 다르다고 해야함
                 if((uId.getText().toString().equals("")) || (uName.getText().toString().equals("")) || (uPw.getText().toString().equals("")) || (uPhoneNum.getText().toString().equals("")) || (uBirthday_year.getText().toString().equals("")) || (uBirthday_month.getText().toString().equals("")) || (uBirthday_day.getText().toString().equals(""))){
                     Toast.makeText(getApplicationContext(), "빠뜨린 정보가 있어요!", Toast.LENGTH_SHORT).show();
-                }
-                else if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
+                } else if ( repetitionId == 0 ) {
+                    Toast.makeText(getApplicationContext(), "아이디 중복확인을 하세요!", Toast.LENGTH_SHORT).show();
+                } else if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
                     Toast.makeText(getApplicationContext(), "비밀번호가 달라요!", Toast.LENGTH_SHORT).show();
                 }else{
                     //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
@@ -291,6 +297,7 @@ public class SignupActivity extends FragmentActivity {
                     Log.d("seojang", "gogogogogogo : " + setting.getString("info_Id", ""));
 
                     Toast.makeText(getApplicationContext(), "회원가입 완료!.", Toast.LENGTH_SHORT).show();
+                    repetitionId = 0; // 회원가입이 완료되었기 때문에, 아이디 중복확인 OK 상태를 NONE으로 변경
 
                     Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);
                     startActivity(homeIntent);
@@ -331,6 +338,20 @@ public class SignupActivity extends FragmentActivity {
                         break;
                 }
                 return false;
+            }
+        });
+
+        // 아이디 체크
+        idCheckArr = new ArrayList<>();
+
+        btnIdCheck = (Button)findViewById(R.id.btnIdCheck);
+        btnIdCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                info_Id = uId.getText().toString();
+
+                idCheckphp = new phpIdCheck();
+                idCheckphp.execute("http://218.150.181.131/seo/phpIdCheck.php", info_Id);
             }
         });
 
@@ -750,5 +771,84 @@ public class SignupActivity extends FragmentActivity {
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    // 아이디를 체크하는 부분
+    public class phpIdCheck extends AsyncTask<String, Integer, String> {
+        String checkUserId;
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                Log.e("CheckId : ", ""+ urls[1]);
+                // urls[1]에는 현재 EditText에 입력된 아이디가 저장되어 있음
+                // 그것을 가져온다.
+                checkUserId = ""+ urls[1];
+
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str){
+            // JSON 구문을 파싱해서 JSONArray 객체를 생성
+
+            try {
+                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
+                    JSONObject idCheckJson = jAr.getJSONObject(i);
+
+                    // 디비에 저장된 아이디들을 가져와서 idCheckArr ArrayList에 넣는다.
+                    idCheckArr.add(idCheckJson.getString("userid"));
+                }
+
+                if ( idCheckArr.contains(checkUserId) ) {
+                    Toast.makeText(getApplicationContext(), "중복된 아이디입니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (checkUserId.equals("")) { // 아이디를 입력하지 않았을 경우
+                        Toast.makeText(getApplicationContext(), "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        repetitionId = 1; // 아이디 중복확인 확인함, 등록가능
+                        Toast.makeText(getApplicationContext(), "사용가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
     }
 }
