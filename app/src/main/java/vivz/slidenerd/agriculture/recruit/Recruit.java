@@ -515,47 +515,58 @@ public class Recruit extends Activity implements TextWatcher{
                     break;
                 case R.id.regist_button: // 등록 버튼
 
-                    try {
-                        Log.e("regist", "button");
-                        // 입력한 정보를 Item 객체에 담는다.
-                        String lineEnding = recruitContent.getText().toString().replace("\n", "99line99end99");
-                        String phoneNumber = etxtPhone.getText().toString();
-                        String phoneNumber1 = phoneNumber.substring(0, 3);
-                        String phoneNumber2 = phoneNumber.substring(3, 7);
-                        String phoneNumber3 = phoneNumber.substring(7, 11);
-                        String phoneNumbers = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
-                        recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNum.getText().toString()), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
+                    // 미션이름을 적지 않았을 경우
+                    if (missionName.getText().toString().equals("")) {
+                        Toast.makeText(getApplicationContext(), "미션이름을 입력하세요!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            Log.e("regist", "button");
+                            // 입력한 정보를 Item 객체에 담는다.
+                            String lineEnding = recruitContent.getText().toString().replace("\n", "99line99end99");
+                            String phoneNumber = etxtPhone.getText().toString();
+                            String phoneNumbers = "";
+                            if ( !phoneNumber.equals("") || phoneNumber.length() == 11) {
+                                String phoneNumber1 = phoneNumber.substring(0, 3);
+                                String phoneNumber2 = phoneNumber.substring(3, 7);
+                                String phoneNumber3 = phoneNumber.substring(7, 11);
+                                phoneNumbers = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
+                            }
+                            String recruitNumber = recruitNum.getText().toString();
+                            if (recruitNumber.equals("")) {
+                                recruitNumber = "0";
+                            }
+                            recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNumber), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
 
-                        // 입력한 정보들을 php에 get방식으로 보낸다.
-                        recruitTask = new phpUp();
+                            // 입력한 정보들을 php에 get방식으로 보낸다.
+                            recruitTask = new phpUp();
 
-                        String params = "";
-                        params = URLEncoder.encode(recruitItem.toString(), "utf-8");
+                            String params = "";
+                            params = URLEncoder.encode(recruitItem.toString(), "utf-8");
 
-                        recruitTask.execute("http://218.150.181.131/seo/recruit.php?" + recruitItem.toString());
+                            recruitTask.execute("http://218.150.181.131/seo/recruit.php?" + recruitItem.toString());
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("URLEncoder", "PHP params Encoder error");
+                            dialog = ProgressDialog.show(Recruit.this, "", "Uploading file...", true);
+                            Log.e("upload message : ", "uploading started.....");
+                            new Thread(new Runnable() {
+                                public void run() {
+
+                                    if (imagepath == null ) {
+                                        imagepath = "";
+                                        dialog.dismiss();
+                                        Log.e("Uploading file : ", "file is null, User don't select picture.");
+                                        return;
+                                    } else {
+                                        uploadFile(imagepath);
+                                    }
+                                }
+                            }).start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("URLEncoder", "PHP params Encoder error");
+                        }
                     }
 
-                    dialog = ProgressDialog.show(Recruit.this, "", "Uploading file...", true);
-                    Log.e("upload message : ", "uploading started.....");
-                    new Thread(new Runnable() {
-                        public void run() {
-
-                            if (imagepath == null ) {
-                                imagepath = "";
-                                dialog.dismiss();
-                                Log.e("Uploading file : ", "file is null, User don't select picture.");
-                                return;
-                            } else {
-                                uploadFile(imagepath);
-                            }
-                        }
-                    }).start();
                     break;
-
 
                 case R.id.selectPicture : // 사진을 선택
                     Intent intent = new Intent(Intent.ACTION_PICK);
@@ -607,6 +618,15 @@ public class Recruit extends Activity implements TextWatcher{
 
                     Toast.makeText(getApplicationContext(), "모집 등록을 완료하였습니다.", Toast.LENGTH_SHORT).show();
                     // 등록에 성공했기 때문에 등록 미완료로 초기화
+
+                    // 회원가입 완료시 자동으로 모집리스트 화면으로 이동
+                    recruitListBtn.setBackgroundResource(R.drawable.recruit_button3);
+                    recruitStartBtn.setBackgroundResource(R.drawable.recruit_button4);
+                    recruitListLayout.setVisibility(LinearLayout.VISIBLE);
+                    recruitStartLayout.setVisibility(LinearLayout.GONE);
+                    data.clear();
+                    phpList = new phpRecruitList();
+                    phpList.execute("http://218.150.181.131/seo/recruitList.php");
                     break;
 
                 case registNoSucceeded:

@@ -205,6 +205,11 @@
                     android:layout_height="0px"
                     android:layout_weight="40"
                     android:background="@drawable/userinformation15">
+                    <Button
+                        android:id="@+id/btnIdCheck"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"/>
 
                 </LinearLayout>
 
