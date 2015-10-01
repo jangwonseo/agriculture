@@ -11,8 +11,8 @@ android {
         applicationId "vivz.slidenerd.agriculture"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile project(':com.skp.Tmap_1.0.33')
 }
