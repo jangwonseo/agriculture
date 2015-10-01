@@ -98,7 +98,6 @@ public class HomeActivity extends ActionBarActivity{
                 if (isPageOpen){
                     slidingPage01.startAnimation(translateRightAnim);
                 } else {
-
                     slidingPage01.setVisibility(View.VISIBLE);
                     slidingPage01.startAnimation(translateLeftAnim);
                 }
