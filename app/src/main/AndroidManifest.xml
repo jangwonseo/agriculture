@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_OWNER_DATA" />
     <uses-permission android:name="android.permission.READ_OWNER_DATA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".MyApplication"
@@ -38,12 +38,11 @@
         <activity
             android:name=".IntroActivity"
             android:label="펀팜" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".HomeActivity"
@@ -64,7 +63,7 @@
             android:name=".SignupActivity"
             android:label="@string/title_activity_singup"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".ThemeChoiceActivity"
@@ -99,22 +98,27 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name=".navigate.MainActivity2Activity"
-            android:label="@string/title_activity_main_activity2"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
-        <activity
             android:name=".recruit.RecruitPopupActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_recruit_popup"
             android:theme="@android:style/Theme.Dialog"
-            android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|keyboardHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-
         <activity
             android:name=".MyDiaryActivity"
             android:label="@string/title_activity_my_diary"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".navigate.navigateSettingPopupActivity"
+            android:label="@string/title_activity_navigate_setting_popup"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
+        <activity
+            android:name=".navigate.FullScreenMapActivity"
+            android:label="@string/title_activity_full_screen_map" >
         </activity>
     </application>
 
