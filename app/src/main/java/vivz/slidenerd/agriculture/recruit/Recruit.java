@@ -524,18 +524,31 @@ public class Recruit extends Activity implements TextWatcher{
                             // 입력한 정보를 Item 객체에 담는다.
                             String lineEnding = recruitContent.getText().toString().replace("\n", "99line99end99");
                             String phoneNumber = etxtPhone.getText().toString();
+
                             String phoneNumbers = "";
-                            if ( !phoneNumber.equals("") || phoneNumber.length() == 11) {
+                            if ( phoneNumber.length() == 10 || phoneNumber.length() == 11) {
+                                Log.e("etxtPhone : ", phoneNumber);
                                 String phoneNumber1 = phoneNumber.substring(0, 3);
                                 String phoneNumber2 = phoneNumber.substring(3, 7);
                                 String phoneNumber3 = phoneNumber.substring(7, 11);
                                 phoneNumbers = phoneNumber1 + "-" + phoneNumber2 + "-" + phoneNumber3;
                             }
+
                             String recruitNumber = recruitNum.getText().toString();
                             if (recruitNumber.equals("")) {
                                 recruitNumber = "0";
                             }
-                            recruitItem = new RecruitItem(URLEncoder.encode(recruit_autoComplete.getText().toString(), "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNumber), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
+                            try {
+                                String auto = recruit_autoComplete.getText().toString();
+                                if ( auto.equals("") ) {
+                                    vilageName = "";
+                                }
+                                recruitItem = new RecruitItem(URLEncoder.encode(auto, "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNumber), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "회원가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+
 
                             // 입력한 정보들을 php에 get방식으로 보낸다.
                             recruitTask = new phpUp();
