@@ -27,6 +27,8 @@
     <string name="title_activity_map">mapActivity</string>
     <string name="title_activity_recruit_popup">RecruitPopupActivity</string>
     <string name="title_activity_my_diary">MyDiaryActivity</string>
+    <string name="title_activity_navigate_setting_popup">navigateSettingPopupActivity</string>
+    <string name="title_activity_full_screen_map">FullScreenMapActivity</string>
 
 
     <!--    <string name="com_facebook_loginview_log_in_button_long">Login</string>

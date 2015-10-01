@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.navigate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +16,7 @@ import java.io.Serializable;
 
 import vivz.slidenerd.agriculture.R;
 
-/**
- * Created by makejin on 2015-09-20.
- */
-public class MainActivity2Activity extends Activity {
+public class navigateSettingPopupActivity extends Activity implements View.OnClickListener {
     TextView poiName;
     TextView poiAddr;
     TextView distance;
@@ -33,7 +31,7 @@ public class MainActivity2Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_activity2);
+        setContentView(R.layout.activity_navigate_setting_popup);
 
 
         Intent intent = getIntent();
@@ -68,37 +66,16 @@ public class MainActivity2Activity extends Activity {
 
         poiName.setText(i.getName());
         poiAddr.setText(i.getAddr());
-        //  srcPoint = i.getPoint();
-        distance.setText(""+i.getDistance());
+        distance.setText(String.format("%.3fkm", i.getDistance()/1000.0));
         lat.setText(""+i.getLat());
         lon.setText(""+i.getLon());
-        distance2 = Double.parseDouble(distance.getText().toString());
+        distance2 = i.getDistance()/1000.0;
         btn1.setOnClickListener(btn1Listener);
         btn2.setOnClickListener(btn2Listener);
 
     }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_main_activity2, menu);
-        return true;
+    public void onClick(View v) {
+
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action b ar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-/*
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-*/
-        return super.onOptionsItemSelected(item);
-    }
-
-
 }

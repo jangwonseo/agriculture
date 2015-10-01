@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -97,6 +98,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             R.id.car,
             R.id.bicycle,
             R.id.walk,
+            R.id.wideView,
     };
 
     private 	int 		m_nCurrentZoomLevel = 0;
@@ -132,8 +134,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     TextView time = null;
     Button btn = null;
     LinearLayout menu1;
-    public static TMapPoint srcPoint = null;
-    public static TMapPoint desPoint = null;
+    public static TMapPoint srcPoint = new TMapPoint(37.566474D, 126.985022D);
+    public static TMapPoint desPoint = new TMapPoint(37.566474D, 126.985022D);;
     private double distance = 0;
     private TMapPoint tempPoint = null;
     private ArrayList<TMapPOIItem> tempPoiItem = null;
@@ -148,6 +150,24 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     private TextView search_radius;
     private int cntBus=0;
     private Boolean showMyPositionMode = false;
+    private LinearLayout _accommodation;
+    private LinearLayout _restaurant;
+    private LinearLayout _gasStation;
+    private LinearLayout _getMyPosition;
+    private LinearLayout _setMyPosition;
+    private LinearLayout _car;
+    private LinearLayout _bicycle;
+    private LinearLayout _walk;
+    private LinearLayout _searchCancel;
+
+    private boolean menu1_pressed = false;
+    private boolean menu2_pressed = false;
+    private boolean setMyPosition_pressed = false;
+    private boolean getMyPosition_pressed = false;
+    private boolean zoomIn_pressed = false;
+    private boolean zoomOut_pressed = false;
+    private boolean searchClean_pressed = false;
+
     //phpDown task;
 
     /**
@@ -171,7 +191,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         gps.setProvider(gps.NETWORK_PROVIDER);
         gps.OpenGps();
 
-        MainActivity2Activity.srcPoint = new TMapPoint(mMapView.getLatitude(), mMapView.getLongitude());
+        navigateSettingPopupActivity.srcPoint = new TMapPoint(mMapView.getLatitude(), mMapView.getLongitude());
 
         configureMapView();
 
@@ -180,7 +200,36 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 		btn = (Button) findViewById(R.id.navi);
 		btn.bringToFront();
 		*/
+        final Handler handler = new Handler();
         searchTotal = (EditText) findViewById(R.id.searchTotal);
+        searchTotal.setOnKeyListener(
+                new View.OnKeyListener()
+                {
+                    public boolean onKey(View v, int keyCode, KeyEvent event)
+                    {
+                        if(keyCode ==  KeyEvent.KEYCODE_ENTER && KeyEvent.ACTION_DOWN == event.getAction())
+                        {
+                            listView2.invalidateViews();
+                            removeMarker();
+                            search();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Do something after 5s = 5000ms
+                                    setText();
+                                    listView2.invalidateViews();
+                                }
+                            }, 3000);
+                            listView2.invalidateViews();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+
+
+
         time = (TextView) findViewById(R.id.time);
         listView2 = (ListView) findViewById(R.id.listView2);
         srcText = (TextView) findViewById(R.id.srcText);
@@ -188,6 +237,15 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         search_radius = (TextView) findViewById(R.id.search_radius);
         adapterMarker=new List_Adapter_Marker(mContext,R.layout.item,data);
         listView2.setAdapter(adapterMarker);
+        _accommodation = (LinearLayout) findViewById(R.id._accommodation);
+        _restaurant = (LinearLayout) findViewById(R.id._restaurant);
+        _gasStation = (LinearLayout) findViewById(R.id._gasStation);
+        _setMyPosition = (LinearLayout) findViewById(R.id._setMyPosition);
+        _getMyPosition = (LinearLayout) findViewById(R.id._getMyPosition);
+        _car = (LinearLayout) findViewById(R.id._car);
+        _bicycle = (LinearLayout) findViewById(R.id._bicycle);
+        _walk = (LinearLayout) findViewById(R.id._walk);
+        _searchCancel = (LinearLayout) findViewById(R.id._searchCancel);
 
         Log.i("asd123", "listView2.setAdapter(adapterMarker);");
 
@@ -197,14 +255,12 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
                 //이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분
 
-                Intent intent = new Intent(NavigateActivity.this,
-                        MainActivity2Activity.class);
+                Intent intent = new Intent(NavigateActivity.this, navigateSettingPopupActivity.class);
                 Log.i("asd", " adapterMarker.getItem(position) : " + adapterMarker.getItem(position));
                 intent.putExtra("item", adapterMarker.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 Log.i("asd", "intent " + intent);
                 startActivity(intent);
-
 
             }
 
@@ -216,7 +272,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         dropdown.setAdapter(adapter);
         adapter.setDropDownViewResource(R.layout.dropdown_item);
 
-        final Handler handler = new Handler();
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -355,7 +410,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.setTMapLogoPosition(TMapLogoPositon.POSITION_BOTTOMRIGHT);
         //mMapView.setTMapPoint(gps.getLocation().getLatitude(), gps.getLocation().getLongitude());
     }
-
     public void listRead(ArrayList<TMapPOIItem> poiItem){
         data.clear();
 		/*int j = data.size();
@@ -372,7 +426,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             ex.printStackTrace();
         }
     }
-
     /**
      * setSKPMapApiKey()에 ApiKey를 입력 한다.
      * setSKPMapBizappId()에 mBizAppID를 입력한다.
@@ -382,7 +435,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.setSKPMapApiKey(mApiKey);
         mMapView.setSKPMapBizappId(mBizAppID);
     }
-
     /**
      * initView - 버튼에 대한 리스너를 등록한다.
      */
@@ -424,6 +476,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.setOnEnableScrollWithZoomLevelListener(new TMapView.OnEnableScrollWithZoomLevelCallback() {
             @Override
             public void onEnableScrollWithZoomLevelEvent(float zoom, TMapPoint centerPoint) {
+                getMyPositionCnt = 3;
+                _getMyPosition.setBackgroundResource(R.drawable.accommodation_food7);
                 LogManager.printLog("MainActivity onEnableScrollWithZoomLevelEvent " + zoom + " " + centerPoint.getLatitude() + " " + centerPoint.getLongitude());
             }
         });
@@ -481,7 +535,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             public void onCalloutRightButton(TMapMarkerItem markerItem) {
                 String strMessage = "";
                 strMessage = "ID: " + markerItem.getID() + " " + "Title " + markerItem.getCalloutTitle();
-
             }
         });
 
@@ -502,17 +555,14 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         m_bSightVisible = false;
         m_bTrackingMode = false;
     }
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -521,7 +571,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             mOverlayList.clear();
         }
     }
-
     /**
      * onClick Event
      */
@@ -543,92 +592,174 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 }, 3000);
                 listView2.invalidateViews();
                 break;
-            case R.id.searchCancel: searchClean(); break;
+            case R.id.searchCancel:
+                searchClean(); break;
             case R.id.accommodation:
-                listView2.invalidateViews();
-                removeMarker();
-                accommodation();
-                listView2.invalidateViews();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        setText();
-                        listView2.invalidateViews();
-                    }
-                }, 3000);
-                listView2.invalidateViews();
+                menu1_pressed = !menu1_pressed;
+                if(!menu1_pressed) {
+                    _accommodation.setBackgroundResource(R.drawable.accommodation_food2);
+                    break;
+                }else {
+                    _accommodation.setBackgroundResource(R.drawable.accommodation_food34af);
+                    _restaurant.setBackgroundResource(R.drawable.accommodation_food3);
+                    _gasStation.setBackgroundResource(R.drawable.accommodation_food4);
+                    listView2.invalidateViews();
+                    removeMarker();
+                    accommodation();
+                    listView2.invalidateViews();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 5s = 5000ms
+                            setText();
+                            listView2.invalidateViews();
+                        }
+                    }, 3000);
+                    listView2.invalidateViews();
+                }
                 break;
             case R.id.restaurant:
-                listView2.invalidateViews();
-                removeMarker();
-                restaurant();
-                listView2.invalidateViews();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        setText();
-                        listView2.invalidateViews();
-                    }
-                }, 3000);
-                listView2.invalidateViews();
+                menu1_pressed = !menu1_pressed;
+                if(!menu1_pressed) {
+                    _restaurant.setBackgroundResource(R.drawable.accommodation_food3);
+                    break;
+                }else {
+                    _restaurant.setBackgroundResource(R.drawable.accommodation_food35af);
+                    _accommodation.setBackgroundResource(R.drawable.accommodation_food2);
+                    _gasStation.setBackgroundResource(R.drawable.accommodation_food4);
+                    listView2.invalidateViews();
+                    removeMarker();
+                    restaurant();
+                    listView2.invalidateViews();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 5s = 5000ms
+                            setText();
+                            listView2.invalidateViews();
+                        }
+                    }, 3000);
+                    listView2.invalidateViews();
+                }
                 break;
             case R.id.gasStation:
-                listView2.invalidateViews();
-                removeMarker();
-                gasStation();
-                listView2.invalidateViews();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        setText();
-                        listView2.invalidateViews();
-                    }
-                }, 3000);
-                listView2.invalidateViews();
+                menu1_pressed = !menu1_pressed;
+                if(!menu1_pressed) {
+                    _gasStation.setBackgroundResource(R.drawable.accommodation_food4);
+                    break;
+                }else {
+                    _gasStation.setBackgroundResource(R.drawable.accommodation_food36af);
+                    _restaurant.setBackgroundResource(R.drawable.accommodation_food3);
+                    _accommodation.setBackgroundResource(R.drawable.accommodation_food2);
+                    listView2.invalidateViews();
+                    removeMarker();
+                    gasStation();
+                    listView2.invalidateViews();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Do something after 5s = 5000ms
+                            setText();
+                            listView2.invalidateViews();
+                        }
+                    }, 3000);
+                    listView2.invalidateViews();
+                }
                 break;
-            //case R.id.etc: removeMarker(); navi(); break;
             case R.id.getMyPosition: {
                 getMyPositionCnt++;
-                if (getMyPositionCnt == 1){
-                    getMyPosition();
-                }
-                else if(getMyPositionCnt > 1) {
-                    getMyPosition();
-                    setCompassMode();
-                    setSightVisible();
+                getMyPosition();
+                if(getMyPositionCnt%3 == 0) { //기본 (0단계)
+                    _getMyPosition.setBackgroundResource(R.drawable.accommodation_food7);
+                    setCompassMode(false);
+                    setSightVisible(false);
+                }else if(getMyPositionCnt%3 == 1) { //1단계 : 현재 위치화면
+                    _getMyPosition.setBackgroundResource(R.drawable.accommodation_food42af);
+                }else if(getMyPositionCnt%3 == 2){ //2단계 : 나침반모드
+                    _getMyPosition.setBackgroundResource(R.drawable.accommodation_food58);
+                    setCompassMode(true);
+                    setSightVisible(true);
                 }
                 break;
             }
-            case R.id.setMyPosition: setMyPosition(); break;
-            case R.id.zoom_In: mapZoomIn(); break;
+            case R.id.setMyPosition:
+                setMyPosition_pressed = !setMyPosition_pressed;
+                if(!setMyPosition_pressed){
+                    _setMyPosition.setBackgroundResource(R.drawable.accommodation_food6);
+                }else{
+                    _setMyPosition.setBackgroundResource(R.drawable.accommodation_food41af);
+                    setMyPosition();
+                    break;
+                }
+            case R.id.zoom_In:mapZoomIn(); break;
             case R.id.zoom_Out: mapZoomOut(); break;
-            //case R.id.navigate: navigate(); break;
-
-            //case R.id.btnSetCompassMode	  : 	setCompassMode();		break;
-            //case R.id.navi: navi(); break;
-
-            //case R.id.car: car(); drawCarPath(pathPoint); break;
-            case R.id.car: car(); drawCarPath(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint); break;
-            case R.id.bicycle: bicycle(); drawBicyclePath(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint); break;
-            case R.id.walk: walk(); drawPedestrianPath(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint); break;
+            case R.id.car:
+                menu2_pressed = !menu2_pressed;
+                if(!menu2_pressed) {
+                    _car.setBackgroundResource(R.drawable.accommodation_food11);
+                    break;
+                }else {
+                    _car.setBackgroundResource(R.drawable.accommodation_food44af);
+                    _bicycle.setBackgroundResource(R.drawable.accommodation_food12);
+                    _walk.setBackgroundResource(R.drawable.accommodation_food14);
+                }
+                car(); drawCarPath(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint); break;
+            case R.id.bicycle:
+                menu2_pressed = !menu2_pressed;
+                if(!menu2_pressed) {
+                    _bicycle.setBackgroundResource(R.drawable.accommodation_food12);
+                    break;
+                }else {
+                    _bicycle.setBackgroundResource(R.drawable.accommodation_food45af);
+                    _car.setBackgroundResource(R.drawable.accommodation_food11);
+                    _walk.setBackgroundResource(R.drawable.accommodation_food14);
+                }
+                bicycle(); drawBicyclePath(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint); break;
+            case R.id.walk:
+                menu2_pressed = !menu2_pressed;
+                if(!menu2_pressed) {
+                    _walk.setBackgroundResource(R.drawable.accommodation_food14);
+                    break;
+                }else {
+                    _walk.setBackgroundResource(R.drawable.accommodation_food47af);
+                    _car.setBackgroundResource(R.drawable.accommodation_food11);
+                    _bicycle.setBackgroundResource(R.drawable.accommodation_food12);
+                }
+                walk(); drawPedestrianPath(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint); break;
+            case R.id.wideView: wideView(); break;
         }
     }
-
+    public void wideView(){
+        TMapData tmapdata = new TMapData();
+        Intent intent = new Intent(NavigateActivity.this,
+                FullScreenMapActivity.class);
+        //Log.i("asd", "lat : " + mMapView.getCenterPoint().getLatitude() +  "lon : " + mMapView.getCenterPoint().getLongitude());
+        double[] point = new double[2];
+        point[0] = mMapView.getCenterPoint().getLatitude();
+        point[1] = mMapView.getCenterPoint().getLongitude();
+        String position = "";
+        try {
+            position = tmapdata.convertGpsToAddress(point[0], point[1]);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "다시 시도해주세요", Toast.LENGTH_LONG).show();
+        }
+        intent.putExtra("point", point); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+        intent.putExtra("position", position);
+        // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+        Log.i("asd", "intent " + intent);
+        startActivity(intent);
+    }
     public void setMyPosition(){
         showMyPositionMode = !showMyPositionMode;
         if(showMyPositionMode){
             removeMarker2();
             showMarkerPoint(mMapView.getLatitude(),mMapView.getLongitude());
         }else {
-            MainActivity2Activity.srcPoint = new TMapPoint(srcPoint.getLatitude(), srcPoint.getLongitude());
-            Log.i("sad", "MainActivity2Activity.srcPoint :" + MainActivity2Activity.srcPoint + "srcPoint : "+srcPoint);
+            Log.i("sad", "navigateActivity.srcPoint :" + navigateSettingPopupActivity.srcPoint + "srcPoint : "+srcPoint);
+            navigateSettingPopupActivity.srcPoint = new TMapPoint(srcPoint.getLatitude(), srcPoint.getLongitude());
         }
         srcText.setText("현재 위치");
     }
-
     public void refresh(){
         adapterMarker.notifyDataSetChanged();
     }
@@ -636,26 +767,30 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         Log.i("setStartPoint", "setStartPoint123");
         srcText.setText("asd");
     }
-
     public void choose(TMapPoint point){
         tempPoint = point;
     }
-
     public void setText(){
         time.setText("");
     }
-
-
     /*404m 기준(다산-담헌)
     자동차 - 2분
     자전거 - 3분
     걷기 - 7분*/
     public void car(){
         try {
-            distance = MapUtils.getDistance(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint);
-            Double d = distance * 0.3 / 60;
+            distance = MapUtils.getDistance(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint);
+            Double d = distance * 0.1 / 60;
             Integer i = d.intValue();
-            time.setText("   약 " + i.toString() + "분");
+
+            if(i.intValue()/60!=0){
+                Integer hour = i.intValue()/60;
+                Integer minute =  i.intValue()%60;
+                time.setText( hour.toString() + "시간 " + minute.toString() + "분");
+            }else {
+
+                time.setText("      "+ i.toString() + "분");
+            }
         }catch(Exception ex){
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -669,10 +804,16 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
     public void bicycle(){
         try{
-            distance = MapUtils.getDistance(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint);
+            distance = MapUtils.getDistance(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint);
             Double d = distance * 0.45 / 60;
             Integer i = d.intValue();
-            time.setText("   약 " +  i.toString() +"분");
+            if(i.intValue()/60!=0){
+                Integer hour = i.intValue()/60;
+                Integer minute =  i.intValue()%60;
+                time.setText( hour.toString() + "시간 " + minute.toString() + "분");
+            }else {
+                time.setText("      "+i.toString() + "분");
+            }
         }catch(Exception ex){
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -681,13 +822,18 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             });
         }
     }
-
     public void walk(){
         try{
-            distance = MapUtils.getDistance(MainActivity2Activity.srcPoint, MainActivity2Activity.desPoint);
+            distance = MapUtils.getDistance(navigateSettingPopupActivity.srcPoint, navigateSettingPopupActivity.desPoint);
             Double d = distance * 1.04 / 60;
             Integer i = d.intValue();
-            time.setText("   약 " +  i.toString() +"분");
+            if(i.intValue()/60!=0){
+                Integer hour = i.intValue()/60;
+                Integer minute =  i.intValue()%60;
+                time.setText( hour.toString() + "시간 " + minute.toString() + "분");
+            }else {
+                time.setText("      "+i.toString() + "분");
+            }
         }catch(Exception ex){
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -696,14 +842,16 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             });
         }
     }
-
     public void getMyPosition() {
-        TMapPoint point = gps.getLocation();
-        mMapView.setCenterPoint(point.getLongitude(), point.getLatitude(), true);
-        setMapIcon(mMapView);
-        mMapView.setIconVisibility(true);
+        try {
+            TMapPoint point = gps.getLocation();
+            mMapView.setCenterPoint(point.getLongitude(), point.getLatitude(), true);
+            setMapIcon(mMapView);
+            mMapView.setIconVisibility(true);
+        }catch(Exception ex){
+            Toast.makeText(getApplicationContext(), "잠시 후 다시 시도해주세요.", Toast.LENGTH_LONG).show();
+        }
     }
-
     public void convenience() {
         TMapData tmapdata = new TMapData();
 
@@ -811,7 +959,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     public void gasStation() {
         TMapData tmapdata = new TMapData();
 
@@ -893,7 +1040,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     public void searchClean() {
         searchTotal.setText("");
     }
@@ -936,14 +1082,10 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         return point;
     }
-
-
-
     public void animateTo() {
         TMapPoint point = randomTMapPoint();
         mMapView.setCenterPoint(point.getLongitude(), point.getLatitude(), true);
     }
-
     public Bitmap overlayMark(Bitmap bmp1, Bitmap bmp2, int width, int height) {
         Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
 
@@ -967,7 +1109,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         canvas.drawBitmap(bmp2, marginLeft, marginTop, null);
         return bmOverlay;
     }
-
     /**
      * mapZoomIn
      * 지도를 한단계 확대한다.
@@ -975,7 +1116,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public void mapZoomIn() {
         mMapView.MapZoomIn();
     }
-
     /**
      * mapZoomOut
      * 지도를 한단계 축소한다.
@@ -983,16 +1123,13 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public void mapZoomOut() {
         mMapView.MapZoomOut();
     }
-
     /**
      * getZoomLevel
      * 현재 줌의 레벨을 가지고 온다.
      */
     public void getZoomLevel() {
         int nCurrentZoomLevel = mMapView.getZoomLevel();
-
     }
-
     /**
      * setZoomLevel
      * Zoom Level을 설정한다.
@@ -1011,7 +1148,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     }
                 }).show();
     }
-
     /**
      * seetMapType
      * Map의 Type을 설정한다.
@@ -1029,7 +1165,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     }
                 }).show();
     }
-
     /**
      * setLocationPoint
      * 현재위치로 표시될 좌표의 위도,경도를 설정한다.
@@ -1042,7 +1177,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         mMapView.setLocationPoint(Longitude, Latitude);
     }
-
     /**
      * setMapIcon
      * 현재위치로 표시될 아이콘을 설정한다.
@@ -1056,24 +1190,20 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
         mMapView.setIconVisibility(m_bShowMapIcon);
     }
-
     /**
      * setCompassMode
      * 단말의 방항에 따라 움직이는 나침반모드로 설정한다.
      */
-    public void setCompassMode() {
-        mMapView.setCompassMode(!mMapView.getIsCompass());
+    public void setCompassMode(boolean bool) {
+        mMapView.setCompassMode(bool);
     }
-
     /**
      * getIsCompass
      * 나침반모드의 사용여부를 반환한다.
      */
     public void getIsCompass() {
         Boolean bGetIsCompass = mMapView.getIsCompass();
-
     }
-
     /**
      * setTrafficeInfo
      * 실시간 교통정보를 표출여부를 설정한다.
@@ -1082,27 +1212,16 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         m_bTrafficeMode = !m_bTrafficeMode;
         mMapView.setTrafficInfo(m_bTrafficeMode);
     }
-
-    /**
-     * getIsTrafficeInfo
-     * 실시간 교통정보 표출상태를 반환한다.
-     */
-    public void getIsTrafficeInfo() {
-        Boolean bIsTrafficeInfo = mMapView.IsTrafficInfo();
-
-    }
-
     /**
      * setSightVisible
      * 시야표출여부를 설정한다.
      */
-    public void setSightVisible() {
+    public void setSightVisible(boolean bool) {
         setLocationPoint();
         mMapView.setTMapPoint(gps.getLocation().getLatitude(), gps.getLocation().getLongitude(), true);
         m_bSightVisible = !m_bSightVisible;
-        mMapView.setSightVisible(m_bSightVisible);
+        mMapView.setSightVisible(bool);
     }
-
     /**
      * setTrackingMode
      * 화면중심을 단말의 현재위치로 이동시켜주는 트래킹모드로 설정한다.
@@ -1111,16 +1230,13 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         m_bTrackingMode = !m_bTrackingMode;
         mMapView.setTrackingMode(m_bTrackingMode);
     }
-
     /**
      * getIsTracking
      * 트래킹모드의 사용여부를 반환한다.
      */
     public void getIsTracking() {
         Boolean bIsTracking = mMapView.getIsTracking();
-
     }
-
     /**
      * addTMapCircle()
      * 지도에 서클을 추가한다.
@@ -1141,7 +1257,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.addTMapCircle(strID, circle);
         mArrayCircleID.add(strID);
     }
-
     /**
      * removeTMapCircle
      * 지도상의 해당 서클을 제거한다.
@@ -1154,7 +1269,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.removeTMapCircle(strCircleID);
         mArrayCircleID.remove(mArrayCircleID.size() - 1);
     }
-
     public void showMarkerPoint2(ArrayList<TMapPOIItem> poiItem) {
         if(poiItem == null) {
             return;
@@ -1208,8 +1322,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         });
 
     }
-
-
     public void showMarkerPoint(double lat, double lon) {
         Bitmap bitmap = null;
 
@@ -1217,20 +1329,12 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         TMapMarkerItem item1 = new TMapMarkerItem();
 
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.i_location);
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.accommodation_food55);
 
         item1.setTMapPoint(point);
-        item1.setName("SKT타워");
         item1.setVisible(item1.VISIBLE);
 
         item1.setIcon(bitmap);
-        LogManager.printLog("bitmap " + bitmap.getWidth() + " " + bitmap.getHeight());
-
-        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.i_location);
-
-        Bitmap bitmap_i = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.i_go);
-
-        item1.setCalloutRightButtonImage(bitmap_i);
 
         String strID2 = String.format("pmarker%d", mMarkerID2++);
 
@@ -1238,7 +1342,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mArrayMarkerID2.add(strID2);
 
     }
-
     public void removeMarker() {
         Log.i("asd", "cnt : " + mArrayMarkerID.size());
         if(mArrayMarkerID.size() <= 0 )
@@ -1248,13 +1351,12 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         while(mArrayMarkerID.size() > 0){
             cnt++;
             strMarkerID = mArrayMarkerID.get(mArrayMarkerID.size() - 1);
-            //Log.i("asd", "strMarkerID : " + strMarkerID + "mMapView : " + mMapView );
+            Log.i("asd", "strMarkerID : " + strMarkerID + "mMapView : " + mMapView );
             mMapView.removeMarkerItem(strMarkerID);
             mArrayMarkerID.remove(mArrayMarkerID.size() - 1);
         }
         Log.i("asd", "cnt : " + cnt);
     }
-
     public void removeMarker2() {
         Log.i("asd", "cnt : " + mArrayMarkerID2.size());
         if(mArrayMarkerID2.size() <= 0 )
@@ -1270,7 +1372,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
         Log.i("asd", "cnt : " + cnt);
     }
-
     /**
      * moveFrontMarker
      * 마커를 맨 앞으로 표시 하도록 한다.
@@ -1280,7 +1381,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         TMapMarkerItem item = mMapView.getMarkerItemFromID("1");
         mMapView.bringMarkerToFront(item);
     }
-
     /**
      * moveBackMarker
      * 마커를 맨 뒤에 표시하도록 한다.
@@ -1290,7 +1390,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         TMapMarkerItem item = mMapView.getMarkerItemFromID("1");
         mMapView.sendMarkerToBack(item);
     }
-
     /**
      * drawLine
      * 지도에 라인을 추가한다.
@@ -1309,7 +1408,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.addTMapPolyLine(strID, polyLine);
         mArrayLineID.add(strID);
     }
-
     /**
      * erasePolyLine
      * 지도에 라인을 제거한다.
@@ -1322,7 +1420,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.removeTMapPolyLine(strLineID);
         mArrayLineID.remove(mArrayLineID.size() - 1);
     }
-
     /**
      * drawPolygon
      * 지도에 폴리곤에 그린다.
@@ -1354,7 +1451,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.addTMapPolygon(strID, polygon);
         mArrayPolygonID.add(strID);
     }
-
     /**
      * erasePolygon
      * 지도에 그려진 폴리곤을 제거한다.
@@ -1370,7 +1466,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.removeTMapPolygon(strPolygonID);
         mArrayPolygonID.remove(mArrayPolygonID.size() - 1);
     }
-
     /**
      * drawMapPath
      * 지도에 시작-종료 점에 대해서 경로를 표시한다.
@@ -1399,7 +1494,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
         return null;
     }
-
     /**
      * displayMapInfo()
      * POI들이 모두 표시될 수 있는 줌레벨 결정함수와 중심점리턴하는 함수
@@ -1426,9 +1520,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         String strInfo = "Center Latitude" + info.getTMapPoint().getLatitude() + "Center Longitude" + info.getTMapPoint().getLongitude() +
                 "Level " + info.getTMapZoomLevel();
 
-
     }
-
     /**
      * removeMapPath
      * 경로 표시를 삭제한다.
@@ -1436,7 +1528,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public void removeMapPath() {
         mMapView.removeTMapPath();
     }
-
     /**
      * naviGuide
      * 길안내
@@ -1537,8 +1628,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
      */
     public void getCenterPoint() {
         TMapPoint point = mMapView.getCenterPoint();
-
-
     }
 
     /**
@@ -1626,7 +1715,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 //			});
         }
     }
-
     /**
      * getBizCategory
      * 업종별 category를 요청한다.
@@ -1645,7 +1733,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     /**
      * getAroundBizPoi
      * 업종별 주변검색 POI 데이터를 요청한다.
@@ -1678,7 +1765,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     public void setTileType() {
         AlertDialog dlg = new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_launcher)
@@ -1692,15 +1778,12 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     }
                 }).show();
     }
-
     public void setBicycle() {
         mMapView.setBicycleInfo(!mMapView.IsBicycleInfo());
     }
-
     public void setBicycleFacility() {
         mMapView.setBicycleFacilityInfo(!mMapView.isBicycleFacilityInfo());
     }
-
     public void invokeRoute() {
         final TMapPoint point = mMapView.getCenterPoint();
         TMapData tmapdata = new TMapData();
@@ -1717,7 +1800,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             });
         }
     }
-
     public void invokeSetLocation() {
         final TMapPoint point = mMapView.getCenterPoint();
         TMapData tmapdata = new TMapData();
@@ -1732,7 +1814,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     public void invokeSearchProtal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("T MAP 통합 검색");
@@ -1763,7 +1844,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         });
         builder.show();
     }
-
     public void tmapInstall() {
         new Thread() {
             @Override
@@ -1776,7 +1856,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         }.start();
     }
-
     public void captureImage() {
         mMapView.getCaptureImage(20, new MapCaptureImageListenerCallback() {
 
@@ -1806,14 +1885,11 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
-
     private boolean bZoomEnable = false;
-
     public void disableZoom() {
         bZoomEnable = !bZoomEnable;
         mMapView.setUserScrollZoomEnable(bZoomEnable);
     }
-
     public void timeMachine() {
         TMapData tmapdata = new TMapData();
 
@@ -1829,6 +1905,5 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         Date currentTime = new Date();
         tmapdata.findTimeMachineCarPath(pathInfo,  currentTime, null);
     }
-
 }
 
