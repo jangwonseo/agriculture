@@ -42,7 +42,7 @@ public class HomeActivity extends ActionBarActivity{
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
-    private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton;
+    private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton, myDiary;
 
     //페이지가 열려 있는지 알기 위한 플래그
     private boolean isPageOpen = false;
@@ -115,6 +115,10 @@ public class HomeActivity extends ActionBarActivity{
 
         // 슬라이딩으로 보여질 레이아웃 객체 참조
         slidingPage01 = (LinearLayout) findViewById(R.id.slidingPage01);
+
+        myDiary= (Button) findViewById(R.id.btn_myDiary);
+        myDiary.setOnClickListener(mClickListener);
+
 
         // 애니메이션 객체 로딩
         translateLeftAnim = AnimationUtils.loadAnimation(this, R.anim.translate_left);
@@ -259,6 +263,10 @@ public class HomeActivity extends ActionBarActivity{
                 case R.id.etceterabutton:
                     Intent intentNavigate = new Intent(getApplicationContext(), NavigateActivity.class);
                     startActivity(intentNavigate);
+                    break;
+                case R.id.btn_myDiary:
+                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity.class);
+                    startActivity(intentMyDiary);
                     break;
 
             }

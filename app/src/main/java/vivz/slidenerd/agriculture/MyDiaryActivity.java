@@ -40,6 +40,7 @@ public class MyDiaryActivity extends ActionBarActivity {
     phpDown task;
     String themeName;
     String tempThemeName;
+
     // listview
     private ListView vilageList;
     ArrayList<DiaryItem> data = new ArrayList<>();
@@ -58,10 +59,6 @@ public class MyDiaryActivity extends ActionBarActivity {
         //m_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         vilageList = (ListView) findViewById(R.id.vilageList);
 
-        video = (Button) findViewById(R.id.video);
-        //addItem = (Button) findViewById(R.id.addItem);
-        keys = (TextView) findViewById(R.id.themeKey);
-
         backButton  = (Button)findViewById(R.id.myDiary_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +68,6 @@ public class MyDiaryActivity extends ActionBarActivity {
         });
 
 
-
-        keys.setText(tempThemeName);
 
         // ListView에 어댑터 연결
         adapter = new List_Adapter(this, R.layout.list_item, data);
@@ -95,7 +90,7 @@ public class MyDiaryActivity extends ActionBarActivity {
         });
         // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
 
-            task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
+            task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=321kj");
 
     }
 
@@ -165,10 +160,10 @@ public class MyDiaryActivity extends ActionBarActivity {
                     Log.d("seojang", "this is a apple4444");
                     Log.d("seojang", "정보확인하기 : " + vilageName.getString("prcafsManMoblphon"));
 
-                    DiaryItem item = new DiaryItem(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
+                    DiaryItem item = new DiaryItem(vilageName.getString("thumbUrl"), vilageName.getString("name"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageKndNm"), vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
+                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("vilageId"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
                     data.add(item);
@@ -302,7 +297,6 @@ class DiaryItem implements Serializable {
     private String prcafsManMoblphon;   // 실무자 전화번호
     private String vilageHmpgEnnc;      // 마을 홈피 유무
     private String vilageHmpgUrl;       // 마을 홈피 주소
-    private String vilageKndNm;         // 마을 종류
     private String vilageSlgn;          // 마을 간단 소개
     private String tableName;           // 테마
     private String vilageId;
@@ -327,13 +321,7 @@ class DiaryItem implements Serializable {
         return vilageHmpgEnnc;
     }
 
-    public String getVilageHmpgUrl() {
-        return vilageHmpgUrl;
-    }
-
-    public String getVilageKndNm() {
-        return vilageKndNm;
-    }
+    public String getVilageHmpgUrl() { return vilageHmpgUrl;  }
 
     public String getVilageSlgn() {
         return vilageSlgn;
@@ -348,7 +336,7 @@ class DiaryItem implements Serializable {
     }
 
     public DiaryItem(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageKndNm, String vilageSlgn, String tableName, String VilageId) {
+                String vilageSlgn, String tableName, String VilageId) {
 
         this.thumbUrl = thumbUrl;
         this.name = name;
@@ -356,7 +344,6 @@ class DiaryItem implements Serializable {
         this.prcafsManMoblphon = prcafsManMoblphon;
         this.vilageHmpgEnnc = vilageHmpgEnnc;
         this.vilageHmpgUrl = vilageHmpgUrl;
-        this.vilageKndNm = vilageKndNm;
         this.vilageSlgn = vilageSlgn;
         this.tableName = tableName;
         this.vilageId = VilageId;
