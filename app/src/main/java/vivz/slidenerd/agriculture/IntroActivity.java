@@ -17,7 +17,6 @@ public class IntroActivity extends Activity {
     LinearLayout introbtn;
     Handler introHandler;
     //intro activity
-    //in
 
     SharedPreferences setting;
     SharedPreferences.Editor editor;
