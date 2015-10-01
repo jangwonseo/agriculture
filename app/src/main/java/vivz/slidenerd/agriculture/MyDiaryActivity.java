@@ -43,7 +43,7 @@ public class MyDiaryActivity extends ActionBarActivity {
 
     // listview
     private ListView vilageList;
-    ArrayList<DiaryItem> data = new ArrayList<>();
+    ArrayList<Item> data = new ArrayList<>();
     List_Adapter adapter;
 
     @Override
@@ -160,7 +160,7 @@ public class MyDiaryActivity extends ActionBarActivity {
                     Log.d("seojang", "this is a apple4444");
                     Log.d("seojang", "정보확인하기 : " + vilageName.getString("prcafsManMoblphon"));
 
-                    DiaryItem item = new DiaryItem(vilageName.getString("thumbUrl"), vilageName.getString("name"),
+                    Item item = new Item(vilageName.getString("thumbUrl"), vilageName.getString("name"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
                             vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("vilageId"));
@@ -180,11 +180,11 @@ public class MyDiaryActivity extends ActionBarActivity {
 
 class List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ArrayList<DiaryItem> data;
+    private ArrayList<Item> data;
     private int layout;
     WebView thumb;
 
-    public List_Adapter(Context context, int layout, ArrayList<DiaryItem> data) {
+    public List_Adapter(Context context, int layout, ArrayList<Item> data) {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
         this.layout = layout;
@@ -196,7 +196,7 @@ class List_Adapter extends BaseAdapter {
     }
 
     @Override
-    public DiaryItem getItem(int position) {
+    public Item getItem(int position) {
         return data.get(position);
     }
 
@@ -210,7 +210,7 @@ class List_Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(layout, parent, false);
         }
-        DiaryItem listviewitem = data.get(position);
+        Item listviewitem = data.get(position);
         thumb = (WebView) convertView.findViewById(R.id.thumb);
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
@@ -237,7 +237,7 @@ class List_Adapter extends BaseAdapter {
 //
 //        // 텍스트 짤림방지
 //        if (listviewitem.getName().length() <= 9)
-//            name.setText(listviewitem.getName());
+//            name.setText(listviewitem.getName());.
 //        else if (listviewitem.getName().length() > 9 && listviewitem.getName().length() <= 14) {
 //            int stringEnd = listviewitem.getName().length() - 1;
 //            name.setText(listviewitem.getName().substring(0, stringEnd - 4)
@@ -284,68 +284,5 @@ class List_Adapter extends BaseAdapter {
         sb.append("</BODY>");
         sb.append("</HTML>");
         return sb.toString();
-    }
-}
-
-/**
- * 리스트의 데이터 클래스
- */
-class DiaryItem implements Serializable {
-    private String thumbUrl;            // 이미지 경로
-    private String name;                // 마을 이름
-    private String addr;                // 주소
-    private String prcafsManMoblphon;   // 실무자 전화번호
-    private String vilageHmpgEnnc;      // 마을 홈피 유무
-    private String vilageHmpgUrl;       // 마을 홈피 주소
-    private String vilageSlgn;          // 마을 간단 소개
-    private String tableName;           // 테마
-    private String vilageId;
-
-    public String getThumbUrl() {
-        return thumbUrl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAddr() {
-        return addr;
-    }
-
-    public String getPrcafsManMoblphon() {
-        return prcafsManMoblphon;
-    }
-
-    public String getVilageHmpgEnnc() {
-        return vilageHmpgEnnc;
-    }
-
-    public String getVilageHmpgUrl() { return vilageHmpgUrl;  }
-
-    public String getVilageSlgn() {
-        return vilageSlgn;
-    }
-
-    public String getTableName() {
-        return tableName;
-    }
-
-    public String getVilageId() {
-        return vilageId;
-    }
-
-    public DiaryItem(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageSlgn, String tableName, String VilageId) {
-
-        this.thumbUrl = thumbUrl;
-        this.name = name;
-        this.addr = addr;
-        this.prcafsManMoblphon = prcafsManMoblphon;
-        this.vilageHmpgEnnc = vilageHmpgEnnc;
-        this.vilageHmpgUrl = vilageHmpgUrl;
-        this.vilageSlgn = vilageSlgn;
-        this.tableName = tableName;
-        this.vilageId = VilageId;
     }
 }

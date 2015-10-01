@@ -6,8 +6,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,10 +26,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import vivz.slidenerd.agriculture.list.Item;
-import vivz.slidenerd.agriculture.list.ListActivity;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
-import vivz.slidenerd.agriculture.navigate.BaseActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.recruit.Recruit;
 

@@ -1,7 +1,5 @@
 package vivz.slidenerd.agriculture.list;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -15,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,18 +21,13 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
-import vivz.slidenerd.agriculture.MyDiaryActivity;
+import vivz.slidenerd.agriculture.Item;
 import vivz.slidenerd.agriculture.R;
 
 
-
-import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 import org.json.JSONArray;

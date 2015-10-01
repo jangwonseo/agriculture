@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture.list;
+package vivz.slidenerd.agriculture;
 
 import android.util.Log;
 
