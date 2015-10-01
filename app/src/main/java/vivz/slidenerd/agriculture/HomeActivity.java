@@ -58,6 +58,7 @@ public class HomeActivity extends ActionBarActivity{
     // 홈 왼쪽, 오른쪽 체험 선택
     Button btnLeftVilage;
     Button btnRightVilage;
+    Button btnMyDiary;
     public int recommendNum = 0;
 
 
@@ -142,6 +143,9 @@ public class HomeActivity extends ActionBarActivity{
 
         btnLeftVilage = (Button)findViewById(R.id.btnLeftVilage);
         btnRightVilage = (Button)findViewById(R.id.btnRightVilage);
+
+        btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
+        btnMyDiary.setOnClickListener(mClickListener);
 
         btnLeftVilage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,7 +259,9 @@ public class HomeActivity extends ActionBarActivity{
                     Intent intentNavigate = new Intent(getApplicationContext(), NavigateActivity.class);
                     startActivity(intentNavigate);
                     break;
-
+                case R.id.btn_myDiary:
+                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity.class);
+                    startActivity(intentMyDiary);
             }
         }
     };
