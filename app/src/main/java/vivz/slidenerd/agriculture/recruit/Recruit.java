@@ -110,7 +110,7 @@ public class Recruit extends Activity implements TextWatcher{
 
 
     //모집리스트버튼, 모집하기버튼, 뒤로가기버튼
-    Button recruitListBtn, recruitStartBtn, backBtn;
+    Button recruitListBtn, recruitStartBtn, RecruitBackBtn;
     LinearLayout recruitListLayout,recruitStartLayout;
 
     // 등록하기 버튼
@@ -222,9 +222,10 @@ public class Recruit extends Activity implements TextWatcher{
         recruit_list_autoComplete.setTextColor(Color.BLACK);
 
         // 모집, 모집하기 버튼
-        backBtn = (Button)findViewById(R.id.backbtn);
+        RecruitBackBtn = (Button)findViewById(R.id.BackbtnRecruit);
         recruitListBtn = (Button)findViewById(R.id.recruit_list);
         recruitStartBtn = (Button)findViewById(R.id.recruit_start);
+        RecruitBackBtn.setOnClickListener(recruitClickListener);
         recruitListBtn.setOnClickListener(recruitClickListener);
         recruitStartBtn.setOnClickListener(recruitClickListener);
         recruitListLayout = (LinearLayout)findViewById(R.id.recruit_list_portion);
@@ -510,8 +511,10 @@ public class Recruit extends Activity implements TextWatcher{
                     }
                     break;
 
-                case R.id.backbtn:
+                case R.id.BackbtnRecruit:
+                    Log.e("RECBackBtn", "BBBBBBBBBBBB");
                     onBackPressed();
+                    //finish();
                     break;
                 case R.id.regist_button: // 등록 버튼
 

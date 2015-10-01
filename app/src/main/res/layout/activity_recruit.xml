@@ -17,7 +17,7 @@
             android:layout_weight="70"
             android:background="@drawable/back_button">
             <Button
-                android:id="@+id/backbtn"
+                android:id="@+id/BackbtnRecruit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"/>
