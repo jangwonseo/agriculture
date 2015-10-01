@@ -58,8 +58,6 @@ public class HomeActivity extends ActionBarActivity{
     // 홈 왼쪽, 오른쪽 체험 선택
     Button btnLeftVilage;
     Button btnRightVilage;
-    Button btnMyDiary;
-
     public int recommendNum = 0;
 
 
@@ -157,10 +155,6 @@ public class HomeActivity extends ActionBarActivity{
                 webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
             }
         });
-
-
-        btnMyDiary=(Button) findViewById(R.id.btn_myDiary);
-        btnMyDiary.setOnClickListener(mClickListener);
 
         btnRightVilage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,10 +254,6 @@ public class HomeActivity extends ActionBarActivity{
                 case R.id.etceterabutton:
                     Intent intentNavigate = new Intent(getApplicationContext(), NavigateActivity.class);
                     startActivity(intentNavigate);
-                    break;
-                case R.id.btn_myDiary:
-                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity.class);
-                    startActivity(intentMyDiary);
                     break;
 
             }

@@ -237,16 +237,12 @@ public class ListDetailActivity extends ActionBarActivity {
                         recruitTask = new phpUp();
 
                         recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
-
-                        // MyDiaryActivity로 이동하는 소스
-//                        Log.e("regist", i.toString());
-//                        //searchingseojang
-//                        Log.d("seojang","11111");
-//                        Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
-//                        startActivity(moveIntent);
-//                        Log.d("seojang", "22222");
-
-
+                        Log.e("regist", i.toString());
+                        //searchingseojang
+                        Log.d("seojang","11111");
+                        Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
+                        startActivity(moveIntent);
+                        Log.d("seojang", "22222");
                         Toast.makeText (getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
 
                     } catch (Exception e) {
