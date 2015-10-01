@@ -209,15 +209,12 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         }
 
         protected void onPostExecute(String str){
-
             if ( !str.contains("1 record added") ) {
                 msg.what = joinNoSucceed;
             }
-
             if ( str.contains("key 'PRIMARY'")) {
                 msg.what = joinAlreadyIn;
             }
-
             myJoinHandler.sendMessage(msg);
         }
     }
