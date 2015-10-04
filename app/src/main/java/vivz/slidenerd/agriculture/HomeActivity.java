@@ -177,13 +177,17 @@ public class HomeActivity extends ActionBarActivity{
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
-                        Intent intent = new Intent(getApplicationContext(), ListDetailActivity.class);
-                        intent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
-                        // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
-                        startActivity(intent);
                         break;
                     case MotionEvent.ACTION_UP:
+                        try{
+                            /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
+                            Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
+                            HomeIntent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+                            // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+                            startActivity(HomeIntent);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 return false;
