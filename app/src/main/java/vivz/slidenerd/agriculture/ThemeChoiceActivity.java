@@ -29,7 +29,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
         natureButton = (Button)findViewById(R.id.btn_nature);
         natureButton.setOnClickListener(mClickListener);
 
-        exprienceButton = (Button)findViewById(R.id.btn_exprience);
+        exprienceButton = (Button)findViewById(R.id.btn_experience);
         exprienceButton.setOnClickListener(mClickListener);
 
         traditionalButton = (Button)findViewById(R.id.btn_traditional);
@@ -65,7 +65,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                     intentTheme.putExtra("themeflag","traditional");
                     startActivity(intentTheme);
                     break;
-                case R.id.btn_exprience:
+                case R.id.btn_experience:
                     intentTheme.putExtra("themeflag","experience");
                     startActivity(intentTheme);
                     break;

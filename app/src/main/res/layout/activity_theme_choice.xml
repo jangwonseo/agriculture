@@ -75,11 +75,11 @@
                 android:layout_weight="65">
             </LinearLayout>
             <Button
-                android:id="@+id/btn_exprience"
+                android:id="@+id/btn_experience"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/thema6">
+                android:background="@drawable/btn_experience">
             </Button>
             <LinearLayout
                 android:layout_width="0px"
@@ -91,7 +91,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/thema7">
+                android:background="@drawable/btn_wellbing">
             </Button>
             <LinearLayout
                 android:layout_width="0px"
@@ -121,7 +121,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/thema8">
+                android:background="@drawable/btn_traditional">
             </Button>
             <LinearLayout
                 android:layout_width="0px"
@@ -133,7 +133,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/thema9">
+                android:background="@drawable/btn_nature">
             </Button>
             <LinearLayout
                 android:layout_width="0px"
