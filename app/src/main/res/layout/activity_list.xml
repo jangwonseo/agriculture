@@ -15,7 +15,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/list10"
+            android:background="@drawable/btn_pressback"
             android:clickable="false"
             android:focusable="false">
             <Button

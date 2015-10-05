@@ -16,7 +16,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/thema4">
+            android:background="@drawable/btn_pressback">
 
             <Button
                 android:id="@+id/themechoice_backbutton"
