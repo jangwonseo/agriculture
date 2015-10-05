@@ -1,5 +1,7 @@
 package vivz.slidenerd.agriculture;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -334,11 +337,16 @@ public class HomeActivity extends ActionBarActivity{
 
             // 모든 체험정보를 가져오면 임의로 10개의 체험을 뽑는다.
             Log.e("recomdItemsSize: ", Integer.toString(recommendItems.size()));
-            for ( int i=0 ; i<10 ; i++ ) {
-                recommendItems10.add(recommendItems.get(i));
-                Log.e("recomdItemsAdded: ", recommendItems.get(i).getName());
+            try {
+                for (int i = 0; i < 10; i++) {
+                    recommendItems10.add(recommendItems.get(i));
+                    Log.e("recomdItemsAdded: ", recommendItems.get(i).getName());
+                }
+                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(0).getThumbUrl()), "text/html", "utf-8", null);
+            }catch(Exception ex){
+                Toast.makeText(getApplicationContext(), "인터넷 연결이 되어있지 않습니다.", Toast.LENGTH_SHORT);
             }
-            webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(0).getThumbUrl()), "text/html", "utf-8", null);
+
         }
     }
 
