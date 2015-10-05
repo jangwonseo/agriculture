@@ -100,7 +100,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             R.id.walk,
             R.id.wideView,
     };
-
+//
     private 	int 		m_nCurrentZoomLevel = 0;
     private 	double 		m_Latitude  = 0;
     private     double  	m_Longitude = 0;
