@@ -349,7 +349,7 @@ public class HomeActivity extends ActionBarActivity{
 
         }
     }
-
+//
     /**
      * 애니메이션 리스너 정의
      */
