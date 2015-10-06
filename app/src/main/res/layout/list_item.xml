@@ -85,7 +85,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="45"
+                android:layout_weight="39"
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_width="0px"
@@ -110,7 +110,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="40">
+                android:layout_weight="42">
 
                 <TextView
                     android:id="@+id/vilageAccount"
@@ -128,7 +128,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="5">
+                android:layout_weight="3">
 
             </LinearLayout>
 
@@ -136,7 +136,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="39">
+                android:layout_weight="41">
 
                 <TextView
                     android:id="@+id/vilageAddr"
@@ -156,7 +156,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="10">
+            android:layout_weight="14">
 
         </LinearLayout>
 
