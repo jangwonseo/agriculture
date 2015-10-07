@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.home;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.facebook.appevents.AppEventsLogger;
+
+import vivz.slidenerd.agriculture.R;
 
 
 public class IntroActivity extends Activity {

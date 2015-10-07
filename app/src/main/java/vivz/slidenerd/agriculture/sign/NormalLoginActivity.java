@@ -1,9 +1,11 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.sign;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import vivz.slidenerd.agriculture.R;
 
 
 public class NormalLoginActivity extends ActionBarActivity {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="vivz.slidenerd.agriculture.SignupChoiceActivity"
+    tools:context="vivz.slidenerd.agriculture.sign.SignupChoiceActivity"
     android:background="@drawable/background_screen">
 
     <LinearLayout

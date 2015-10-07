@@ -1,7 +1,5 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.home;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -29,9 +27,14 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import vivz.slidenerd.agriculture.list.Item;
+import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.recruit.Recruit;
+import vivz.slidenerd.agriculture.region_theme.RegionChoiceActivity;
+import vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity;
+import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
 
 
 public class HomeActivity extends ActionBarActivity{

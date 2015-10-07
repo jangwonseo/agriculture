@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,11 +22,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 

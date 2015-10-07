@@ -26,7 +26,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import vivz.slidenerd.agriculture.Item;
 import vivz.slidenerd.agriculture.R;
 
 public class ListActivity extends ActionBarActivity {

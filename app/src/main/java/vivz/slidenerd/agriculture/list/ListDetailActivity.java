@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import vivz.slidenerd.agriculture.Item;
 import vivz.slidenerd.agriculture.R;
 
 

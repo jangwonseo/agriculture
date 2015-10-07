@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.sign;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -20,6 +19,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import vivz.slidenerd.agriculture.R;
 
 
 public class SignupChoiceActivity extends ActionBarActivity {

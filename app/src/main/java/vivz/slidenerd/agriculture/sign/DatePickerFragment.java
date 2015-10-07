@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.sign;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

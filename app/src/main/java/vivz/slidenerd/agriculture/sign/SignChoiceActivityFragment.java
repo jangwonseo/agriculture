@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.sign;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -25,6 +25,9 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONObject;
+
+import vivz.slidenerd.agriculture.home.HomeActivity;
+import vivz.slidenerd.agriculture.R;
 
 
 /**

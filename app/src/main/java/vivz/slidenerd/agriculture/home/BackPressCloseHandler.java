@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.home;
 
 import android.app.Activity;
 import android.widget.Toast;

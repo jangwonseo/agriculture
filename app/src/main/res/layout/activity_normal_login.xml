@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="vivz.slidenerd.agriculture.NormalLoginActivity">
+    tools:context="vivz.slidenerd.agriculture.sign.NormalLoginActivity">
 
 
     <LinearLayout

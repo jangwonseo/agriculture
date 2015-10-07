@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="vivz.slidenerd.agriculture.ThemeChoiceActivity">
+    tools:context="vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity">
 
     <!--title bar-->
     <LinearLayout

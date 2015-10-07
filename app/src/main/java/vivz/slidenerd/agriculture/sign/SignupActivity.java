@@ -1,4 +1,4 @@
-package vivz.slidenerd.agriculture;
+package vivz.slidenerd.agriculture.sign;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -21,11 +21,8 @@ import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -55,13 +52,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Member;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import vivz.slidenerd.agriculture.home.HomeActivity;
+import vivz.slidenerd.agriculture.R;
 
 
 public class SignupActivity extends FragmentActivity {
