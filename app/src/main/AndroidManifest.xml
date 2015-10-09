@@ -123,8 +123,9 @@
             android:label="@string/title_activity_full_screen_map" >
         </activity>
         <activity
-            android:name=".mydiary.MyDiaryActivity"
-            android:label="@string/title_activity_my_diary" >
+            android:name=".mydiary.MyDiaryActivity__"
+            android:label="@string/title_activity_my_diary"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
 

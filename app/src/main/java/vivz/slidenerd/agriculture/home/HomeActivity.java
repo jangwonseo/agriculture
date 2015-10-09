@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
+import vivz.slidenerd.agriculture.mydiary.MyDiaryActivity__;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.recruit.Recruit;
 import vivz.slidenerd.agriculture.region_theme.RegionChoiceActivity;
@@ -270,7 +271,7 @@ public class HomeActivity extends ActionBarActivity{
                     startActivity(intentNavigate);
                     break;
                 case R.id.btn_myDiary:
-                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity.class);
+                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity__.class);
                     startActivity(intentMyDiary);
             }
         }
