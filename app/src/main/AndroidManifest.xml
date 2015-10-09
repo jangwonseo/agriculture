@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vivz.slidenerd.agriculture"
     android:versionCode="2"
-    android:versionName="2.0">
+    android:versionName="2.0" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -113,14 +113,18 @@
         </activity>
         <activity
             android:name=".navigate.navigateSettingPopupActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_navigate_setting_popup"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateHidden"
-            android:configChanges="orientation|keyboardHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".navigate.FullScreenMapActivity"
             android:label="@string/title_activity_full_screen_map" >
+        </activity>
+        <activity
+            android:name=".mydiary.MyDiaryActivity"
+            android:label="@string/title_activity_my_diary" >
         </activity>
     </application>
 
