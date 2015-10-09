@@ -75,6 +75,7 @@ public class HomeActivity extends ActionBarActivity{
     // 프로필 사진
     WebView webvProfile;
 
+    LinearLayout HomeBackGround;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,15 @@ public class HomeActivity extends ActionBarActivity{
                     slidingPage01.startAnimation(translateLeftAnim);
                 }
 
+            }
+        });
+        HomeBackGround = (LinearLayout)findViewById(R.id.homebackground);
+        HomeBackGround.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isPageOpen){
+                    slidingPage01.startAnimation(translateRightAnim);
+                }
             }
         });
 
