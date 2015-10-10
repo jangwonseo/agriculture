@@ -1332,10 +1332,12 @@ class RecruitListItem implements Serializable {
         this.clickNum = clickNum;
         this.phoneNum = phoneNum;
     }
+
     public String toString() {
 
         return "idrecruit=" + idRecruit + "&UserId=" + userId + "&missionName=" + missionName + "&vilageName" + vilageName + "&recruitContent=" +recruitContent + "&termStart=" + termStart + "&termEnd=" + termEnd + "&" + "recruitNum=" + Integer.toString(recruitNum) + "&joinedNum=" + Integer.toString(joinedNum) + "&reward=" + reward + "&ImageURL=" + ImageURL + "&clickNum=" + clickNum + "&phoneNum=" + phoneNum;
     }
+
 }
 
 class Item implements Serializable{
