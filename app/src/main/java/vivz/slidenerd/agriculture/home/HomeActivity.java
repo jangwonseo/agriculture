@@ -40,6 +40,7 @@ import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
 
 public class HomeActivity extends ActionBarActivity{
     //zz
+    //kkk
     //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
