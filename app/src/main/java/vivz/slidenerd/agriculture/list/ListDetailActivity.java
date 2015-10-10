@@ -235,7 +235,7 @@ public class ListDetailActivity extends ActionBarActivity {
                         // 입력한 정보들을 php에 get방식으로 보낸다.
                         recruitTask = new phpUp();
 
-                        recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=                        321kj&" + i.toString());
+                        recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
 
                         // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
