@@ -356,8 +356,8 @@ public class Recruit extends Activity implements TextWatcher{
                 switch(btn.getId()) {
                     case R.id.chkBxBtnTerm:
                         Toast.makeText(getApplicationContext(), "날짜순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
-                        chkBxBtnTerm.setBackgroundColor(Color.BLACK);
-                        chkBxBtnClick.setBackgroundColor(Color.WHITE);
+                        chkBxBtnTerm.setBackgroundColor(Color.parseColor("#3EB5A2"));
+                        chkBxBtnClick.setBackgroundColor(Color.parseColor("#BDBDBD"));
 
                         Collections.sort(orderByTerm, termComparator);
                         Log.e("orderByTerm", orderByTerm.toString());
@@ -369,8 +369,8 @@ public class Recruit extends Activity implements TextWatcher{
 
                     case R.id.chkBxBtnClick:
                         Toast.makeText(getApplicationContext(), "조회순으로 정렬되었습니다.", Toast.LENGTH_SHORT).show();
-                        chkBxBtnClick.setBackgroundColor(Color.BLACK);
-                        chkBxBtnTerm.setBackgroundColor(Color.WHITE);
+                        chkBxBtnClick.setBackgroundColor(Color.parseColor("#3EB5A2"));
+                        chkBxBtnTerm.setBackgroundColor(Color.parseColor("#BDBDBD"));
 
                         Collections.sort(orderByClick, clickComparator);
                         Log.e("orderByClick", orderByClick.toString());

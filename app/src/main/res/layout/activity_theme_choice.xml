@@ -55,7 +55,7 @@
         android:layout_height="0px"
         android:layout_weight="894"
         android:orientation="vertical"
-        android:background="@drawable/thema5">
+        android:background="@drawable/theme1">
 
 
         <LinearLayout
@@ -74,25 +74,39 @@
                 android:layout_height="match_parent"
                 android:layout_weight="65">
             </LinearLayout>
-            <Button
-                android:id="@+id/btn_experience"
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/btn_experience">
-            </Button>
+                >
+                <Button
+                    android:id="@+id/btn_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_experience">
+                </Button>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="20">
             </LinearLayout>
-            <Button
-                android:id="@+id/btn_wellBeing"
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/btn_wellbing">
-            </Button>
+                >
+                <Button
+                    android:id="@+id/btn_wellBeing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_wellbing">
+                </Button>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -116,25 +130,41 @@
                 android:layout_height="match_parent"
                 android:layout_weight="65">
             </LinearLayout>
-            <Button
-                android:id="@+id/btn_traditional"
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/btn_traditional">
-            </Button>
+                >
+
+                <Button
+                    android:id="@+id/btn_traditional"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_traditional">
+                </Button>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="20">
             </LinearLayout>
-            <Button
-                android:id="@+id/btn_nature"
+            <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="195"
-                android:background="@drawable/btn_nature">
-            </Button>
+                >
+
+                <Button
+                    android:id="@+id/btn_nature"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_nature">
+                </Button>
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"

@@ -249,7 +249,9 @@
                         android:id="@+id/chkBxBtnTerm"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null" />
+                        android:button="@null"
+                        android:background="@null"
+                        android:checked="false" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -269,6 +271,7 @@
                         android:id="@+id/chkBxBtnClick"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:button="@null"
                         android:background="@null" />
 
                 </LinearLayout>
