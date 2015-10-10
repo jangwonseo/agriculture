@@ -35,6 +35,7 @@ public class IntroActivity extends Activity {
         //branch test
         //test 2
         // test 3
+        //tset 4
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
 
