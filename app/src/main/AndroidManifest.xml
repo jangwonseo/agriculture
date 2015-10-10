@@ -114,7 +114,7 @@
         <activity
             android:name=".mydiary.MyDiaryActivity__"
             android:label="@string/title_activity_my_diary"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
         <activity
             android:name=".navigate.navigateSettingPopupActivity"
@@ -125,7 +125,7 @@
         </activity>
         <activity
             android:name=".navigate.NavigateSearch"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".navigate.navigateSearchPopup"
@@ -140,6 +140,11 @@
             android:label="@string/title_activity_navigate_setting_popup"
             android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
             android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".mydiary.MyDiaryDetailActivity"
+            android:label="@string/title_activity_my_diary_detail"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
 
