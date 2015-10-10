@@ -35,6 +35,7 @@ public class IntroActivity extends Activity {
 
         Log.d("seojang", "gogogogogogo : " + setting.getString("info_Id", ""));
     }
+    
     Runnable irun = new Runnable() {
         @Override
         public void run() {
