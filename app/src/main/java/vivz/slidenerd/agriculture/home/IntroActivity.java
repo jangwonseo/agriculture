@@ -21,6 +21,7 @@ public class IntroActivity extends Activity {
     //intro activity
     //dfdfdsf
     //jangwon
+    ///dfsdfasdfasf
     SharedPreferences setting;
     SharedPreferences.Editor editor;
     @Override
