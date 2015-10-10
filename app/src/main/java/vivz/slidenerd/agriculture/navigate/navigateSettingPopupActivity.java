@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skp.Tmap.TMapPoint;
 
@@ -44,17 +46,25 @@ public class navigateSettingPopupActivity extends Activity implements View.OnCli
         View.OnClickListener btn1Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigateActivity.srcText.setText(poiName.getText().toString());
+                NavigateActivity.srcButton.setText(poiName.getText().toString());
                 srcPoint = new TMapPoint(i2.getLat(), i2.getLon());
                 onBackPressed();
+                Toast.makeText(getApplicationContext(), "출발지로 설정되었습니다.", Toast.LENGTH_LONG).show();
+                Log.i("asd", "NavigateActivity.srcButton.getText() : " + NavigateActivity.srcButton.getText() + " NavigateActivity.desButton.getText() : " + NavigateActivity.desButton.getText());
+                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "")
+                    onBackPressed();
             }
         };
         View.OnClickListener btn2Listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavigateActivity.desText.setText(poiName.getText().toString());
+                NavigateActivity.desButton.setText(poiName.getText().toString());
                 desPoint = new TMapPoint(i2.getLat(), i2.getLon());
                 onBackPressed();
+                Toast.makeText(getApplicationContext(), "도착지로 설정되었습니다.", Toast.LENGTH_LONG).show();
+                Log.i("asd", "NavigateActivity.srcButton.getText() : " + NavigateActivity.srcButton.getText() + " NavigateActivity.desButton.getText() : " + NavigateActivity.desButton.getText());
+                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "")
+                    onBackPressed();
             }
         };
 

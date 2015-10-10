@@ -112,6 +112,11 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
         <activity
+            android:name=".mydiary.MyDiaryActivity__"
+            android:label="@string/title_activity_my_diary"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
             android:name=".navigate.navigateSettingPopupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_navigate_setting_popup"
@@ -119,13 +124,22 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".navigate.FullScreenMapActivity"
-            android:label="@string/title_activity_full_screen_map" >
+            android:name=".navigate.NavigateSearch"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
-            android:name=".mydiary.MyDiaryActivity__"
-            android:label="@string/title_activity_my_diary"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:name=".navigate.navigateSearchPopup"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_navigate_setting_popup"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".navigate.navigateSetMyPositionPopup"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_navigate_setting_popup"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
     </application>
 
