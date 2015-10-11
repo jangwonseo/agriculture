@@ -48,7 +48,7 @@ public class ListDetailActivity extends ActionBarActivity {
     View.OnTouchListener gestureListener;
 
     Item i;
-
+    boolean isDiary;
     TextView vilageHomepage;
     TextView vilageNameDown;
     View btnView;
@@ -93,10 +93,16 @@ public class ListDetailActivity extends ActionBarActivity {
         };
 
 
+        // 일단은 다이어리에서 넘어온게 아니라고 가정하고 초기화
+        isDiary = false;
+
         // mianActivity에서 넘겨준 인텐트정보를 받는다.
         Intent intent = getIntent();
         Serializable item = intent.getSerializableExtra("item"); // 클래스를 넘길 때는 Serializable을 이용함
+        isDiary = intent.getExtras().getBoolean("isDiary"); // int형 데이터 값 받아옴.
+                                                        // 다이어리에서 넘어오면 1 넘어옴
 
+        Log.e("aaa","다이어리 넘어왔냐는 건 "+isDiary);
         i = (Item)item;
 
 
@@ -150,8 +156,7 @@ public class ListDetailActivity extends ActionBarActivity {
         thumb.setInitialScale(100);
         thumb.setFocusable(false);
 
-        Log.e("zzzzz", "sdfsdfdsf");
-        Log.e("zzzzz", i.getThumbUrl());
+
         if(thumb != null)
         {
             thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrl()), "text/html", "utf-8", null);
@@ -228,16 +233,18 @@ public class ListDetailActivity extends ActionBarActivity {
             switch (v.getId())
             {
                 case R.id.btn_myDiary:
-                    try {
-                        Log.e("regist", "정보입력!");
-                        // 입력한 정보를 Item 객체에 담는다.
+                    if(!isDiary)
+                    {
+                        try {
+                            Log.e("regist", "정보입력!");
+                            // 입력한 정보를 Item 객체에 담는다.
 
-                        // 입력한 정보들을 php에 get방식으로 보낸다.
-                        recruitTask = new phpUp();
+                            // 입력한 정보들을 php에 get방식으로 보낸다.
+                            recruitTask = new phpUp();
 
-                        recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
+                            recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
 
-                        // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
+                            // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
 //                        Log.e("regist", i.toString());
 //                        //searchingseojang
@@ -247,14 +254,18 @@ public class ListDetailActivity extends ActionBarActivity {
 //                        Log.d("seojang", "22222");
 
 
+                            Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
 
-                        Toast.makeText (getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("URLEncoder", "PHP params Encoder error");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("URLEncoder", "PHP params Encoder error");
+                        }
                     }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
 
+                    }
                     break;
                 case R.id.btn_vod:
                     if(vodUrls==null) {

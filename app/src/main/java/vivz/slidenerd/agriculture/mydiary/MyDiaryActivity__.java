@@ -83,6 +83,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
                 Intent intent = new Intent(getApplicationContext(),
                         ListDetailActivity.class);
                 intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+                intent.putExtra("isDiary",true);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 startActivity(intent);
 
