@@ -20,6 +20,9 @@ public class Item implements Serializable {
     private String tableName;           // 테마
     private String vilageId;
 
+    public Item() {
+    }
+
     public String getThumbUrl() {
         return thumbUrl;
     }

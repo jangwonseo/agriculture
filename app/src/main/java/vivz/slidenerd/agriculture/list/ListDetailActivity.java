@@ -65,6 +65,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
     boolean dupChk;
     String vodUrls;
+    String vilageId;
     //phpDown phpJson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         Log.e("aaa","다이어리 넘어왔냐는 건 "+isDiary);
         i = (Item)item;
-
+        vilageId=i.getVilageId();
 
         backButton  = (Button)findViewById(R.id.listDeail_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +197,7 @@ public class ListDetailActivity extends ActionBarActivity {
         main2Web.getSettings().setUseWideViewPort(true);
         main2Web.getSettings().setJavaScriptEnabled(true);
 
-
+        //체험 정보 가져오기
         main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?tableName=" + i.getTableName() + "&vilageId=" + i.getVilageId());
 
 
@@ -213,13 +214,16 @@ public class ListDetailActivity extends ActionBarActivity {
         //phpJson = new phpDown();
         //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
 
-        // 체험 정보 가져오기
+        // 체험 비디오 가져오기가져오기
         task=new phpDown();
         task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + i.getVilageId() + "");
 
         // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
         dupChecker = new dupChecker();
         dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=321kj");
+
+
+
     }
     public  String creHtmlBody(String imagUrl){
         StringBuffer sb = new StringBuffer("<HTML>");
@@ -252,7 +256,8 @@ public class ListDetailActivity extends ActionBarActivity {
                                 // 이름은 recuitTask 지만 하는 일은 정보입력용 변수임
                                 recruitTask = new phpUp();
 
-                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
+                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&tableName="
+                                        + i.getTableName() + "&vilageId=" + i.getVilageId());
 
                                 // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
@@ -262,8 +267,11 @@ public class ListDetailActivity extends ActionBarActivity {
 //                        Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
 //                        startActivity(moveIntent);
 //                        Log.d("seojang", "22222");
-
+                                Log.e("data<RecruitItem>", i.toString());
                                  Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
+                                // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
+                                dupChecker = new dupChecker();
+                                dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=321kj");
 
                             }
                             else
@@ -350,8 +358,11 @@ public class ListDetailActivity extends ActionBarActivity {
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
 
-                    if(vilageName.getString("vilageId")!=null)
+                    if(vilageId.compareTo(vilageName.getString("vilageId"))==0)
+                    {
                         dupChk=true;
+                        break;
+                    }
 
 
                 }
