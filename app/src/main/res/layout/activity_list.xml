@@ -35,7 +35,15 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="81"
-            android:background="@drawable/list9"></LinearLayout>
+            android:orientation="horizontal"
+            >
+            <Button
+                android:id="@+id/list_menubutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_movetohome"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

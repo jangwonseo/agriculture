@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.navigate.navigateSettingPopupActivity;
 import vivz.slidenerd.agriculture.service_prepare;
@@ -36,7 +37,7 @@ public class ListActivity extends ActionBarActivity {
     ImageView imView;
     TextView txtView;
     Button addItem; // 리스트뷰에 있는 관심있는 항목 추가 버튼
-    Button backButton;
+    Button backButton,menuButton;
     TextView keys;
     phpDown task;
     String themeName;
@@ -46,6 +47,8 @@ public class ListActivity extends ActionBarActivity {
     private ListView vilageList;
     ArrayList<Item> data = new ArrayList<>();
     List_Adapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,16 @@ public class ListActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        menuButton = (Button)findViewById(R.id.list_menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
             }
         });
 
