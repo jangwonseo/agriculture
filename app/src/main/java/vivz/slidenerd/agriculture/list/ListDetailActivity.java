@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 
 
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -53,7 +54,7 @@ public class ListDetailActivity extends ActionBarActivity {
     TextView vilageNameDown;
     View btnView;
     Button call;
-    Button backButton;
+    Button backButton,menuButton;
     Button myDiary;
     Button vod;
     phpUp recruitTask;
@@ -116,6 +117,16 @@ public class ListDetailActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        menuButton = (Button)findViewById(R.id.listdetail_menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
             }
         });
 
