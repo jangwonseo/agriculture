@@ -21,6 +21,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
     private Button exprienceButton;
     private Button traditionalButton;
     private Button wellBeingButton;
+    private Button menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,12 @@ public class ThemeChoiceActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
 
