@@ -75,6 +75,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 
 
@@ -515,6 +516,11 @@ public class Recruit extends Activity implements TextWatcher{
                     Log.e("RECBackBtn", "BBBBBBBBBBBB");
                     onBackPressed();
                     //finish();
+                    break;
+                case R.id.recruit_menubutton:
+                    Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                    moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(moveToHomeIntent);
                     break;
                 case R.id.regist_button: // 등록 버튼
 

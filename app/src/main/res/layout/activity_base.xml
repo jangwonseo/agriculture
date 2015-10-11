@@ -34,13 +34,13 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="81"
-            android:background="@drawable/navigate2">
+            >
 
             <Button
-                android:id="@+id/myPage"
+                android:id="@+id/base_menubutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null" />
+                android:background="@drawable/btn_movetohome" />
         </LinearLayout>
 
     </LinearLayout>

@@ -9,11 +9,12 @@ import android.view.View;
 import android.widget.Button;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListActivity;
 
 
 public class RegionChoiceActivity extends ActionBarActivity {
-    private Button backButton;
+    private Button backButton,menuButton;
     private View kangwonBtn;
     private View kyungkiBtn;
     private View chungnamBtn;
@@ -59,6 +60,18 @@ public class RegionChoiceActivity extends ActionBarActivity {
                 onBackPressed();
             }
         });
+        menuButton = (Button)findViewById(R.id.regionchoice_menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
+            }
+        });
+
+
+
     }
 
     Button.OnClickListener mClickListener = new View.OnClickListener()
