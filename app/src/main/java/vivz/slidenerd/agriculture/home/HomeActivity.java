@@ -39,8 +39,6 @@ import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
 
 
 public class HomeActivity extends ActionBarActivity{
-    //zz
-    //kkk
     //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
@@ -48,13 +46,12 @@ public class HomeActivity extends ActionBarActivity{
     private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton;
 
     //페이지가 열려 있는지 알기 위한 플래그
-    private boolean isPageOpen = false;
 
     //애니메이션 객체
     private Animation translateLeftAnim;
     private Animation translateRightAnim;
 
-     //슬라이딩으로 보여지는 페이지 레이아웃
+    //슬라이딩으로 보여지는 페이지 레이아웃
     private LinearLayout slidingPage01;
 
     // 홈에 추천 마을(체험) 이미지
@@ -70,6 +67,7 @@ public class HomeActivity extends ActionBarActivity{
     public int recommendNum = 0;
 
 
+    private boolean isPageOpen = false;
     //두번 눌러 종료
     private BackPressCloseHandler backPressCloseHandler;
 
