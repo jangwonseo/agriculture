@@ -28,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.service_prepare;
 
 public class RecruitPopupActivity extends Activity implements View.OnClickListener{
 
@@ -48,7 +49,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
     Button btnPhoneCall;
     Button btnMissionJoin;
-
+    Button shareButton;
 
     String imgUrl = "http://218.150.181.131/seo/image/"; // 사진이 없을 경우 디폴트 사진 띄우는 경로
 
@@ -67,6 +68,15 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_recruit_popup);
+
+        shareButton = (Button) findViewById(R.id.shareButton);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecruitPopupActivity.this, service_prepare.class);
+                startActivity(intent);
+            }
+        });
 
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();

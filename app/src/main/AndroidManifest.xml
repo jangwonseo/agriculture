@@ -144,7 +144,14 @@
         <activity
             android:name=".mydiary.MyDiaryDetailActivity"
             android:label="@string/title_activity_my_diary_detail"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".service_prepare"
+            android:label="@string/title_activity_service_prepare"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden" >>
         </activity>
     </application>
 

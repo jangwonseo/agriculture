@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,17 +28,20 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.navigate.NavigateActivity;
+import vivz.slidenerd.agriculture.navigate.navigateSettingPopupActivity;
+import vivz.slidenerd.agriculture.service_prepare;
 
 public class ListActivity extends ActionBarActivity {
     ImageView imView;
     TextView txtView;
-    Button video;   // 리스트뷰에 있는 재생버튼
     Button addItem; // 리스트뷰에 있는 관심있는 항목 추가 버튼
     Button backButton;
     TextView keys;
     phpDown task;
     String themeName;
     String tempThemeName;
+    public static Context mContext;
     // listview
     private ListView vilageList;
     ArrayList<Item> data = new ArrayList<>();
@@ -48,7 +52,7 @@ public class ListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         task = new phpDown();
-
+        mContext = this;
         Intent themeIntent = getIntent();
         themeName = themeIntent.getExtras().getString("themeflag");
 
@@ -87,7 +91,6 @@ public class ListActivity extends ActionBarActivity {
         //m_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         vilageList = (ListView) findViewById(R.id.vilageList);
 
-        video = (Button) findViewById(R.id.video);
         //addItem = (Button) findViewById(R.id.addItem);
         keys = (TextView) findViewById(R.id.themeKey);
 
@@ -106,6 +109,7 @@ public class ListActivity extends ActionBarActivity {
         // ListView에 어댑터 연결
         adapter = new List_Adapter(this, R.layout.list_item, data);
         vilageList.setAdapter(adapter);
+
 
         vilageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -251,6 +255,18 @@ class List_Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(layout, parent, false);
         }
+
+        Button video=(Button)convertView.findViewById(R.id.video);
+
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListActivity.mContext, service_prepare.class);
+                ListActivity.mContext.startActivity(intent);
+            }
+        });
+
+
         Item listviewitem = data.get(position);
         thumb = (WebView) convertView.findViewById(R.id.thumb);
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
