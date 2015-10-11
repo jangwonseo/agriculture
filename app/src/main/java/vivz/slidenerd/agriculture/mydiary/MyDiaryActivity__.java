@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.mydiary;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -38,6 +39,10 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     private Button mydiarybackbutton;
 
 
+              //sharedPreference 선언부
+    public SharedPreferences setting;
+    public SharedPreferences.Editor editor;
+    String userId;
     phpDown task;
 
     // listview
@@ -51,6 +56,14 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiary);
+
+
+        //sharedPreference로 전역 공유공간을 만듬
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+        userId = setting.getString("info_Id", "");
+        Log.e("aaaaaaaa","sdfsdfdsf" + userId);
+
 
         // 뒤로가기 버튼
         mydiarybackbutton = (Button)findViewById(R.id.mydiarybackbutton);
