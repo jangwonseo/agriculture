@@ -101,9 +101,9 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
                             vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("vilageId"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
-                    data.add(item);
+                   // data.add(item);
                 }
-                vilageList.setAdapter(adapter);
+               // vilageList.setAdapter(adapter);
 
             } catch (Exception ex) {
                 ex.printStackTrace();
