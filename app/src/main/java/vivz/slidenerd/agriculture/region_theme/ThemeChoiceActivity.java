@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListActivity;
 
 
@@ -48,10 +49,13 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                 onBackPressed();
             }
         });
-
+        menuButton = (Button)findViewById(R.id.themechoice_menubutton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
             }
         });
 
