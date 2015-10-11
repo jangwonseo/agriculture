@@ -58,11 +58,12 @@ public class ListDetailActivity extends ActionBarActivity {
     Button vod;
     phpUp recruitTask;
     phpDown task;
+    dupChecker dupChecker;
 
     WebView main2Web;
     WebView thumb;
 
-
+    boolean dupChk;
     String vodUrls;
     //phpDown phpJson;
     @Override
@@ -95,6 +96,9 @@ public class ListDetailActivity extends ActionBarActivity {
 
         // 일단은 다이어리에서 넘어온게 아니라고 가정하고 초기화
         isDiary = false;
+
+        // 중복 체크값 초기화
+        dupChk=false;
 
         // mianActivity에서 넘겨준 인텐트정보를 받는다.
         Intent intent = getIntent();
@@ -209,10 +213,13 @@ public class ListDetailActivity extends ActionBarActivity {
         //phpJson = new phpDown();
         //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
 
+        // 체험 정보 가져오기
         task=new phpDown();
-        Log.e("zzzzzzzz","Agriculture!");
         task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + i.getVilageId() + "");
-        Log.e("zzzzzzzz", "Agriculture1!");
+
+        // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
+        dupChecker = new dupChecker();
+        dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=321kj");
     }
     public  String creHtmlBody(String imagUrl){
         StringBuffer sb = new StringBuffer("<HTML>");
@@ -236,15 +243,18 @@ public class ListDetailActivity extends ActionBarActivity {
                     if(!isDiary)
                     {
                         try {
-                            Log.e("regist", "정보입력!");
-                            // 입력한 정보를 Item 객체에 담는다.
+                            // 중복 검사
+                            if(!dupChk)
+                            {
 
-                            // 입력한 정보들을 php에 get방식으로 보낸다.
-                            recruitTask = new phpUp();
+                                // 입력한 정보를 Item 객체에 담는다.
+                                // 입력한 정보들을 php에 get방식으로 보낸다.
+                                // 이름은 recuitTask 지만 하는 일은 정보입력용 변수임
+                                recruitTask = new phpUp();
 
-                            recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
+                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&" + i.toString());
 
-                            // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
+                                // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
 //                        Log.e("regist", i.toString());
 //                        //searchingseojang
@@ -253,8 +263,11 @@ public class ListDetailActivity extends ActionBarActivity {
 //                        startActivity(moveIntent);
 //                        Log.d("seojang", "22222");
 
+                                 Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -278,8 +291,78 @@ public class ListDetailActivity extends ActionBarActivity {
                     break;
 
             }
+
+
         }
     };
+
+
+    public class dupChecker extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line = "";
+            try {
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                // 연결되었으면.
+
+                if (conn != null) {
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for (; ; ) {
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if (line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+
+                        }
+
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str) {
+            // JSON 구문을 파싱해서 JSONArray 객체를 생성
+            try {
+
+                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+
+                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
+                    JSONObject vilageName = jAr.getJSONObject(i);
+
+                    if(vilageName.getString("vilageId")!=null)
+                        dupChk=true;
+
+
+                }
+
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+    }
 
 /* // json 파싱하려고 했지만 잘 모르겠음
    // MainActivity 에서는 line = br.. 이 잘 되는데, 여기서는 안됨 url에 접속해서 코드를 하나도 가져오지 못하는데 원인을 모르겠음
