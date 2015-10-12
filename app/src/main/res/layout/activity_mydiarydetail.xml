@@ -86,6 +86,7 @@
                     android:layout_weight="50">
 
                     <TextView
+                        android:id="@+id/missionName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="#ffffff"
@@ -104,6 +105,7 @@
                 android:background="@drawable/mydiary_detail5">
 
                 <Button
+                    android:id="@+id/phoneNum"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"/>
@@ -148,37 +150,64 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0px"
-                        android:layout_weight="15">
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0px"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:textColor="#3EB5A2"
                             android:text="주 최 자"/>
+                        <TextView
+                            android:id="@+id/recruiter"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:textColor="#000000"
+                            android:text="홍 길 동"/>
 
 
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0px"
-                        android:layout_weight="15">
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0px"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:textColor="#3EB5A2"
                             android:text="모집기간"/>
-
+                        <TextView
+                            android:id="@+id/recruitDate"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:textColor="#000000"
+                            android:text="홍 길 동"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0px"
-                        android:layout_weight="15">
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
+
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="0px"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:textColor="#3EB5A2"
                             android:text="신청일자"/>
-
+                        <TextView
+                            android:id="@+id/submitDate"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="4"
+                            android:textColor="#000000"
+                            android:text="홍 길 동"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -198,6 +227,12 @@
                     android:layout_height="0px"
                     android:layout_weight="135"
                     android:background="@drawable/mydiary_detail2">
+                    <TextView
+                        android:id="@+id/mission"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="준비중입니다."/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -217,6 +252,12 @@
                     android:layout_height="0px"
                     android:layout_weight="205"
                     android:background="@drawable/mydiary_detail3">
+                    <TextView
+                        android:id="@+id/colleague"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="#000000"
+                        android:text="준비중입니다."/>
 
                 </LinearLayout>
                 <LinearLayout

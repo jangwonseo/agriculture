@@ -1,6 +1,7 @@
 package vivz.slidenerd.agriculture.list;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -67,6 +68,15 @@ public class ListDetailActivity extends ActionBarActivity {
     boolean dupChk;
     String vodUrls;
     String vilageId;
+    String id;
+
+
+    //sharedPreference 선언부
+    public SharedPreferences setting;
+    public SharedPreferences.Editor editor;
+
+
+
     //phpDown phpJson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +121,12 @@ public class ListDetailActivity extends ActionBarActivity {
         Log.e("aaa","다이어리 넘어왔냐는 건 "+isDiary);
         i = (Item)item;
         vilageId=i.getVilageId();
+
+        //sharedPreference로 전역 공유공간을 만듬
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+        id = setting.getString("info_Id", "");
+
 
         backButton  = (Button)findViewById(R.id.listDeail_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -231,7 +247,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
         dupChecker = new dupChecker();
-        dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=321kj");
+        dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
 
 
 
@@ -265,9 +281,10 @@ public class ListDetailActivity extends ActionBarActivity {
                                 // 입력한 정보를 Item 객체에 담는다.
                                 // 입력한 정보들을 php에 get방식으로 보낸다.
                                 // 이름은 recuitTask 지만 하는 일은 정보입력용 변수임
+                                // 마이다이어리를 추가
                                 recruitTask = new phpUp();
 
-                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=321kj&tableName="
+                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
                                         + i.getTableName() + "&vilageId=" + i.getVilageId());
 
                                 // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
@@ -282,7 +299,7 @@ public class ListDetailActivity extends ActionBarActivity {
                                  Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
                                 // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
                                 dupChecker = new dupChecker();
-                                dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=321kj");
+                                dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
 
                             }
                             else

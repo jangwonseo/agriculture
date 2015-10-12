@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.service_prepare;
@@ -258,19 +259,4 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         }
 
     };
-}
-class MissionItem implements Serializable{
-    private String UserId;
-    private int recruitId;
-    public String getUserId(){return UserId;}
-    public int getRecruitId(){return recruitId;}
-
-    public MissionItem(String UserId, int recruitId){
-        this.recruitId = recruitId;
-        this.UserId = UserId;
-    }
-
-    public String toString() {
-        return "UserId=" + UserId + "&recruitId=" + Integer.toString(recruitId);
-    }
 }

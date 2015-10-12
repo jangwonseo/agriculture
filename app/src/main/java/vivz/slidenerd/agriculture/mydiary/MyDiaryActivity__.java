@@ -45,11 +45,10 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     private Button recruitListButton, interestedListButton;
     private Button mydiarybackbutton;
 
-
-              //sharedPreference 선언부
+    //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
-    String userId;
+    String id;
 
 
     // mydiary 마이다이어리
@@ -77,8 +76,8 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
-        userId = setting.getString("info_Id", "");
-        Log.e("aaaaaaaa", "sdfsdfdsf" + userId);
+        id = setting.getString("info_Id", "");
+
 
 
         // 뒤로가기 버튼
@@ -118,7 +117,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
             }
         });
-        task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=321kj");
+        task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=" + id);
 
 
 
