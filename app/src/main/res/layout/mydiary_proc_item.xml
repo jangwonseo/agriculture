@@ -197,6 +197,26 @@
         android:layout_width="0px"
         android:layout_height="match_parent"
         android:layout_weight="55"
-        android:focusable="false">
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="55"
+            android:background="@drawable/mydiary6">
+            <!-- 아이템 삭제 -->
+            <Button
+                android:id="@+id/btnMydiaryProcCancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="115">
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

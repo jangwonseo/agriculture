@@ -177,6 +177,12 @@
             android:layout_height="0px"
             android:layout_weight="55"
             android:background="@drawable/mydiary6">
+            <!-- 아이템 삭제 -->
+            <Button
+                android:id="@+id/btnMydiaryListCancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
 
         </LinearLayout>
         <LinearLayout
