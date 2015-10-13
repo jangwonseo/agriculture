@@ -69,6 +69,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     // 프로필 사진
     WebView imgvMydiaryProfile;
 
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -179,6 +180,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         } else {
             pTask.execute("http://218.150.181.131/seo/phpMydiaryRecruitList.php?userId=" + id);
         }
+
 
     }
 
@@ -391,7 +393,7 @@ class proc_Adapter extends BaseAdapter {
     @Override
     public long getItemId(int position){return position;}
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         if(convertView==null){
             convertView=inflater.inflate(layout,parent,false);
         }
@@ -429,6 +431,17 @@ class proc_Adapter extends BaseAdapter {
         txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
         txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
         txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
+
+
+        /// 마이다이어리 모집 취소 버튼
+        Button btnMydiaryProcCancle = (Button)convertView.findViewById(R.id.btnMydiaryProcCancle);
+        btnMydiaryProcCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data.remove(position);
+                notifyDataSetChanged(); // 내용 초기화인듯 정말 유용한거 같음!
+            }
+        });
 
         return convertView;
     }
