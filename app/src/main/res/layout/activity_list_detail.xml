@@ -341,7 +341,8 @@
                                 android:layout_width="0px"
                                 android:layout_height="match_parent"
                                 android:layout_weight="40"
-                                android:background="@drawable/information_10">
+                                android:background="@drawable/information_10"
+                                android:id="@+id/accommodation">
                             </Button>
                             <!--첫번째 버튼 끝-->
 
@@ -355,7 +356,8 @@
                                 android:layout_width="0px"
                                 android:layout_height="match_parent"
                                 android:layout_weight="40"
-                                android:background="@drawable/information_12">
+                                android:background="@drawable/accommodation_food32"
+                                android:id="@+id/bank">
                             </Button>
                             <!-- 두번째 버튼 끝 -->
 
@@ -369,7 +371,8 @@
                                 android:layout_width="0px"
                                 android:layout_height="match_parent"
                                 android:layout_weight="40"
-                                android:background="@drawable/information_14">
+                                android:background="@drawable/accommodation_food4"
+                                android:id="@+id/gasStation">
                             </Button>
                             <!-- 세번째 버튼 끝 -->
 
@@ -383,7 +386,8 @@
                                 android:layout_width="0px"
                                 android:layout_height="match_parent"
                                 android:layout_weight="40"
-                                android:background="@drawable/information_16">
+                                android:background="@drawable/information_16"
+                                android:id="@+id/restaurant">
                             </Button>
                             <LinearLayout
                                 android:layout_width="0px"

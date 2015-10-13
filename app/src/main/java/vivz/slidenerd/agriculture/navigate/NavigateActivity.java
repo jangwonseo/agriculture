@@ -168,6 +168,13 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
     private TextView srcTextView;
 
+    public final static  int isClicked_none = 0;
+    public final static  int isClicked_accommodation = 1;
+    public final static  int isClicked_bank = 2;
+    public final static  int isClicked_gasStation = 3;
+    public final static  int isClicked_restaurant = 4;
+    public static int isClicked_menu1 = isClicked_none;
+    Intent intent = null;
     //phpDown task;
 
     /**
@@ -197,7 +204,30 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         initView();
 
+        try {
+            intent  = getIntent();
+            if (intent == null) {
+                Log.i("menu1", "step1");
+                return;
+            }
 
+            switch(isClicked_menu1){
+                case isClicked_accommodation:
+                    search_accommodation(intent.getStringExtra("addr"));
+                    break;
+                case isClicked_bank:
+                    search_bank(intent.getStringExtra("addr"));
+                    break;
+                case isClicked_gasStation:
+                    search_gasStation(intent.getStringExtra("addr"));
+                    break;
+                case isClicked_restaurant:
+                    search_restaurant(intent.getStringExtra("addr"));
+                    break;
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
 				/*
 		btn = (Button) findViewById(R.id.navi);
 		btn.bringToFront();
@@ -972,6 +1002,164 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public void searchClean() {
         searchTotal.setText("");
     }
+
+    public void search_accommodation(String addr) {
+        if(addr==null)
+            return;
+        final String addr2 = addr;
+        TMapData tmapdata = new TMapData();
+        tmapdata.findAllPOI(addr2, new FindAllPOIListenerCallback() {
+            @Override
+            public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                if (poiItem.size() == 0) {
+                    return;
+                }
+
+                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+
+                TMapData tmapdata = new TMapData();
+                tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "숙박", nRadius, 33, new FindAroundNamePOIListenerCallback() {
+
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        if (poiItem == null) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "요청 정보에 대한 결과값이 없습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            showMarkerPoint2(poiItem);
+                            displayMapInfo2(poiItem);
+                            for (int i = 0; i < poiItem.size(); i++) {
+                                TMapPOIItem item = poiItem.get(i);
+                                LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
+                                        + item.getPOIAddress().replace("null", ""));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+    public void search_bank(String addr) {
+        if(addr==null)
+            return;
+        final String addr2 = addr;
+        TMapData tmapdata = new TMapData();
+        tmapdata.findAllPOI(addr2, new FindAllPOIListenerCallback() {
+            @Override
+            public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                if (poiItem.size() == 0) {
+                    return;
+                }
+
+                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+
+                TMapData tmapdata = new TMapData();
+                tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "은행;ATM", nRadius, 33, new FindAroundNamePOIListenerCallback() {
+
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        if (poiItem == null) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "요청 정보에 대한 결과값이 없습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            showMarkerPoint2(poiItem);
+                            displayMapInfo2(poiItem);
+                            for (int i = 0; i < poiItem.size(); i++) {
+                                TMapPOIItem item = poiItem.get(i);
+                                LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
+                                        + item.getPOIAddress().replace("null", ""));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+    public void search_gasStation(String addr) {
+        if(addr==null)
+            return;
+        final String addr2 = addr;
+        TMapData tmapdata = new TMapData();
+        tmapdata.findAllPOI(addr2, new FindAllPOIListenerCallback() {
+            @Override
+            public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                if (poiItem.size() == 0) {
+                    return;
+                }
+
+                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+
+                TMapData tmapdata = new TMapData();
+                tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "주유소;충전소", nRadius, 33, new FindAroundNamePOIListenerCallback() {
+
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        if (poiItem == null) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "요청 정보에 대한 결과값이 없습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            showMarkerPoint2(poiItem);
+                            displayMapInfo2(poiItem);
+                            for (int i = 0; i < poiItem.size(); i++) {
+                                TMapPOIItem item = poiItem.get(i);
+                                LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
+                                        + item.getPOIAddress().replace("null", ""));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+    public void search_restaurant(String addr) {
+        if(addr==null)
+            return;
+        final String addr2 = addr;
+        TMapData tmapdata = new TMapData();
+        tmapdata.findAllPOI(addr2, new FindAllPOIListenerCallback() {
+            @Override
+            public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
+                if (poiItem.size() == 0) {
+                    return;
+                }
+
+                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+
+                TMapData tmapdata = new TMapData();
+                tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "한식;중식;일식;TV맛집;양식", nRadius, 33, new FindAroundNamePOIListenerCallback() {
+
+                    @Override
+                    public void onFindAroundNamePOI(ArrayList<TMapPOIItem> poiItem) {
+                        if (poiItem == null) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "요청 정보에 대한 결과값이 없습니다.", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        } else {
+                            showMarkerPoint2(poiItem);
+                            displayMapInfo2(poiItem);
+                            for (int i = 0; i < poiItem.size(); i++) {
+                                TMapPOIItem item = poiItem.get(i);
+                                LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
+                                        + item.getPOIAddress().replace("null", ""));
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+
     public void search() {
 
         final String strData = searchTotal.getText().toString();

@@ -25,6 +25,7 @@ import java.net.URL;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.home.HomeActivity;
+import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 
 
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -61,6 +62,10 @@ public class ListDetailActivity extends ActionBarActivity {
     phpUp recruitTask;
     phpDown task;
     dupChecker dupChecker;
+    Button accommodation;
+    Button bank;
+    Button gasStation;
+    Button restaurant;
 
     WebView main2Web;
     WebView thumb;
@@ -84,7 +89,14 @@ public class ListDetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_list_detail);
 
         btnView=(View)findViewById(R.id.btnView);
-
+        accommodation = (Button) findViewById(R.id.accommodation);
+        accommodation.setOnClickListener(mClickListener);
+        bank = (Button) findViewById(R.id.bank);
+        bank.setOnClickListener(mClickListener);
+        gasStation = (Button) findViewById(R.id.gasStation);
+        gasStation.setOnClickListener(mClickListener);
+        restaurant = (Button) findViewById(R.id.restaurant);
+        restaurant.setOnClickListener(mClickListener);
         // 제스처를 사용하기 위해 미리 선언.
         gestureDetector = new GestureDetector(this, new SwipeGestureDetector(){
             @Override
@@ -325,7 +337,42 @@ public class ListDetailActivity extends ActionBarActivity {
                         startActivity(new Intent(Intent.ACTION_VIEW,
                                 Uri.parse("http://" + vodUrls )));
                     break;
-
+                case R.id.accommodation:
+                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_accommodation;
+                    Intent intentAccommodation = new Intent(getApplicationContext(), NavigateActivity.class);
+                    intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentAccommodation.putExtra("addr", i.getAddr());
+                    // Log.i("asd", "addr : " + i.getAddr());
+                    intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentAccommodation);
+                    break;
+                case R.id.bank:
+                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_bank;
+                    Intent intentBank = new Intent(getApplicationContext(), NavigateActivity.class);
+                    intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentBank.putExtra("addr", i.getAddr());
+                    // Log.i("asd", "addr : " + i.getAddr());
+                    intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentBank);
+                    break;
+                case R.id.gasStation:
+                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_gasStation;
+                    Intent intentGasStation = new Intent(getApplicationContext(), NavigateActivity.class);
+                    intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentGasStation.putExtra("addr", i.getAddr());
+                    // Log.i("asd", "addr : " + i.getAddr());
+                    intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentGasStation);
+                    break;
+                case R.id.restaurant:
+                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_restaurant;
+                    Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
+                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentRestaurant.putExtra("addr", i.getAddr());
+                    // Log.i("asd", "addr : " + i.getAddr());
+                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentRestaurant);
+                    break;
             }
 
 
