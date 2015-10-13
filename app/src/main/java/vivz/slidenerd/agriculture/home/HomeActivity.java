@@ -77,6 +77,8 @@ public class HomeActivity extends ActionBarActivity{
 
     LinearLayout HomeBackGround;
 
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +87,7 @@ public class HomeActivity extends ActionBarActivity{
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
-        final String userId = setting.getString("info_Id", "");
+        userId = setting.getString("info_Id", "");
 
         goTheme = (Button)findViewById(R.id.themebutton);
         goRegion = (Button)findViewById(R.id.regionbutton);
@@ -296,8 +298,12 @@ public class HomeActivity extends ActionBarActivity{
                     startActivity(intentNavigate);
                     break;
                 case R.id.btn_myDiary:
-                    Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity__.class);
-                    startActivity(intentMyDiary);
+                    if ( userId.equals("") || userId == null ) {
+                        Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity__.class);
+                        startActivity(intentMyDiary);
+                    }
             }
         }
     };
