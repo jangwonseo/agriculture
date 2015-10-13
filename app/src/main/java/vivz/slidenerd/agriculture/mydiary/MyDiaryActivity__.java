@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -117,7 +118,12 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
             }
         });
-        task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=" + id);
+
+        if ( id.equals("") || id == null ) {
+            Toast.makeText(getApplicationContext(), "로그인 정보가 필요합니다.", Toast.LENGTH_SHORT).show();
+        } else {
+            task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=" + id);
+        }
 
 
 
@@ -139,7 +145,12 @@ public class MyDiaryActivity__ extends ActionBarActivity {
             }
 
         });
-        pTask.execute("http://218.150.181.131/seo/recruitList.php");
+        if ( id.equals("") || id == null ) {
+            Toast.makeText(getApplicationContext(), "로그인 정보가 필요합니다.", Toast.LENGTH_SHORT).show();
+        } else {
+            pTask.execute("http://218.150.181.131/seo/phpMydiaryRecruitList.php?userId=" + id);
+        }
+
 
 
 
