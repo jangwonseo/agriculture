@@ -38,7 +38,7 @@ public class ListActivity extends ActionBarActivity {
     ImageView imView;
     TextView txtView;
     Button addItem; // 리스트뷰에 있는 관심있는 항목 추가 버튼
-    Button backButton,menuButton;
+    Button backButton, menuButton;
     TextView keys;
     phpDown task;
     String themeName;
@@ -48,7 +48,8 @@ public class ListActivity extends ActionBarActivity {
     private ListView vilageList;
     ArrayList<Item> data = new ArrayList<>();
     List_Adapter adapter;
-    Typeface yunGothicFont;
+    //폰트설정
+    public Typeface yunGothicFont;
 
 
     @Override
@@ -59,36 +60,33 @@ public class ListActivity extends ActionBarActivity {
         mContext = this;
         Intent themeIntent = getIntent();
         themeName = themeIntent.getExtras().getString("themeflag");
+        //폰트 설정 초기화(윤고딕330)
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
-        Log.d("seojang","seojang3");
-        //폰트설정을 위한 초기화(윤고딕 330)
-        yunGothicFont = Typeface.createFromAsset(getAssets(),"fonts/yungothic330.ttf");
-        Log.d("seojang","seojang4");
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
-
-        if(themeName.equals("experience"))
-             tempThemeName = "체험여행";
-        else if(themeName.equals("nature"))
+        if (themeName.equals("experience"))
+            tempThemeName = "체험여행";
+        else if (themeName.equals("nature"))
             tempThemeName = "자연여행";
-        else if(themeName.equals("traditional"))
+        else if (themeName.equals("traditional"))
             tempThemeName = "전통문화여행";
-        else if(themeName.equals("wellBeing"))
+        else if (themeName.equals("wellBeing"))
             tempThemeName = "웰빙여행";
-        else if(themeName.equals("kangwon"))
+        else if (themeName.equals("kangwon"))
             tempThemeName = "강원도";
-        else if(themeName.equals("kyungki"))
+        else if (themeName.equals("kyungki"))
             tempThemeName = "경기/인천";
-        else if(themeName.equals("chungnam"))
+        else if (themeName.equals("chungnam"))
             tempThemeName = "충남/대전";
-        else if(themeName.equals("chungbuk"))
+        else if (themeName.equals("chungbuk"))
             tempThemeName = "충북";
-        else if(themeName.equals("jeonnam"))
+        else if (themeName.equals("jeonnam"))
             tempThemeName = "전남/광주";
-        else if(themeName.equals("jeonbuk"))
+        else if (themeName.equals("jeonbuk"))
             tempThemeName = "전북";
-        else if(themeName.equals("kyungnam"))
+        else if (themeName.equals("kyungnam"))
             tempThemeName = "경남/부산";
-        else if(themeName.equals("kyungbuk"))
+        else if (themeName.equals("kyungbuk"))
             tempThemeName = "경북/대구";
         else
             tempThemeName = "기타";
@@ -99,12 +97,12 @@ public class ListActivity extends ActionBarActivity {
         vilageList = (ListView) findViewById(R.id.vilageList);
 
         //addItem = (Button) findViewById(R.id.addItem);
-        Log.d("seojang","seojang1");
-        keys = (TextView) findViewById(R.id.themeKey);
-        keys.setTypeface(yunGothicFont);
-        Log.d("seojang", "seojang2");
 
-        backButton  = (Button)findViewById(R.id.list_backbutton);
+        keys = (TextView) findViewById(R.id.themeKey);
+        keys.setTypeface(yunGothicFont);  //윤고딕 적용
+
+
+        backButton = (Button) findViewById(R.id.list_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,24 +110,23 @@ public class ListActivity extends ActionBarActivity {
             }
         });
 
-        menuButton = (Button)findViewById(R.id.list_menubutton);
+        menuButton = (Button) findViewById(R.id.list_menubutton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(moveToHomeIntent);
             }
         });
 
 
-
         keys.setText(tempThemeName);
+
 
         // ListView에 어댑터 연결
         adapter = new List_Adapter(this, R.layout.list_item, data);
         vilageList.setAdapter(adapter);
-
 
         vilageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -140,7 +137,7 @@ public class ListActivity extends ActionBarActivity {
                 Intent intent = new Intent(getApplicationContext(),
                         ListDetailActivity.class);
                 intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
-                intent.putExtra("isDairy",false);
+                intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 startActivity(intent);
 
@@ -148,13 +145,13 @@ public class ListActivity extends ActionBarActivity {
             }
         });
         // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
-        if(themeName.equals("experience")||themeName.equals("nature")||themeName.equals("traditional")||
+        if (themeName.equals("experience") || themeName.equals("nature") || themeName.equals("traditional") ||
                 themeName.equals("wellBeing"))
             task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
-        else if(themeName.equals("kangwon")||themeName.equals("kyungki")||themeName.equals("chungnam")||
-                themeName.equals("chungbuk")||themeName.equals("jeonnam")||themeName.equals("jeonbuk")||
-                themeName.equals("kyungnam")||themeName.equals("kyungbuk"))
+        else if (themeName.equals("kangwon") || themeName.equals("kyungki") || themeName.equals("chungnam") ||
+                themeName.equals("chungbuk") || themeName.equals("jeonnam") || themeName.equals("jeonbuk") ||
+                themeName.equals("kyungnam") || themeName.equals("kyungbuk"))
             task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
 
     }
@@ -248,8 +245,10 @@ class List_Adapter extends BaseAdapter {
     private ArrayList<Item> data;
     private int layout;
     WebView thumb;
-
+    Typeface yunGothicFont;
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
         this.layout = layout;
@@ -272,11 +271,12 @@ class List_Adapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if (convertView == null) {
             convertView = inflater.inflate(layout, parent, false);
         }
 
-        Button video=(Button)convertView.findViewById(R.id.video);
+        Button video = (Button) convertView.findViewById(R.id.video);
 
         video.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +310,7 @@ class List_Adapter extends BaseAdapter {
 
         // 마을 이름
         TextView name = (TextView) convertView.findViewById(R.id.vilageName);
+        name.setTypeface(yunGothicFont);
         name.setText(listviewitem.getName());
 //
 //        // 텍스트 짤림방지
@@ -339,9 +340,11 @@ class List_Adapter extends BaseAdapter {
 
         // 마을 간단 소개
         TextView vilageAccount = (TextView) convertView.findViewById(R.id.vilageAccount);
+        vilageAccount.setTypeface(yunGothicFont);
         vilageAccount.setText(listviewitem.getVilageSlgn());
         // 마을 주소
         TextView addr = (TextView) convertView.findViewById(R.id.vilageAddr);
+        addr.setTypeface(yunGothicFont);
         addr.setText(listviewitem.getAddr());
 
 
