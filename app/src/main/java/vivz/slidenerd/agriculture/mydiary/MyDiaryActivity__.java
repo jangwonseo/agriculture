@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
@@ -68,6 +71,9 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
     // 프로필 사진
     WebView imgvMydiaryProfile;
+
+    // x 버튼 핸들러
+    CancelHandler cancelHandler;
 
 
     @Override
@@ -182,6 +188,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         }
 
 
+        cancelHandler = new CancelHandler();
     }
 
     // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
@@ -364,129 +371,31 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         }
     }
 
+    // Handler 클래스
+    class CancelHandler extends Handler {
 
-}
-
-class proc_Adapter extends BaseAdapter {
-    private LayoutInflater inflater;
-    private ArrayList<vivz.slidenerd.agriculture.recruit.RecruitListItem> data;
-    private int layout;
-
-    // 리스트에 들어갈 이미지를 가져올때 쓰이는 변수들
-    TextView txtvRecListTerm;
-    TextView txtvRecListRecNum;
-    WebView webView ;
-
-    //phpGetImage getImage = new phpGetImage();
-    String imgUrl = "http://218.150.181.131/seo/image/";
-    Bitmap bmImg;
-
-    public proc_Adapter(Context context, int layout, ArrayList<vivz.slidenerd.agriculture.recruit.RecruitListItem> data){
-        this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.data=data;
-        this.layout=layout;
-    }
-    @Override
-    public int getCount(){return data.size();}
-    @Override
-    public vivz.slidenerd.agriculture.recruit.RecruitListItem getItem(int position){return data.get(position);}
-    @Override
-    public long getItemId(int position){return position;}
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent){
-        if(convertView==null){
-            convertView=inflater.inflate(layout,parent,false);
-        }
-        vivz.slidenerd.agriculture.recruit.RecruitListItem listviewitem=data.get(position);
-
-        webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
-
-        // 배경이 하얕게 나오는데 투명하게 만들어줌
-        webView.setBackgroundColor(0);
-        // 웹뷰 설정
-        webView.setVerticalScrollBarEnabled(false);
-        webView.setVerticalScrollbarOverlay(false);
-        webView.setHorizontalScrollBarEnabled(false);
-        webView.setHorizontalScrollbarOverlay(false);
-        webView.setFocusableInTouchMode(false);
-        webView.setHorizontalScrollBarEnabled(false);
-        webView.setVerticalScrollBarEnabled(false);
-        webView.setInitialScale(100);
-        webView.setFocusable(false);
-
-        String ImageURL = listviewitem.getImageURL();
-        String loadingURL = null;
-        if (ImageURL.equals("null") || ImageURL == null) {
-            loadingURL = imgUrl + "default.png";
-        } else {
-            loadingURL = imgUrl + listviewitem.getImageURL();
-        }
-
-        webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
-        Log.e("list image path", loadingURL);
-
-        TextView name=(TextView)convertView.findViewById(R.id.list_missionName);
-        name.setText(listviewitem.getMissionName());
-        txtvRecListTerm = (TextView)convertView.findViewById(R.id.txtvRecListTerm);
-        txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
-        txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
-        txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
-
-
-        /// 마이다이어리 모집 취소 버튼
-        Button btnMydiaryProcCancle = (Button)convertView.findViewById(R.id.btnMydiaryProcCancle);
-        btnMydiaryProcCancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                data.remove(position);
-                notifyDataSetChanged(); // 내용 초기화인듯 정말 유용한거 같음!
-            }
-        });
-
-        return convertView;
-    }
-
-    // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
-    public String creHtmlBody(String imgUrl) {
-        StringBuffer sb = new StringBuffer("<HTML>");
-        sb.append("<HEAD>");
-        sb.append("</HEAD>");
-        sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
-        //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
-        sb.append("<img width='100%' height='100%' style='border-radius: 220px; -moz-border-radius: 220px; -khtml-border-radius: 220px;" +
-                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
-        sb.append("</BODY>");
-        sb.append("</HTML>");
-        return sb.toString();
-    }
-
-    // 서버에서 URL 경로에 있는 이미지를 가져온다. 에러가 나는 바람에 웹뷰로 경로에 있는 이미지 가져온다.
-    private class phpGetImage extends AsyncTask<String, Integer,Bitmap>{
         @Override
-        protected Bitmap doInBackground(String... urls) {
-            // TODO Auto-generated method stub
-            try{
-                URL myFileUrl = new URL(urls[0]);
-                HttpURLConnection conn = (HttpURLConnection)myFileUrl.openConnection();
-                conn.setDoInput(true);
-                conn.connect();
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
 
-                InputStream is = conn.getInputStream();
+            switch (msg.what) {
+                case 2:
+                    Toast.makeText(getApplicationContext(), "모집이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    Toast.makeText(getApplicationContext(), "모집취소에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+                case 4:
+                    Toast.makeText(getApplicationContext(), "관심체험이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    Toast.makeText(getApplicationContext(), "관심체험 삭제를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
 
-                bmImg = BitmapFactory.decodeStream(is);
-
-
-            }catch(IOException e){
-                e.printStackTrace();
             }
-            return bmImg;
         }
 
-        protected void onPostExecute(Bitmap img){
-            //imView.setImageBitmap(bmImg);
-        }
-    }
-}
+    };
 
     class List_Adapter extends BaseAdapter {
         private LayoutInflater inflater;
@@ -516,7 +425,7 @@ class proc_Adapter extends BaseAdapter {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = inflater.inflate(layout, parent, false);
             }
@@ -577,6 +486,23 @@ class proc_Adapter extends BaseAdapter {
             TextView addr = (TextView) convertView.findViewById(R.id.vilageAddr);
             addr.setText(listviewitem.getAddr());
 
+            Button btnMydiaryListCancle = (Button)convertView.findViewById(R.id.btnMydiaryListCancle);
+            btnMydiaryListCancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String VilageName = null;
+                    try {
+                        VilageName  = URLEncoder.encode(data.get(position).getName(), "UTF-8");
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    phpMyDiaryInterestCancel myCancel = new phpMyDiaryInterestCancel();
+
+                    myCancel.execute("http://218.150.181.131/seo/phpMydiaryVilageCancel.php?userId=" + id + "&name=" + VilageName);
+                    data.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
 
             return convertView;
         }
@@ -595,4 +521,238 @@ class proc_Adapter extends BaseAdapter {
             sb.append("</HTML>");
             return sb.toString();
         }
+
+        // MydiaryDetail 부분에서 취소하기
+        public class phpMyDiaryInterestCancel extends AsyncTask<String, Integer,String> {
+
+            Message msg = cancelHandler.obtainMessage(); // 취소 성공/실패를 위한 핸들러
+
+            @Override
+            protected String doInBackground(String... urls) {
+                StringBuilder jsonHtml = new StringBuilder();
+                String line ="";
+                try{
+                    // 텍스트 연결 url 설정
+                    URL url = new URL(urls[0]);
+                    // 이미지 url
+                    Log.e("tag", "url : " + urls[0]);
+                    // URL 페이지 커넥션 객체 생성
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    // 연결되었으면.
+
+                    if(conn != null){
+                        conn.setConnectTimeout(10000);
+                        conn.setUseCaches(false);
+                        // 연결되었음 코드가 리턴되면.
+                        Log.e("tag", "setUseCaches is false");
+                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                            for(;;){
+                                // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                                line = br.readLine();
+                                if(line == null) break;
+                                // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                                jsonHtml.append(line);
+                            }
+                            br.close();
+                        }
+                        conn.disconnect();
+
+                    }
+                } catch(Exception ex){
+                    ex.printStackTrace();
+                    msg.what = 3; // 체험 취소 실패
+                }
+                msg.what = 4; // 체험 취소 성공
+                return jsonHtml.toString();
+
+
+            }
+
+            protected void onPostExecute(String str){
+                cancelHandler.sendMessage(msg);
+            }
+        }
     }
+
+    class proc_Adapter extends BaseAdapter {
+        private LayoutInflater inflater;
+        private ArrayList<vivz.slidenerd.agriculture.recruit.RecruitListItem> data;
+        private int layout;
+
+        // 리스트에 들어갈 이미지를 가져올때 쓰이는 변수들
+        TextView txtvRecListTerm;
+        TextView txtvRecListRecNum;
+        WebView webView ;
+
+        //phpGetImage getImage = new phpGetImage();
+        String imgUrl = "http://218.150.181.131/seo/image/";
+        Bitmap bmImg;
+
+        public proc_Adapter(Context context, int layout, ArrayList<vivz.slidenerd.agriculture.recruit.RecruitListItem> data){
+            this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.data=data;
+            this.layout=layout;
+        }
+        @Override
+        public int getCount(){return data.size();}
+        @Override
+        public vivz.slidenerd.agriculture.recruit.RecruitListItem getItem(int position){return data.get(position);}
+        @Override
+        public long getItemId(int position){return position;}
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent){
+            if(convertView==null){
+                convertView=inflater.inflate(layout,parent,false);
+            }
+            vivz.slidenerd.agriculture.recruit.RecruitListItem listviewitem=data.get(position);
+
+            webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
+
+            // 배경이 하얕게 나오는데 투명하게 만들어줌
+            webView.setBackgroundColor(0);
+            // 웹뷰 설정
+            webView.setVerticalScrollBarEnabled(false);
+            webView.setVerticalScrollbarOverlay(false);
+            webView.setHorizontalScrollBarEnabled(false);
+            webView.setHorizontalScrollbarOverlay(false);
+            webView.setFocusableInTouchMode(false);
+            webView.setHorizontalScrollBarEnabled(false);
+            webView.setVerticalScrollBarEnabled(false);
+            webView.setInitialScale(100);
+            webView.setFocusable(false);
+
+            String ImageURL = listviewitem.getImageURL();
+            String loadingURL = null;
+            if (ImageURL.equals("null") || ImageURL == null) {
+                loadingURL = imgUrl + "default.png";
+            } else {
+                loadingURL = imgUrl + listviewitem.getImageURL();
+            }
+
+            webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
+            Log.e("list image path", loadingURL);
+
+            TextView name=(TextView)convertView.findViewById(R.id.list_missionName);
+            name.setText(listviewitem.getMissionName());
+            txtvRecListTerm = (TextView)convertView.findViewById(R.id.txtvRecListTerm);
+            txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
+            txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
+            txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
+
+
+            /// 마이다이어리 모집 취소 버튼
+            Button btnMydiaryProcCancle = (Button)convertView.findViewById(R.id.btnMydiaryProcCancle);
+            btnMydiaryProcCancle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int recId  = data.get(position).getIdRecruit();
+                    phpMyDiaryListCancel myCancel = new phpMyDiaryListCancel();
+
+                    myCancel.execute("http://218.150.181.131/seo/phpMydiaryListCancel.php?userId=" + id + "&recruitId=" + recId);
+                    data.remove(position);
+                    notifyDataSetChanged(); // 내용 초기화인듯 정말 유용한거 같음!
+                }
+            });
+
+            return convertView;
+        }
+
+        // MydiaryDetail 부분에서 취소하기
+        public class phpMyDiaryListCancel extends AsyncTask<String, Integer,String> {
+
+            Message msg = cancelHandler.obtainMessage(); // 취소 성공/실패를 위한 핸들러
+
+            @Override
+            protected String doInBackground(String... urls) {
+                StringBuilder jsonHtml = new StringBuilder();
+                String line ="";
+                try{
+                    // 텍스트 연결 url 설정
+                    URL url = new URL(urls[0]);
+                    // 이미지 url
+                    Log.e("tag", "url : " + urls[0]);
+                    // URL 페이지 커넥션 객체 생성
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    // 연결되었으면.
+
+                    if(conn != null){
+                        conn.setConnectTimeout(10000);
+                        conn.setUseCaches(false);
+                        // 연결되었음 코드가 리턴되면.
+                        Log.e("tag", "setUseCaches is false");
+                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                            for(;;){
+                                // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                                line = br.readLine();
+                                if(line == null) break;
+                                // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                                jsonHtml.append(line);
+                            }
+                            br.close();
+                        }
+                        conn.disconnect();
+
+                    }
+                } catch(Exception ex){
+                    ex.printStackTrace();
+                    msg.what = 1; // 실패
+                }
+                msg.what = 2; // 성공
+                return jsonHtml.toString();
+
+
+            }
+
+            protected void onPostExecute(String str){
+                cancelHandler.sendMessage(msg);
+            }
+        }
+
+        // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
+        public String creHtmlBody(String imgUrl) {
+            StringBuffer sb = new StringBuffer("<HTML>");
+            sb.append("<HEAD>");
+            sb.append("</HEAD>");
+            sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
+            //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
+            sb.append("<img width='100%' height='100%' style='border-radius: 220px; -moz-border-radius: 220px; -khtml-border-radius: 220px;" +
+                    "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
+            sb.append("</BODY>");
+            sb.append("</HTML>");
+            return sb.toString();
+        }
+
+        // 서버에서 URL 경로에 있는 이미지를 가져온다. 에러가 나는 바람에 웹뷰로 경로에 있는 이미지 가져온다.
+        private class phpGetImage extends AsyncTask<String, Integer,Bitmap>{
+            @Override
+            protected Bitmap doInBackground(String... urls) {
+                // TODO Auto-generated method stub
+                try{
+                    URL myFileUrl = new URL(urls[0]);
+                    HttpURLConnection conn = (HttpURLConnection)myFileUrl.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+
+                    bmImg = BitmapFactory.decodeStream(is);
+
+
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                return bmImg;
+            }
+
+            protected void onPostExecute(Bitmap img){
+                //imView.setImageBitmap(bmImg);
+            }
+        }
+    }
+
+
+}
+
+
