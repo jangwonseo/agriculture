@@ -36,6 +36,7 @@ import vivz.slidenerd.agriculture.recruit.Recruit;
 import vivz.slidenerd.agriculture.region_theme.RegionChoiceActivity;
 import vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity;
 import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
+import vivz.slidenerd.agriculture.sign.SignupActivity;
 
 
 public class HomeActivity extends ActionBarActivity{
@@ -43,7 +44,7 @@ public class HomeActivity extends ActionBarActivity{
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
-    private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton;
+    private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton, btnChangeMyinfo;
 
     //페이지가 열려 있는지 알기 위한 플래그
 
@@ -81,6 +82,11 @@ public class HomeActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //sharedPreference로 전역 공유공간을 만듬
+        setting = getSharedPreferences("setting", MODE_PRIVATE);
+        editor= setting.edit();
+        final String userId = setting.getString("info_Id", "");
+
         goTheme = (Button)findViewById(R.id.themebutton);
         goRegion = (Button)findViewById(R.id.regionbutton);
         goGathering = (Button)findViewById(R.id.gatheringbutton);
@@ -88,6 +94,7 @@ public class HomeActivity extends ActionBarActivity{
 
         menuButton = (Button)findViewById(R.id.home_menubutton);
         myinfoButton = (Button)findViewById(R.id.home_myinfo);
+        btnChangeMyinfo = (Button)findViewById(R.id.btnChangeMyinfo);
 
         goTheme.setOnClickListener(mClickListener);
         goRegion.setOnClickListener(mClickListener);
@@ -122,6 +129,19 @@ public class HomeActivity extends ActionBarActivity{
             public void onClick(View view) {
                 Intent intentSignChoice = new Intent(getApplication(), SignChoiceActivity.class);
                 startActivity(intentSignChoice);
+            }
+        });
+
+        btnChangeMyinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( userId.equals("") || userId == null) {
+                    Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 내정보 수정 myinfo
+                    Intent myInfo = new Intent(getApplicationContext(), ChangeMyinfoActivity.class);
+                    startActivity(myInfo);
+                }
             }
         });
 
@@ -215,11 +235,6 @@ public class HomeActivity extends ActionBarActivity{
 
 
         // 프로필사진
-        //sharedPreference로 전역 공유공간을 만듬
-        setting = getSharedPreferences("setting", MODE_PRIVATE);
-        editor= setting.edit();
-        String userId = setting.getString("info_Id", "");
-
         webvProfile = (WebView)findViewById(R.id.webvProfile);
 
         // 웹뷰 설정

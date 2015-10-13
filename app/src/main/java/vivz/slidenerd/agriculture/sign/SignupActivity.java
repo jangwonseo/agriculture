@@ -321,7 +321,6 @@ public class SignupActivity extends FragmentActivity {
 
 
         // 사진 업로드 부분
-        //uploadButton = (Button)findViewById(R.id.uploadButton); ////////////// 이부분은 등록하기 버튼에 추가되어야 함
         imgvSelectpic  = (ImageView)findViewById(R.id.profile_image);
         imgvSelectpic.setBackgroundColor(0);
 

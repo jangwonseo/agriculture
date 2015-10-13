@@ -148,10 +148,15 @@
         </activity>
         <activity
             android:name=".service_prepare"
-            android:label="@string/title_activity_service_prepare"
             android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_service_prepare"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateHidden" >>
+            android:windowSoftInputMode="stateHidden" >
+>
+        </activity>
+        <activity
+            android:name=".home.ChangeMyinfoActivity"
+            android:label="@string/title_activity_change_myinfo" >
         </activity>
     </application>
 
