@@ -5,11 +5,15 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +40,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
     MissionItem missionItem;
     TextView missionName;
     Button phoneNum;
+    Button btnMydiaryDetailCancel;
 
     getRecruit getRecruit;
 
@@ -47,11 +52,15 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
+    // 취소하기 버튼 메세지 핸들러
+    CancelHandler cancelHandler = new CancelHandler();
+    public static final int cancelSuccess = 1;
+    public static final int cancelNoSuccess = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiarydetail);
-
 
         // 초기화
         collegue="";
@@ -114,10 +123,94 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
             }
         });
 
+        // 신청한 모집 취소하기
+        btnMydiaryDetailCancel = (Button)findViewById(R.id.btnMydiaryDetailCancel);
+        btnMydiaryDetailCancel.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //i.getIdRecruit();
+                //id = id;
+                phpMyDiaryListCancel myCancel = new phpMyDiaryListCancel();
+                myCancel.execute("http://218.150.181.131/seo/phpMydiaryListCancel.php?userId=" + id + "&recruitId=" + i.getIdRecruit());
+                Log.e("MyCancel", "http://218.150.181.131/seo/phpMydiaryListCancel.php?userId=" + id + "&recruitId=" + i.getIdRecruit());
+            }
+        });
+
 
     }
 
+    // MydiaryDetail 부분에서 취소하기
+    public class phpMyDiaryListCancel extends AsyncTask<String, Integer,String> {
 
+        Message msg = cancelHandler.obtainMessage(); // 취소 성공/실패를 위한 핸들러
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+                msg.what = cancelNoSuccess;
+            }
+            msg.what = cancelSuccess;
+            return jsonHtml.toString();
+
+
+        }
+
+        protected void onPostExecute(String str){
+            cancelHandler.sendMessage(msg);
+        }
+    }
+
+    // Handler 클래스
+    class CancelHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case cancelSuccess:
+                    Toast.makeText(getApplicationContext(), "모집이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                    break;
+                case cancelNoSuccess:
+                    Toast.makeText(getApplicationContext(), "모집취소에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+
+            }
+        }
+
+    };
 
     // 체험 모집 중인 정보 가져오기
     public class getRecruit extends AsyncTask<String, Integer, String> {
@@ -183,7 +276,6 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-;
         }
     }
 

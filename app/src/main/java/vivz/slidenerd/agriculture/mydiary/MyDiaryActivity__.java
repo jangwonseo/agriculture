@@ -70,6 +70,19 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     WebView imgvMydiaryProfile;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        pTask = new phpRecruitList();
+        procList = (ListView) findViewById(R.id.procList);
+        pData.clear();
+        pAdapter = new proc_Adapter(this, R.layout.mydiary_proc_item, pData);
+
+        procList.setAdapter(pAdapter);
+
+        pTask.execute("http://218.150.181.131/seo/phpMydiaryRecruitList.php?userId=" + id);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydiary);
