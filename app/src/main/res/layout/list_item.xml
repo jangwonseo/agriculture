@@ -184,11 +184,12 @@
             android:layout_weight="60"
             android:background="@drawable/list5">
             <Button
-                android:id="@+id/video"
+                android:id="@+id/isrecruit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:focusable="false" />
+                android:focusable="false"
+                 />
 
         </LinearLayout>
 

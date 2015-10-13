@@ -1,79 +1,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300px"
-    android:layout_height="232px"
+    android:layout_width="250dp"
+    android:layout_height="150dp"
     android:orientation="vertical">
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="0px"
-         android:layout_weight="32">
-     </LinearLayout>
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="0px"
-         android:layout_weight="100"
-         android:orientation="horizontal">
-         <LinearLayout
-             android:layout_width="0px"
-             android:layout_height="match_parent"
-             android:layout_weight="20"></LinearLayout>
-         <LinearLayout
-             android:layout_width="0px"
-             android:layout_height="match_parent"
-             android:layout_weight="260"
-             android:orientation="vertical">
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="0px"
-                 android:layout_weight="30"></LinearLayout>
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="0px"
-                 android:layout_weight="40">
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:text="서비스 준비 중입니다."
-                     android:textAlignment="center"/>
-             </LinearLayout>
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="0px"
-                 android:layout_weight="30"></LinearLayout>
 
-         </LinearLayout>
-         <LinearLayout
-             android:layout_width="0px"
-             android:layout_height="match_parent"
-             android:layout_weight="20"></LinearLayout>
-     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="32">
+        android:layout_weight="90">
+
+        <TextView
+            android:id="@+id/prepareinfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="서비스 준비 중 입니다."
+            android:textSize="15dp"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="100"
-        android:orientation="horizontal">
+        android:layout_weight="60">
         <LinearLayout
-            android:layout_width="0px"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="80"></LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="140">
+            android:gravity="center">
             <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="확인"
-                android:id="@+id/check"
-                android:textColor="#000000"/>
+                android:id="@+id/preparecheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="확인"/>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="80"></LinearLayout>
+
+
     </LinearLayout>
+
 </LinearLayout>

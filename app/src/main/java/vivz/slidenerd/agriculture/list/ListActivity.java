@@ -246,6 +246,7 @@ class List_Adapter extends BaseAdapter {
     private int layout;
     WebView thumb;
     Typeface yunGothicFont;
+    Button isRecruit;
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
@@ -276,9 +277,9 @@ class List_Adapter extends BaseAdapter {
             convertView = inflater.inflate(layout, parent, false);
         }
 
-        Button video = (Button) convertView.findViewById(R.id.video);
+        isRecruit = (Button) convertView.findViewById(R.id.isrecruit);
 
-        video.setOnClickListener(new View.OnClickListener() {
+        isRecruit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListActivity.mContext, service_prepare.class);
