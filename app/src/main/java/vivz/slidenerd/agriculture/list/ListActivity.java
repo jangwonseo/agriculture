@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -47,7 +48,7 @@ public class ListActivity extends ActionBarActivity {
     private ListView vilageList;
     ArrayList<Item> data = new ArrayList<>();
     List_Adapter adapter;
-
+    Typeface yunGothicFont;
 
 
     @Override
@@ -59,7 +60,10 @@ public class ListActivity extends ActionBarActivity {
         Intent themeIntent = getIntent();
         themeName = themeIntent.getExtras().getString("themeflag");
 
-
+        Log.d("seojang","seojang3");
+        //폰트설정을 위한 초기화(윤고딕 330)
+        yunGothicFont = Typeface.createFromAsset(getAssets(),"fonts/yungothic330.ttf");
+        Log.d("seojang","seojang4");
         // 어떤 값이 넘어오는가에 따라서 액티비티 소제목 변경
 
         if(themeName.equals("experience"))
@@ -95,7 +99,10 @@ public class ListActivity extends ActionBarActivity {
         vilageList = (ListView) findViewById(R.id.vilageList);
 
         //addItem = (Button) findViewById(R.id.addItem);
+        Log.d("seojang","seojang1");
         keys = (TextView) findViewById(R.id.themeKey);
+        keys.setTypeface(yunGothicFont);
+        Log.d("seojang", "seojang2");
 
         backButton  = (Button)findViewById(R.id.list_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
