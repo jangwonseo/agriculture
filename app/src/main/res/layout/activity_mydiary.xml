@@ -74,10 +74,13 @@
                 android:layout_weight="145"
                 android:background="@drawable/mydiary7">
 
-                <ImageView
+                <WebView
+                    android:id="@+id/imgvMydiaryProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"/>
+                    android:background="@null"
+                    android:focusable="false"
+                    android:clickable="false"/>
 
             </LinearLayout>
             <LinearLayout

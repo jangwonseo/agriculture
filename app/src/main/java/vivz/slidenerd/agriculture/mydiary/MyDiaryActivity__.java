@@ -66,7 +66,8 @@ public class MyDiaryActivity__ extends ActionBarActivity {
     proc_Adapter pAdapter;
 
 
-
+    // 프로필 사진
+    WebView imgvMydiaryProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,21 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         id = setting.getString("info_Id", "");
 
 
+        // 프로필 사진
+        imgvMydiaryProfile = (WebView)findViewById(R.id.imgvMydiaryProfile);
+        // 웹뷰 설정
+        // 배경이 하얕게 나오는데 투명하게 만들어줌
+        imgvMydiaryProfile.setBackgroundColor(0);
+        imgvMydiaryProfile.setVerticalScrollBarEnabled(false);
+        imgvMydiaryProfile.setVerticalScrollbarOverlay(false);
+        imgvMydiaryProfile.setHorizontalScrollBarEnabled(false);
+        imgvMydiaryProfile.setHorizontalScrollbarOverlay(false);
+        imgvMydiaryProfile.setFocusableInTouchMode(false);
+        imgvMydiaryProfile.setHorizontalScrollBarEnabled(false);
+        imgvMydiaryProfile.setVerticalScrollBarEnabled(false);
+        imgvMydiaryProfile.setInitialScale(100);
+        imgvMydiaryProfile.setFocusable(false);
+        imgvMydiaryProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+id+"Profile.jpg"), "text/html", "utf-8", null);
 
         // 뒤로가기 버튼
         mydiarybackbutton = (Button)findViewById(R.id.mydiarybackbutton);
@@ -151,12 +167,21 @@ public class MyDiaryActivity__ extends ActionBarActivity {
             pTask.execute("http://218.150.181.131/seo/phpMydiaryRecruitList.php?userId=" + id);
         }
 
-
-
-
-
     }
 
+    // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
+    public String creHtmlBody(String imgUrl) {
+        StringBuffer sb = new StringBuffer("<HTML>");
+        sb.append("<HEAD>");
+        sb.append("</HEAD>");
+        sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
+        //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
+        sb.append("<img width='100%' height='100%' style='border-radius: 220px; -moz-border-radius: 220px; -khtml-border-radius: 220px;" +
+                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
+        sb.append("</BODY>");
+        sb.append("</HTML>");
+        return sb.toString();
+    }
 
     Button.OnClickListener mClickListener = new View.OnClickListener() {
         public void onClick(View v) {

@@ -221,9 +221,10 @@ public class HomeActivity extends ActionBarActivity{
         String userId = setting.getString("info_Id", "");
 
         webvProfile = (WebView)findViewById(R.id.webvProfile);
+
+        // 웹뷰 설정
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webvProfile.setBackgroundColor(0);
-        // 웹뷰 설정
         webvProfile.setVerticalScrollBarEnabled(false);
         webvProfile.setVerticalScrollbarOverlay(false);
         webvProfile.setHorizontalScrollBarEnabled(false);
