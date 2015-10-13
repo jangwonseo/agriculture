@@ -109,7 +109,7 @@
                     android:id="@+id/recruitlistbutton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null"/>
+                    android:background="@null" />
 
             </LinearLayout>
             <!-- 관심체험-->
