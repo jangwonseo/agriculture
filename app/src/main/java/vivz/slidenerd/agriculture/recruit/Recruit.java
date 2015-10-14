@@ -115,8 +115,8 @@ public class Recruit extends Activity implements TextWatcher{
     private ArrayList<String> search_list_item = new ArrayList<String>();
 
 
-    //모집리스트버튼, 모집하기버튼, 뒤로가기버튼
-    Button recruitListBtn, recruitStartBtn, RecruitBackBtn;
+    //모집리스트버튼, 모집하기버튼, 뒤로가기버튼,홈버튼
+    Button recruitListBtn, recruitStartBtn, RecruitBackBtn,RecruitMenuBtn;
     LinearLayout recruitListLayout,recruitStartLayout;
 
     // 등록하기 버튼
@@ -239,13 +239,17 @@ public class Recruit extends Activity implements TextWatcher{
         recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
         recruit_list_autoComplete.setTextColor(Color.BLACK);
 
-        // 모집, 모집하기 버튼
+        // 모집, 모집하기,뒤로가기,홈 버튼
         RecruitBackBtn = (Button)findViewById(R.id.BackbtnRecruit);
         recruitListBtn = (Button)findViewById(R.id.recruit_list);
         recruitStartBtn = (Button)findViewById(R.id.recruit_start);
+        RecruitMenuBtn = (Button)findViewById(R.id.recruit_menubutton);
+
         RecruitBackBtn.setOnClickListener(recruitClickListener);
+        RecruitMenuBtn.setOnClickListener(recruitClickListener);
         recruitListBtn.setOnClickListener(recruitClickListener);
         recruitStartBtn.setOnClickListener(recruitClickListener);
+
         recruitListLayout = (LinearLayout)findViewById(R.id.recruit_list_portion);
         recruitStartLayout = (LinearLayout)findViewById(R.id.recruit_start_portion);
 
@@ -536,7 +540,7 @@ public class Recruit extends Activity implements TextWatcher{
                     //finish();
                     break;
                 case R.id.recruit_menubutton:
-                    Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                    Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                     moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(moveToHomeIntent);
                     break;

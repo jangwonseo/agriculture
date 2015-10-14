@@ -190,6 +190,9 @@
                                 android:textColor="#4C4C4C"
                                 android:completionThreshold="1"
                                 android:hint="모집을 검색하세요"
+                                android:textSize="12dp"
+                                android:paddingLeft="5dp"
+                                android:paddingTop="2dp"
                                 android:textColorHint="#9C9C9C"/>
 
                         </LinearLayout>
@@ -410,6 +413,8 @@
                                     android:textColor="#000000"
                                     android:completionThreshold="1"
                                     android:hint="마을(체험)을 검색하세요"
+                                    android:textSize="12dp"
+                                    android:paddingLeft="5dp"
                                     android:textColorHint="#9C9C9C"/>
 
                             </LinearLayout>
@@ -474,6 +479,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textColor="#4C4C4C"
+                            android:textSize="12dp"
+                            android:paddingLeft="5dp"
                             android:hint="미션이름을 입력하세요!"
                             android:textColorHint="#9C9C9C"/>
 
@@ -526,7 +533,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="imagePath"
-                            android:textColor="#4C4C4C"/>
+                            android:textColor="#4C4C4C"
+                            />
 
                     </LinearLayout>
 
@@ -548,7 +556,10 @@
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="#4C4C4C"/>
+                        android:textColor="#4C4C4C"
+                        android:textSize="12dp"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -580,7 +591,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:clickable="true"
-                            android:textColor="#4C4C4C"/>
+                            android:textColor="#404947"
+                            android:textSize="12dp"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -600,7 +614,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:clickable="true"
-                            android:textColor="#4C4C4C"
+                            android:textColor="#404947"
+                            android:textSize="12dp"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp"
                             />
 
                     </LinearLayout>
@@ -636,6 +653,8 @@
                             android:layout_height="match_parent"
                             android:textColor="#4C4C4C"
                             android:hint="숫자만"
+                            android:textSize="12dp"
+                            android:paddingLeft="5dp"
                             android:textColorHint="#9C9C9C"/>
 
                     </LinearLayout>
@@ -654,7 +673,9 @@
                             android:layout_height="match_parent"
                             android:background="@null"
                             android:textColor="#4C4C4C"
-                            android:hint="-없이 입력"
+                            android:hint="'-'없이 입력"
+                            android:textSize="12dp"
+                            android:paddingLeft="5dp"
                             android:textColorHint="#9C9C9C"/>
                     </LinearLayout>
 
@@ -676,7 +697,9 @@
                         android:background="@null"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="#4C4C4C"/>
+                        android:textColor="#4C4C4C"
+                        android:textSize="12dp"
+                        android:paddingLeft="5dp"/>
 
                 </LinearLayout>
                 <LinearLayout
