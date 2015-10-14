@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
     android:layout_height="150dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#C4FDFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,6 +15,9 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="서비스 준비 중 입니다."
+            android:textColor="#3EB5A2"
+            android:shadowRadius="2"
+            android:shadowColor="#8C8C8C"
             android:textSize="15dp"/>
 
     </LinearLayout>
@@ -29,6 +33,7 @@
                 android:id="@+id/preparecheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="#4374D9"
                 android:textSize="15dp"
                 android:text="확인"/>
 
