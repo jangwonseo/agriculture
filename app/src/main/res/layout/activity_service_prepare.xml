@@ -33,8 +33,5 @@
                 android:text="확인"/>
 
         </LinearLayout>
-
-
     </LinearLayout>
-
 </LinearLayout>
