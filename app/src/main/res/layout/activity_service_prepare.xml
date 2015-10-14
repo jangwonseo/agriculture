@@ -2,12 +2,12 @@
     android:layout_width="250dp"
     android:layout_height="150dp"
     android:orientation="vertical"
-    android:background="#C4FDFF">
+    android:background="#E8FCF9">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="90">
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
         <TextView
             android:id="@+id/prepareinfo"
@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="서비스 준비 중 입니다."
-            android:textColor="#3EB5A2"
+            android:textColor="#404947"
             android:shadowRadius="2"
             android:shadowColor="#8C8C8C"
             android:textSize="15dp"/>
@@ -23,19 +23,60 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="60">
+        android:layout_height="0dp"
+        android:layout_weight="2">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
-            <Button
-                android:id="@+id/preparecheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#4374D9"
-                android:textSize="15dp"
-                android:text="확인"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/preparecheck"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#42B9A7"
+                        android:textSize="15dp"
+                        android:text="확인"
+                        android:textColor="#E8FCF9"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

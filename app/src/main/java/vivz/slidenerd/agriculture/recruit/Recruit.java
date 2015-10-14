@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -80,6 +81,10 @@ import vivz.slidenerd.agriculture.list.ListDetailActivity;
 
 
 public class Recruit extends Activity implements TextWatcher{
+    //폰트
+    Typeface yunGothicFont;
+
+
     //로그인 정보 가져오기
     SharedPreferences setting;
     SharedPreferences.Editor editor;
@@ -167,6 +172,9 @@ public class Recruit extends Activity implements TextWatcher{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recruit);
 
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
         // 로그인 정보 가져오는 부분
         // sharedUserId 는 로그인 한 회원의 id 정보
         // 문자열이 "" 일 경우, 미 로그인, 아니라면 로그인 중이라 가정
@@ -178,12 +186,19 @@ public class Recruit extends Activity implements TextWatcher{
 
         // 모집하기 글쓰는 부분 ---------------------------------------------------------
         missionName = (EditText)findViewById(R.id.missionName);
+        missionName.setTypeface(yunGothicFont);  //폰트
         recruitContent = (EditText)findViewById(R.id.content);
+        recruitContent.setTypeface(yunGothicFont);
         termStart = (TextView)findViewById(R.id.termStart);
+        termStart.setTypeface(yunGothicFont);
         termEnd = (TextView)findViewById(R.id.termEnd);
+        termEnd.setTypeface(yunGothicFont);
         recruitNum = (EditText)findViewById(R.id.recruitNum);
+        recruitNum.setTypeface(yunGothicFont);
         reward = (EditText)findViewById(R.id.reward);
+        reward.setTypeface(yunGothicFont);
         etxtPhone = (EditText)findViewById(R.id.etxtPhone);
+        etxtPhone.setTypeface(yunGothicFont);
 
         // 날짜 클릭할 수 있도록 설정함(집적 입력하지 않고, 휠로 날짜 맞춤 (디폴트로 오늘 날짜))
         termStart.setOnClickListener(new View.OnClickListener() {
@@ -214,10 +229,12 @@ public class Recruit extends Activity implements TextWatcher{
 
         // 설정된 날짜를 TextView에 출력
         recruit_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_autoComplete);
+        recruit_autoComplete.setTypeface(yunGothicFont);
         recruit_autoComplete.addTextChangedListener(this);
         recruit_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_item_vilageName));
         recruit_autoComplete.setTextColor(Color.BLACK);
         recruit_list_autoComplete = (AutoCompleteTextView)findViewById(R.id.recruit_list_autoComplete);
+        recruit_list_autoComplete.setTypeface(yunGothicFont);
         recruit_list_autoComplete.addTextChangedListener(this);
         recruit_list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
         recruit_list_autoComplete.setTextColor(Color.BLACK);
@@ -426,6 +443,7 @@ public class Recruit extends Activity implements TextWatcher{
         upLoadServerUri = "http://218.150.181.131/seo/UploadToServer.php";
 
         filePath = (TextView)findViewById(R.id.filePath);
+        filePath.setTypeface(yunGothicFont);
     }
 
     @Override
@@ -1144,6 +1162,7 @@ class List_Adapter extends BaseAdapter {
     private ArrayList<RecruitListItem> data;
     private int layout;
 
+    private Typeface yunGothicFont; //윤고딕폰트
     // 리스트에 들어갈 이미지를 가져올때 쓰이는 변수들
     TextView txtvRecListTerm;
     TextView txtvRecListRecNum;
@@ -1154,6 +1173,8 @@ class List_Adapter extends BaseAdapter {
     Bitmap bmImg;
 
     public List_Adapter(Context context, int layout, ArrayList<RecruitListItem> data){
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
@@ -1198,10 +1219,13 @@ class List_Adapter extends BaseAdapter {
         Log.e("list image path", loadingURL);
 
         TextView name=(TextView)convertView.findViewById(R.id.list_missionName);
+        name.setTypeface(yunGothicFont);
         name.setText(listviewitem.getMissionName());
         txtvRecListTerm = (TextView)convertView.findViewById(R.id.txtvRecListTerm);
+        txtvRecListTerm.setTypeface(yunGothicFont);
         txtvRecListTerm.setText(listviewitem.getTermStart() + "\n\t ~ " + listviewitem.getTermEnd());
         txtvRecListRecNum = (TextView)convertView.findViewById(R.id.txtvRecListRecNum);
+        txtvRecListRecNum.setTypeface(yunGothicFont);
         txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
 
         return convertView;
