@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.list;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -80,6 +81,9 @@ public class ListDetailActivity extends ActionBarActivity {
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
+    //폰트
+    Typeface yunGothicFont;
+
 
 
     //phpDown phpJson;
@@ -87,6 +91,9 @@ public class ListDetailActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_detail);
+
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         btnView=(View)findViewById(R.id.btnView);
         accommodation = (Button) findViewById(R.id.accommodation);
@@ -159,9 +166,11 @@ public class ListDetailActivity extends ActionBarActivity {
         });
 
         vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
+        vilageNameDown.setTypeface(yunGothicFont);
         vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름
 
         vilageHomepage = (TextView)findViewById(R.id.vilageHomepage); // 마을 홈페이지
+        vilageHomepage.setTypeface(yunGothicFont);
         vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
         Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
 

@@ -79,6 +79,8 @@ public class HomeActivity extends ActionBarActivity{
 
     String userId;
 
+    Button eventButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -251,7 +253,16 @@ public class HomeActivity extends ActionBarActivity{
         webvProfile.setVerticalScrollBarEnabled(false);
         webvProfile.setInitialScale(100);
         webvProfile.setFocusable(false);
-        webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+userId+"Profile.jpg"), "text/html", "utf-8", null);
+        webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
+
+        eventButton = (Button)findViewById(R.id.eventbutton);
+        eventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EventWindow.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
