@@ -131,11 +131,12 @@
                     android:id="@+id/user_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:hint="ex)홍길동"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 
@@ -172,11 +173,12 @@
                     android:id="@+id/user_id"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
+                    android:singleLine="true"
                     android:background="@null"
                     android:hint="ex)abcd@naver.com"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -256,12 +258,13 @@
                     android:id="@+id/user_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
+                    android:singleLine="true"
                     android:background="@null"
                     android:hint="ex)funfarm1234"
                     android:inputType="textPassword"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -298,12 +301,13 @@
                     android:id="@+id/user_password_re"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
+                    android:singleLine="true"
                     android:background="@null"
                     android:hint="ex)funfarm1234"
                     android:inputType="textPassword"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -340,11 +344,12 @@
                     android:id="@+id/user_phonenumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
+                    android:singleLine="true"
                     android:background="@null"
                     android:hint="ex)01012341234"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -382,8 +387,7 @@
                     android:id="@+id/user_birthday_year"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
@@ -408,8 +412,7 @@
                     android:id="@+id/user_birthday_month"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
@@ -434,8 +437,7 @@
                     android:id="@+id/user_birthday_day"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"

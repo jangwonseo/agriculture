@@ -131,11 +131,13 @@
                     android:id="@+id/ChangeUserName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:hint="ex)홍길동"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp"
+                    android:singleLine="true"
+                    />
 
             </LinearLayout>
 
@@ -171,10 +173,11 @@
                     android:id="@+id/MyinfoUserId"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingTop="15dp"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -182,7 +185,7 @@
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="30">
+                android:layout_weight="25">
 
             </LinearLayout>
 
@@ -213,12 +216,13 @@
                     android:id="@+id/ChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:hint="ex)funfarm1234"
                     android:inputType="textPassword"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 
@@ -255,12 +259,13 @@
                     android:id="@+id/ChangePassword_re"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:hint="ex)funfarm1234"
                     android:inputType="textPassword"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 
@@ -297,11 +302,12 @@
                     android:id="@+id/ChangePhoneNum"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="35px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:hint="ex)01012341234"
+                    android:singleLine="true"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -339,12 +345,12 @@
                     android:id="@+id/ChangeBirthYear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp"
+                    />
 
             </LinearLayout>
 
@@ -365,12 +371,11 @@
                     android:id="@+id/ChangeBirthMonth"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -391,12 +396,11 @@
                     android:id="@+id/ChangeBirthDay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="10px"
-                    android:layout_marginLeft="40px"
+                    android:paddingLeft="15dp"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
