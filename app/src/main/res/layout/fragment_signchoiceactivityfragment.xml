@@ -74,9 +74,11 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="390"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:background="@drawable/guidedesign1_5">
 
 
+                <!--
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/facebooklogin_button"
                     android:layout_width="match_parent"
@@ -85,7 +87,12 @@
                     android:background="#00ff0000"
                     facebook:login_text=""
                     facebook:logout_text=""/>
-
+                -->
+                <Button
+                    android:id="@+id/fbloginbutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"/>
 
             </LinearLayout>
 

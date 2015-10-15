@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.service_prepare;
 
 
 /**
@@ -104,6 +105,8 @@ public class SignChoiceActivityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         mCallbackManager = CallbackManager.Factory.create();
         setupTokenTracker();
         setupProfileTracker();
@@ -122,9 +125,12 @@ public class SignChoiceActivityFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setupTextDetails(view);
-        setupFacebookLoginButton(view);
+        //setupFacebookLoginButton(view);
         setupNormalLoginButton(view);
         setupSignupButton(view);
+
+        //
+        tempFBLoginButton(view);
 
     }
 
@@ -215,6 +221,19 @@ public class SignChoiceActivityFragment extends Fragment {
 
             }
         });
+    }
+    //임시 페북 로긴 버튼
+    private void tempFBLoginButton(View view){
+        //임시 페북 로긴 버튼
+        Button tempButton = (Button) view.findViewById(R.id.fbloginbutton);
+        tempButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), service_prepare.class);
+                startActivity(intent);
+            }
+        });
+        /////////////////////////////
     }
 
     private void setupSignupButton(View view){

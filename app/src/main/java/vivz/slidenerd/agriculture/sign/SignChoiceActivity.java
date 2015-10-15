@@ -1,5 +1,6 @@
 package vivz.slidenerd.agriculture.sign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,13 +8,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.service_prepare;
 
 
 public class SignChoiceActivity extends ActionBarActivity {
-
-    ;
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final int INDEX_CUSTOM_LOGIN = 1;
@@ -26,6 +28,11 @@ public class SignChoiceActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signchoice);
+
+
+
+
+
         mFragmentManager = getSupportFragmentManager();
         Fragment fragment = mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();

@@ -41,6 +41,12 @@
             android:background="@drawable/facebooksignup_button"
             android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/fbbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"/>
+            <!--
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/facebooklogin_button"
                 android:layout_width="match_parent"
@@ -49,7 +55,7 @@
                 android:background="#00ff0000"
                 facebook:login_text=""
                 facebook:logout_text=""/>
-
+-->
         </LinearLayout>
         <LinearLayout
             android:layout_width="0px"
