@@ -383,11 +383,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10px"
-                    android:layout_marginLeft="80px"
+                    android:layout_marginLeft="40px"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="35px" />
 
             </LinearLayout>
 
@@ -409,11 +409,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10px"
-                    android:layout_marginLeft="80px"
+                    android:layout_marginLeft="40px"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="35px" />
 
             </LinearLayout>
 
@@ -435,11 +435,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10px"
-                    android:layout_marginLeft="80px"
+                    android:layout_marginLeft="40px"
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="45px" />
+                    android:textSize="35px" />
 
             </LinearLayout>
 
