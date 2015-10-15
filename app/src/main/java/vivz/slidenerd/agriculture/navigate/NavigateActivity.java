@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -175,7 +176,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public final static  int isClicked_restaurant = 4;
     public static int isClicked_menu1 = isClicked_none;
     Intent intent = null;
-    //phpDown task;
+
+    Typeface yunGothicFont;
 
     /**
      * onCreate()
@@ -186,7 +188,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         setContentView(R.layout.activity_navigate);
 
-        //task = new phpDown();
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
         mContext = this;
         mMapView = new TMapView(this);
 
@@ -252,8 +256,10 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         final Handler handler = new Handler();
 
         time = (TextView) findViewById(R.id.time);
+        time.setTypeface(yunGothicFont);
         time.setText("현재");
         search_radius = (TextView) findViewById(R.id.search_radius);
+        search_radius.setTypeface(yunGothicFont);
         adapterMarker=new List_Adapter_Marker(mContext,R.layout.item,data);
         _accommodation = (LinearLayout) findViewById(R.id._accommodation);
         _restaurant = (LinearLayout) findViewById(R.id._restaurant);
@@ -267,6 +273,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         desButton = (Button) findViewById(R.id.desButton);
 
         srcTextView =(TextView) findViewById(R.id.srcTextView);
+        srcTextView.setTypeface(yunGothicFont);
 
         Spinner spinner = (Spinner)findViewById(R.id.spinner);
         String[] items = new String[]{"선택", "버스", "은행", "병원 / 약국", "편의점"};

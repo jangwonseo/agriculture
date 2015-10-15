@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.recruit;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -31,7 +32,9 @@ import java.util.Calendar;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.service_prepare;
 
-public class RecruitPopupActivity extends Activity implements View.OnClickListener{
+public class RecruitPopupActivity extends Activity implements View.OnClickListener {
+
+    private Typeface yunGothicFont; //윤고딕폰트
 
     //로그인 정보 가져오기
     SharedPreferences setting;
@@ -40,12 +43,12 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
     RecruitListItem item;
 
-    TextView txtvVilageName;
-    TextView txtvMissionName;
-    TextView txtvRecruitNum;
-    TextView txtvRecruitContent;
-    TextView txtvRecruitTerm;
-    TextView txtvReward;
+    //정적 텍스트뷰(고정)
+    TextView static_txtvVilageName, static_txtvMissionName, static_txtvRecruitNum, static_txtvRecruitContent, static_txtvRecruitTerm, static_txtvReward;
+
+    //동적인 텍스트뷰
+    TextView txtvVilageName, txtvMissionName, txtvRecruitNum, txtvRecruitContent, txtvRecruitTerm, txtvReward;
+
     WebView webvRecPopup;
 
     Button btnPhoneCall;
@@ -67,8 +70,10 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_recruit_popup);
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
 
         shareButton = (Button) findViewById(R.id.shareButton);
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -80,27 +85,44 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         });
 
         setting = getSharedPreferences("setting", MODE_PRIVATE);
-        editor= setting.edit();
+        editor = setting.edit();
 
         sharedUserId = setting.getString("info_Id", "");
         Log.e("userId : ", sharedUserId);
 
 
         Intent intent = getIntent();
-        item = (RecruitListItem)intent.getSerializableExtra("item");
+        item = (RecruitListItem) intent.getSerializableExtra("item");
         Log.e("popup", "successed");
 
-        txtvVilageName = (TextView)findViewById(R.id.txtvVilageName);
+        //고정 textview
+        static_txtvMissionName = (TextView) findViewById(R.id.static_missionname);
+        static_txtvMissionName.setTypeface(yunGothicFont);
+        static_txtvRecruitNum = (TextView) findViewById(R.id.static_recuitnum);
+        static_txtvRecruitNum.setTypeface(yunGothicFont);
+        static_txtvRecruitContent = (TextView) findViewById(R.id.static_recuitcontent);
+        static_txtvRecruitContent.setTypeface(yunGothicFont);
+        static_txtvRecruitTerm = (TextView) findViewById(R.id.static_recruitterm);
+        static_txtvRecruitTerm.setTypeface(yunGothicFont);
+        static_txtvReward = (TextView) findViewById(R.id.static_txtreward);
+        static_txtvReward.setTypeface(yunGothicFont);
+
+
+        txtvVilageName = (TextView) findViewById(R.id.txtvVilageName);
+        txtvVilageName.setTypeface(yunGothicFont);
         txtvVilageName.setText(item.getVilageName());
-        txtvMissionName = (TextView)findViewById(R.id.txtvMissionName);
+        txtvMissionName = (TextView) findViewById(R.id.txtvMissionName);
+        txtvMissionName.setTypeface(yunGothicFont);
         txtvMissionName.setText(item.getMissionName());
-        txtvRecruitTerm = (TextView)findViewById(R.id.txtvRecruitTerm);
+        txtvRecruitTerm = (TextView) findViewById(R.id.txtvRecruitTerm);
+        txtvRecruitTerm.setTypeface(yunGothicFont);
         txtvRecruitTerm.setText(item.getTermStart() + " ~ " + item.getTermEnd());
-        txtvRecruitNum = (TextView)findViewById(R.id.txtvRecruitNum);
+        txtvRecruitNum = (TextView) findViewById(R.id.txtvRecruitNum);
+        txtvRecruitNum.setTypeface(yunGothicFont);
         txtvRecruitNum.setText(Integer.toString(item.getJoinedNum()) + " / " + Integer.toString(item.getRecruitNum()) + " 명");
 
-        btnPhoneCall = (Button)findViewById(R.id.btnPhoneCall);
-        btnMissionJoin = (Button)findViewById(R.id.btnMissionJoin);
+        btnPhoneCall = (Button) findViewById(R.id.btnPhoneCall);
+        btnMissionJoin = (Button) findViewById(R.id.btnMissionJoin);
 
         btnPhoneCall.setOnClickListener(this);
         btnMissionJoin.setOnClickListener(this);
@@ -108,13 +130,15 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
         // 줄바꿈
         String lineEnding = item.getRecruitContent().replace("99line99end99", "\n");
-        txtvRecruitContent = (TextView)findViewById(R.id.txtvRecruitContent);
+        txtvRecruitContent = (TextView) findViewById(R.id.txtvRecruitContent);
+        txtvRecruitContent.setTypeface(yunGothicFont);
         txtvRecruitContent.setText(lineEnding);
         Log.e("txtvRecruitContent", item.getRecruitContent());
-        txtvReward = (TextView)findViewById(R.id.txtvReward);
+        txtvReward = (TextView) findViewById(R.id.txtvReward);
+        txtvReward.setTypeface(yunGothicFont);
         txtvReward.setText(item.getReward());
 
-        webvRecPopup = (WebView)findViewById(R.id.webvRecPopup);
+        webvRecPopup = (WebView) findViewById(R.id.webvRecPopup);
 
         webvRecPopup.setVerticalScrollBarEnabled(false);
         webvRecPopup.setVerticalScrollbarOverlay(false);
@@ -140,6 +164,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
         myJoinHandler = new JoinHandler();
 
+
     }
 
     // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
@@ -159,12 +184,12 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPhoneCall:
-                startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:"+item.getPhoneNum())));
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + item.getPhoneNum())));
                 break;
 
             case R.id.btnMissionJoin:
                 missionJoin = new phpMissionJoin();
-                if ( sharedUserId.equals("") ) {
+                if (sharedUserId.equals("")) {
                     Toast.makeText(getApplicationContext(), "로그인을 하십시오", Toast.LENGTH_SHORT).show();
                     break;
                 } else {
@@ -176,34 +201,34 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     }
 
     // 참가하기 php
-    public class phpMissionJoin extends AsyncTask<String, Integer,String> {
+    public class phpMissionJoin extends AsyncTask<String, Integer, String> {
 
         Message msg = myJoinHandler.obtainMessage(); // 참가 성공 실패 핸들러
 
         @Override
         protected String doInBackground(String... urls) {
             StringBuilder jsonHtml = new StringBuilder();
-            String line ="";
-            try{
+            String line = "";
+            try {
                 // 텍스트 연결 url 설정
                 URL url = new URL(urls[0]);
                 // 이미지 url
                 Log.e("tag", "url : " + urls[0]);
                 // URL 페이지 커넥션 객체 생성
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 // 연결되었으면.
 
-                if(conn != null){
+                if (conn != null) {
                     conn.setConnectTimeout(10000);
                     conn.setUseCaches(false);
                     // 연결되었음 코드가 리턴되면.
                     Log.e("tag", "setUseCaches is false");
-                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                        for(;;){
+                        for (; ; ) {
                             // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
                             line = br.readLine();
-                            if(line == null) break;
+                            if (line == null) break;
                             // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
                             jsonHtml.append(line);
                         }
@@ -212,20 +237,20 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
                     conn.disconnect();
                 }
                 msg.what = joinSucceed;
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 msg.what = joinNoSucceed;
             }
             return jsonHtml.toString();
         }
 
-        protected void onPostExecute(String str){
+        protected void onPostExecute(String str) {
 
-            if ( !str.contains("1 record added") ) {
+            if (!str.contains("1 record added")) {
                 msg.what = joinNoSucceed;
             }
 
-            if ( str.contains("key 'PRIMARY'")) {
+            if (str.contains("key 'PRIMARY'")) {
                 msg.what = joinAlreadyIn;
             }
 
@@ -258,5 +283,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             }
         }
 
-    };
+    }
+
+    ;
 }

@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.navigate;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,11 +31,15 @@ public class navigateSettingPopupActivity extends Activity implements View.OnCli
     public static TMapPoint srcPoint = null;
     public static TMapPoint desPoint = null;
     public static double distance2 = 0;
+
+    private Typeface yunGothicFont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate_setting_popup);
 
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         Intent intent = getIntent();
         Serializable item = intent.getSerializableExtra("item");
@@ -69,10 +74,15 @@ public class navigateSettingPopupActivity extends Activity implements View.OnCli
         };
 
         poiName = (TextView)findViewById(R.id.poiName);
+        poiName.setTypeface(yunGothicFont);
         poiAddr = (TextView)findViewById(R.id.poiAddr);
+        poiAddr.setTypeface(yunGothicFont);
         distance = (TextView)findViewById(R.id.distance);
+        distance.setTypeface(yunGothicFont);
         lat = (TextView)findViewById(R.id.lat);
+        lat.setTypeface(yunGothicFont);
         lon = (TextView)findViewById(R.id.lon);
+        lon.setTypeface(yunGothicFont);
 
         poiName.setText(i.getName());
         poiAddr.setText(i.getAddr());

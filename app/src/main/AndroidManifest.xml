@@ -103,7 +103,7 @@
             android:name=".recruit.RecruitPopupActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_recruit_popup"
-            android:theme="@android:style/Theme.Dialog"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
@@ -156,7 +156,8 @@
         </activity>
         <activity
             android:name=".home.ChangeMyinfoActivity"
-            android:label="@string/title_activity_change_myinfo" >
+            android:label="@string/title_activity_change_myinfo"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity
             android:name=".home.EventWindow"

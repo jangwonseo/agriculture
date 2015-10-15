@@ -3,12 +3,16 @@ package vivz.slidenerd.agriculture.navigate;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -19,12 +23,24 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     private LinearLayout contentView = null;
     private static Context mCtx = null;
     private Button backButton, menuButton;
+    private Typeface yunGothicFont;
+    private TextView startPointTxt,endPointTxt;
+    public Button searchWay;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.setContentView(R.layout.activity_base);
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
+        startPointTxt = (TextView)findViewById(R.id.srcTextView);
+        startPointTxt.setTypeface(yunGothicFont);
+        endPointTxt = (TextView)findViewById(R.id.endpointtxt);
+        endPointTxt.setTypeface(yunGothicFont);
+        searchWay = (Button)findViewById(R.id.submit);
+        searchWay.setTypeface(yunGothicFont);
+
         mCtx = this;
 
         contentView  = (LinearLayout)findViewById(R.id.contentView);
@@ -37,7 +53,13 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 startActivity(moveToHomeIntent);
             }
         });
-
+        backButton = (Button)findViewById(R.id.navigate_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         super.onCreate(savedInstanceState);
 

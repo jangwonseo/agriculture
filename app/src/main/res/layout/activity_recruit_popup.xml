@@ -88,7 +88,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="100">
                     <TextView
-
+                        android:id="@+id/static_missionname"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="미션이름 : "
@@ -137,6 +137,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="100">
                         <TextView
+                            android:id="@+id/static_recruitterm"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="모집기한 : "
@@ -165,6 +166,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="100">
                         <TextView
+                            android:id="@+id/static_recuitnum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="모집인원 : "
@@ -183,6 +185,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/static_recuitcontent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -200,6 +203,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
                         android:id="@+id/txtvRecruitContent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -220,6 +225,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="100">
                     <TextView
+                        android:id="@+id/static_txtreward"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="보상 : "

@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.navigate;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,10 @@ class List_Adapter_Marker extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<Item> data;
     private int layout;
+    private Typeface yunGothicFont;
     public List_Adapter_Marker(Context context, int layout, ArrayList<Item> data){
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
@@ -43,10 +47,12 @@ class List_Adapter_Marker extends BaseAdapter {
         Item listviewitem=data.get(position);
 
         TextView Title=(TextView)convertView.findViewById(R.id.poiName);
+        Title.setTypeface(yunGothicFont);
         Title.setText(listviewitem.getName());
         Title.setTextColor(Color.BLACK);
 
         TextView subTitle=(TextView)convertView.findViewById(R.id.poiAddr);
+        subTitle.setTypeface(yunGothicFont);
         subTitle.setText(listviewitem.getAddr()+ " " + String.format("%.3f", listviewitem.getDistance()/1000.0) + "km");
         subTitle.setTextColor(Color.BLACK);
 

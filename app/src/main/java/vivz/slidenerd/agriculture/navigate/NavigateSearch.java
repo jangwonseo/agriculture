@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.navigate;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,17 +32,24 @@ public class NavigateSearch extends Activity {
     private Button searchButton;
     private EditText navigateText;
     private TMapView mMapView = null;
+    private Typeface yunGothicFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate_search);
+
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
+
         mContext = this;
         listView2 = (ListView) findViewById(R.id.listView2);
         adapterMarker=new List_Adapter_Marker(mContext, R.layout.item,data);
         listView2.setAdapter(adapterMarker);
         searchButton = (Button) findViewById(R.id.searchButton);
         navigateText = (EditText) findViewById(R.id.navigateText);
+        navigateText.setTypeface(yunGothicFont);
         mMapView = new TMapView(this);
 
         navigateText.setOnKeyListener(new View.OnKeyListener()

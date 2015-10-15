@@ -2,6 +2,7 @@ package vivz.slidenerd.agriculture.home;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -81,10 +82,15 @@ public class HomeActivity extends ActionBarActivity{
 
     Button eventButton;
 
+    private Typeface yunGothicFont; //윤고딕폰트
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -256,6 +262,7 @@ public class HomeActivity extends ActionBarActivity{
         webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
         eventButton = (Button)findViewById(R.id.eventbutton);
+        eventButton.setTypeface(yunGothicFont);
         eventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
