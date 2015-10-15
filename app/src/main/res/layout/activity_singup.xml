@@ -387,7 +387,7 @@
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -413,7 +413,7 @@
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
@@ -439,7 +439,7 @@
                     android:background="@null"
                     android:focusableInTouchMode="false"
                     android:textColor="#4C4C4C"
-                    android:textSize="35px" />
+                    android:textSize="15dp" />
 
             </LinearLayout>
 
