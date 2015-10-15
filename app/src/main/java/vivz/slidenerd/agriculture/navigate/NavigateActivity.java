@@ -217,15 +217,19 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
             switch(isClicked_menu1){
                 case isClicked_accommodation:
+                    Toast.makeText(getApplicationContext(), "해당 마을의 <숙박> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_accommodation(intent.getStringExtra("addr"));
                     break;
                 case isClicked_bank:
+                    Toast.makeText(getApplicationContext(), "해당 마을의 <은행> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_bank(intent.getStringExtra("addr"));
                     break;
                 case isClicked_gasStation:
+                    Toast.makeText(getApplicationContext(), "해당 마을의 <주유소> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_gasStation(intent.getStringExtra("addr"));
                     break;
                 case isClicked_restaurant:
+                    Toast.makeText(getApplicationContext(), "해당 마을의 <식당> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_restaurant(intent.getStringExtra("addr"));
                     break;
             }
