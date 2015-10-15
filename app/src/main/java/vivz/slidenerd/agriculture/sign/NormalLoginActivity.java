@@ -1,19 +1,32 @@
 package vivz.slidenerd.agriculture.sign;
 
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 import vivz.slidenerd.agriculture.R;
 
 
 public class NormalLoginActivity extends ActionBarActivity {
+    private Typeface yunGothicFont;
+    private EditText id_Insert,pw_Insert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal_login);
+        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+
+        id_Insert = (EditText)findViewById(R.id.id_insert);
+        id_Insert.setTypeface(yunGothicFont);
+        pw_Insert = (EditText)findViewById(R.id.pw_insert);
+        pw_Insert.setTypeface(yunGothicFont);
+        //윤고딕 폰트
+
     }
 
     @Override

@@ -63,10 +63,15 @@
                 android:background="@drawable/login5">
 
                 <EditText
+                    android:id="@+id/id_insert"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    />
+                    android:hint="아이디"
+                    android:singleLine="true"
+                    android:paddingLeft="5dp"
+                    android:textSize="15dp"
+                    android:textColor="#ffffff"/>
 
             </LinearLayout>
             <LinearLayout
@@ -79,11 +84,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="55"
-                android:background="@drawable/login6">
+                android:background="@drawable/login5">
                 <EditText
+                    android:id="@+id/pw_insert"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
+                    android:hint="비밀번호"
+                    android:singleLine="true"
+                    android:textSize="15dp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#ffffff"
                     android:background="@null"/>
 
             </LinearLayout>
