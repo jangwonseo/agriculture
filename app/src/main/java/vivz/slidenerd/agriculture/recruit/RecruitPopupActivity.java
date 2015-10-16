@@ -259,6 +259,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             }
 
             myJoinHandler.sendMessage(msg);
+
         }
     }
 

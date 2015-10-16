@@ -36,6 +36,7 @@ import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.recruit.Recruit;
 import vivz.slidenerd.agriculture.region_theme.RegionChoiceActivity;
 import vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity;
+import vivz.slidenerd.agriculture.sign.SHA256;
 import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
 import vivz.slidenerd.agriculture.sign.SignupActivity;
 
@@ -88,6 +89,9 @@ public class HomeActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        SHA256 sha = new SHA256();
+
 
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
@@ -225,13 +229,13 @@ public class HomeActivity extends ActionBarActivity{
                     case MotionEvent.ACTION_DOWN:
                         break;
                     case MotionEvent.ACTION_UP:
-                        try{
+                        try {
                             /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
                             Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
                             HomeIntent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
                             // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                             startActivity(HomeIntent);
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;

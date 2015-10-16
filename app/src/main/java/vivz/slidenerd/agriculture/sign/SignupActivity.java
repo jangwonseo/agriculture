@@ -92,6 +92,9 @@ public class SignupActivity extends FragmentActivity {
     private Button confirmButton;
     private Button cancelButton;
 
+    // 암호화 클래스
+    SHA256 sha;
+
 
     //페이스북에서 가져온 회원정보
     public String fbName;
@@ -146,6 +149,8 @@ public class SignupActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
+
+        sha=new SHA256();
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -247,8 +252,8 @@ public class SignupActivity extends FragmentActivity {
                     Log.d("seojang","비밀번호 일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
                     try {
                         info_Name = URLEncoder.encode(uName.getText().toString(), "UTF-8");
-                        info_Id = uId.getText().toString();
-                        info_Pw = uPw.getText().toString();
+                        info_Id =uId.getText().toString();  //uId.getText().toString();
+                        info_Pw = sha.testSHA256(uPw.getText().toString());
                         info_PhoneNum = uPhoneNum.getText().toString();
                         info_Birthday = uBirthday_year.getText().toString() + "_" + uBirthday_month.getText().toString() + "_" + uBirthday_day.getText().toString();
 

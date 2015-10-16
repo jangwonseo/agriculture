@@ -3,8 +3,11 @@ package vivz.slidenerd.agriculture.sign;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -26,6 +34,11 @@ public class NormalLoginActivity extends ActionBarActivity {
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
     String userId;
+    String id;
+    String pw;
+
+    SHA256 sha;
+    signIn signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +54,11 @@ public class NormalLoginActivity extends ActionBarActivity {
             }
         });
 
+        // 암호화 클래스 선언
+        sha = new SHA256();
+
+        // id, pw 일치 여부 확인 php
+        signin = new signIn();
 
         id_Insert = (EditText)findViewById(R.id.id_insert);
         id_Insert.setTypeface(yunGothicFont);
@@ -52,6 +70,16 @@ public class NormalLoginActivity extends ActionBarActivity {
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
         userId = setting.getString("info_Id", "");
+
+        // 로그인을 했다면
+        if ( !userId.equals("")) {
+
+            Toast.makeText(getApplicationContext(), "이미 로그인이 되어 있습니다.\n " +
+                    "로그아웃 버튼 터치시 로그아웃됩니다..", Toast.LENGTH_SHORT).show();
+
+        }
+
+
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear_login_out);
         if ( userId.equals("") || userId==null ) {
@@ -65,8 +93,24 @@ public class NormalLoginActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if ( userId.equals("") || userId == null) { // 로그인을 안했다면
+
+
                     // 로그인 코드
-                } else { // 로그인을 했다면
+                    id = id_Insert.getText().toString();
+                    pw = sha.testSHA256(pw_Insert.getText().toString());
+
+                    signin.execute("http://218.150.181.131/seo/signin.php?userId=" + id + "&userPw=" + pw);
+                    Log.e("aaaa",pw);
+
+                    // sharedPreference 입력
+                    editor.putString("info_Id", "" + id);
+                    editor.putString("info_Pw", "" + pw);
+                    editor.commit();
+
+                }
+                // 로그인을 했다면
+                else {
+
                     // 로그아웃
                     //sharedPreference 입력부분
                     editor.putString("info_Id", "");
@@ -74,10 +118,12 @@ public class NormalLoginActivity extends ActionBarActivity {
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
 
-                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(homeIntent);
-                    finish();
+
                 }
+                finish();
+                Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(homeIntent);
+
             }
         });
 
@@ -103,5 +149,64 @@ public class NormalLoginActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+    // 로그인 php
+    public class signIn extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line = "";
+            try {
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                // 연결되었으면.
+
+                if (conn != null) {
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for (; ; ) {
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if (line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+        }
+
+        protected void onPostExecute(String str) {
+
+            if (str.contains("Correct Id and Password")) {
+
+                Toast.makeText(getApplicationContext(), "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+
+
+            }
+            else
+                Toast.makeText(getApplicationContext(), "로그인 에러", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
