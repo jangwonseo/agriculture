@@ -294,7 +294,7 @@ public class ListDetailActivity extends ActionBarActivity {
                 case R.id.btn_myDiary:
 
                     // 로그인이 안돼있다면
-                    if(id.compareTo(null)==0) {
+                    if(id.compareTo("")==0) {
                         Toast.makeText(getApplicationContext(), "로그인이 필요한 기능입니다.", Toast.LENGTH_SHORT).show();
                     }
                     else {
