@@ -292,23 +292,28 @@ public class ListDetailActivity extends ActionBarActivity {
             switch (v.getId())
             {
                 case R.id.btn_myDiary:
-                    if(!isDiary)
-                    {
-                        try {
-                            // 중복 검사
-                            if(!dupChk)
-                            {
 
-                                // 입력한 정보를 Item 객체에 담는다.
-                                // 입력한 정보들을 php에 get방식으로 보낸다.
-                                // 이름은 recuitTask 지만 하는 일은 정보입력용 변수임
-                                // 마이다이어리를 추가
-                                recruitTask = new phpUp();
+                    // 로그인이 안돼있다면
+                    if(id.compareTo(null)==0) {
+                        Toast.makeText(getApplicationContext(), "로그인이 필요한 기능입니다.", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        // 만약 로그인 되어있다면 다이어리에서 넘어온 데이터인지 검사
+                        if (!isDiary) {
+                            try {
+                                // 이미 마이다이어리에 있는지 중복 검사
+                                if (!dupChk) {
 
-                                recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
-                                        + i.getTableName() + "&vilageId=" + i.getVilageId());
+                                    // 입력한 정보를 Item 객체에 담는다.
+                                    // 입력한 정보들을 php에 get방식으로 보낸다.
+                                    // 이름은 recuitTask 지만 하는 일은 정보입력용 변수임
+                                    // 마이다이어리를 추가
+                                    recruitTask = new phpUp();
 
-                                // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
+                                    recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
+                                            + i.getTableName() + "&vilageId=" + i.getVilageId());
+
+                                    // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
 //                        Log.e("regist", i.toString());
 //                        //searchingseojang
@@ -316,25 +321,23 @@ public class ListDetailActivity extends ActionBarActivity {
 //                        Intent moveIntent = new Intent(getApplicationContext(), MyDiaryActivity.class);
 //                        startActivity(moveIntent);
 //                        Log.d("seojang", "22222");
-                                Log.e("data<RecruitItem>", i.toString());
-                                 Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
-                                // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
-                                dupChecker = new dupChecker();
-                                dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
+                                    Log.e("data<RecruitItem>", i.toString());
+                                    Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
+                                    // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
+                                    dupChecker = new dupChecker();
+                                    dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
 
+                                } else
+                                    Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e("URLEncoder", "PHP params Encoder error");
                             }
-                            else
-                                Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e("URLEncoder", "PHP params Encoder error");
                         }
-                    }
-                    else
-                    {
-                        Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
-
                     }
                     break;
                 case R.id.btn_vod:
