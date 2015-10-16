@@ -1,11 +1,11 @@
 package vivz.slidenerd.agriculture.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.R;
@@ -38,10 +39,14 @@ import vivz.slidenerd.agriculture.region_theme.RegionChoiceActivity;
 import vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity;
 import vivz.slidenerd.agriculture.sign.SHA256;
 import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
-import vivz.slidenerd.agriculture.sign.SignupActivity;
+
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 
-public class HomeActivity extends ActionBarActivity{
+public class HomeActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
@@ -63,9 +68,11 @@ public class HomeActivity extends ActionBarActivity{
     ArrayList<Item> recommendItems = new ArrayList<>();
     ArrayList<Item> recommendItems10 = new ArrayList<>();
 
-    // 홈 왼쪽, 오른쪽 체험 선택
-    Button btnLeftVilage;
-    Button btnRightVilage;
+
+    //geonchul_remove
+//    // 홈 왼쪽, 오른쪽 체험 선택
+//    Button btnLeftVilage;
+//    Button btnRightVilage;
     Button btnMyDiary;
     public int recommendNum = 0;
 
@@ -85,10 +92,58 @@ public class HomeActivity extends ActionBarActivity{
 
     private Typeface yunGothicFont; //윤고딕폰트
 
+    private SliderLayout mDemoSlider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        //imageSlider
+
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+
+
+        HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Hannibal", R.drawable.aathumbnail1);
+        file_maps.put("Big Bang Theory", R.drawable.aathumbnail2);
+        file_maps.put("House of Cards", R.drawable.aathumbnail3);
+        file_maps.put("Game of Thrones", R.drawable.aathumbnail4);
+        file_maps.put("Hannibal", R.drawable.aathumbnail5);
+        file_maps.put("Big Bang Theory", R.drawable.aathumbnail6);
+        file_maps.put("House of Cards", R.drawable.aathumbnail7);
+        file_maps.put("Game of Thrones", R.drawable.aathumbnail8);
+
+        for (String name : file_maps.keySet()) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+//                    .description(name)  // 이미지에대해 이름을 표시해줌.
+                    .image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle().putString("extra", name);
+
+            mDemoSlider.addSlider(textSliderView);
+        }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        //mDemoSlider.setCustomAnimation(new DescriptionAnimation());//이미지에 대한 설명이 애니메이션으로 나옴
+        mDemoSlider.setDuration(4000);
+        mDemoSlider.addOnPageChangeListener(this);
+
+
+
+
+
+
+
+        //////////////////////////
+
+
 
         SHA256 sha = new SHA256();
 
@@ -171,78 +226,83 @@ public class HomeActivity extends ActionBarActivity{
         translateLeftAnim.setAnimationListener(animListener);
         translateRightAnim.setAnimationListener(animListener);
 
-        // 웹뷰 이미지 가져오는 부분
-        webvHomeImage = (WebView)findViewById(R.id.webvHomeImage);
-        // 배경이 하얕게 나오는데 투명하게 만들어줌
-        webvHomeImage.setBackgroundColor(0);
-        // 웹뷰 설정
-        webvHomeImage.setVerticalScrollBarEnabled(false);
-        webvHomeImage.setVerticalScrollbarOverlay(false);
-        webvHomeImage.setHorizontalScrollBarEnabled(false);
-        webvHomeImage.setHorizontalScrollbarOverlay(false);
-        //webvHomeImage.setFocusableInTouchMode(false);
-        webvHomeImage.setHorizontalScrollBarEnabled(false);
-        webvHomeImage.setVerticalScrollBarEnabled(false);
-        webvHomeImage.setInitialScale(100);
-        //webvHomeImage.setFocusable(false);
+        //geonchul_remove
 
-        webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/default.png"), "text/html", "utf-8", null);
+//        // 웹뷰 이미지 가져오는 부분
+//        webvHomeImage = (WebView)findViewById(R.id.webvHomeImage);
+//        // 배경이 하얕게 나오는데 투명하게 만들어줌
+//        webvHomeImage.setBackgroundColor(0);
+//        // 웹뷰 설정
+//        webvHomeImage.setVerticalScrollBarEnabled(false);
+//        webvHomeImage.setVerticalScrollbarOverlay(false);
+//        webvHomeImage.setHorizontalScrollBarEnabled(false);
+//        webvHomeImage.setHorizontalScrollbarOverlay(false);
+//        //webvHomeImage.setFocusableInTouchMode(false);
+//        webvHomeImage.setHorizontalScrollBarEnabled(false);
+//        webvHomeImage.setVerticalScrollBarEnabled(false);
+//        webvHomeImage.setInitialScale(100);
+//        //webvHomeImage.setFocusable(false);
+//
+//        webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/default.png"), "text/html", "utf-8", null);
 
         getInfo = new phpGetInfo();
         getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
 
-        btnLeftVilage = (Button)findViewById(R.id.btnLeftVilage);
-        btnRightVilage = (Button)findViewById(R.id.btnRightVilage);
+        //geonchul_remove
+//        btnLeftVilage = (Button)findViewById(R.id.btnLeftVilage);
+//        btnRightVilage = (Button)findViewById(R.id.btnRightVilage);
 
         btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
         btnMyDiary.setOnClickListener(mClickListener);
 
-        btnLeftVilage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (recommendNum > 0 && recommendNum < 10) {
-                    recommendNum--;
-                } else if(recommendNum == 0){
-                    recommendNum = 9;
-                }
 
-                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
-            }
-        });
-
-        btnRightVilage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (recommendNum >= 0 && recommendNum < 9) {
-                    recommendNum++;
-                } else if (recommendNum == 9) {
-                    recommendNum = 0;
-                }
-
-                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
-            }
-        });
-
-        webvHomeImage.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        try {
-                            /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
-                            Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
-                            HomeIntent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
-                            // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
-                            startActivity(HomeIntent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
+        //geonchul_remove
+//        btnLeftVilage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (recommendNum > 0 && recommendNum < 10) {
+//                    recommendNum--;
+//                } else if(recommendNum == 0){
+//                    recommendNum = 9;
+//                }
+//
+//                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
+//            }
+//        });
+//
+//        btnRightVilage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (recommendNum >= 0 && recommendNum < 9) {
+//                    recommendNum++;
+//                } else if (recommendNum == 9) {
+//                    recommendNum = 0;
+//                }
+//
+//                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
+//            }
+//        });
+//
+//        webvHomeImage.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        try {
+//                            /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
+//                            Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
+//                            HomeIntent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+//                            // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+//                            startActivity(HomeIntent);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
 
         //두번눌러 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -329,6 +389,33 @@ public class HomeActivity extends ActionBarActivity{
             }
         }
     };
+
+    @Override
+    protected void onStop() {
+        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("Slider Demo", "Page Changed: " + position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
 
     // 추천할 마을 정보
     public class phpGetInfo extends AsyncTask<String, Integer,String> {

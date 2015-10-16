@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.0'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile project(':com.skp.Tmap_1.0.33')
+    compile project(':ImageSliderLibrary')
 }

@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ImageSliderLibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/com.skp.Tmap_1.0.33" />
           </set>

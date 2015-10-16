@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -50,185 +51,60 @@
             android:background="@drawable/home1"
             android:orientation="vertical">
 
+            <!-- image slider-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="132">
+                android:layout_weight="445"
+                android:background="#ffffff">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.daimajia.slider.library.SliderLayout
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        custom:pager_animation="Accordion"
+                        custom:auto_cycle="true"
+                        custom:indicator_visibility="visible"
+                        custom:pager_animation_span="1100"
+                        android:layout_height="match_parent"/>
+
+                    <com.daimajia.slider.library.Indicators.PagerIndicator
+                        android:id="@+id/custom_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        custom:selected_color="#0095BF"
+                        custom:unselected_color="#55333333"
+                        custom:selected_drawable="@drawable/bird"
+                        custom:shape="oval"
+                        custom:selected_padding_left="5dp"
+                        custom:selected_padding_right="5dp"
+                        custom:unselected_padding_left="5dp"
+                        custom:unselected_padding_right="5dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        custom:selected_width="6dp"
+                        custom:selected_height="6dp"
+                        custom:unselected_width="6dp"
+                        custom:unselected_height="6dp"
+                        android:layout_marginBottom="20dp"
+                        />
+                    <com.daimajia.slider.library.Indicators.PagerIndicator
+                        android:id="@+id/custom_indicator2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="20dp"
+                        style="@style/AndroidImageSlider_Corner_Oval_Orange"
+                        />
+
+
+                </RelativeLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="198"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="171"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="69">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="60"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="52">
-
-                        </LinearLayout>
-                        <!-- image back button-->
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="60"
-                            android:background="@drawable/home8">
-
-                            <Button
-                                android:id="@+id/btnLeftVilage"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="59">
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="69">
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <!-- vileage image-->
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="198"
-                    android:background="@drawable/home4"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"></LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="184"
-                        android:orientation="vertical">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="7"></LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="184">
-                            <WebView
-                                android:id="@+id/webvHomeImage"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="true"></WebView>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="7"></LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7"></LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="171"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="69">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="60"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="59">
-
-                        </LinearLayout>
-                        <!-- image ahead button-->
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="60"
-                            android:background="@drawable/home9">
-
-                            <Button
-                                android:id="@+id/btnRightVilage"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
-                            android:layout_weight="52">
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0px"
-                        android:layout_weight="69">
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="107">
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
