@@ -192,7 +192,11 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
                 if (sharedUserId.equals("")) {
                     Toast.makeText(getApplicationContext(), "로그인을 하십시오", Toast.LENGTH_SHORT).show();
                     break;
-                } else {
+                }else if(item.getRecruitNum() <= item.getJoinedNum() && !(item.getRecruitNum()==0))  {
+                    Toast.makeText(getApplicationContext(), "참가인원을 초과하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else {
                     MissionItem missionItem = new MissionItem(sharedUserId, item.getIdRecruit());
                     missionJoin.execute("http://218.150.181.131/seo/phpMissionJoin.php?" + missionItem.toString());
                 }
