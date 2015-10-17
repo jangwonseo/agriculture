@@ -374,26 +374,26 @@ public class PagerIndicator extends LinearLayout implements ViewPagerEx.OnPageCh
      */
     private int getShouldDrawCount(){
         if(mPager.getAdapter() instanceof InfinitePagerAdapter){
-            return ((InfinitePagerAdapter)mPager.getAdapter()).getRealCount();
-        }else{
-            return mPager.getAdapter().getCount();
-        }
-    }
+                        return ((InfinitePagerAdapter)mPager.getAdapter()).getRealCount();
+                    }else{
+                        return mPager.getAdapter().getCount();
+                    }
+                }
 
-    private DataSetObserver dataChangeObserver = new DataSetObserver() {
-        @Override
-        public void onChanged() {
-            PagerAdapter adapter = mPager.getAdapter();
-            int count = 0;
-            if(adapter instanceof InfinitePagerAdapter){
-                count = ((InfinitePagerAdapter)adapter).getRealCount();
-            }else{
-                count = adapter.getCount();
-            }
-            if(count > mItemCount){
-                for(int i =0 ; i< count - mItemCount;i++){
-                    ImageView indicator = new ImageView(mContext);
-                    indicator.setImageDrawable(mUnselectedDrawable);
+                private DataSetObserver dataChangeObserver = new DataSetObserver() {
+                    @Override
+                    public void onChanged() {
+                        PagerAdapter adapter = mPager.getAdapter();
+                        int count = 0;
+                        if(adapter instanceof InfinitePagerAdapter){
+                            count = ((InfinitePagerAdapter)adapter).getRealCount();
+                        }else{
+                            count = adapter.getCount();
+                        }
+                        if(count > mItemCount){
+                            for(int i =0 ; i< count - mItemCount;i++){
+                                ImageView indicator = new ImageView(mContext);
+                                indicator.setImageDrawable(mUnselectedDrawable);
                     indicator.setPadding((int)mUnSelectedPadding_Left,
                             (int)mUnSelectedPadding_Top,
                             (int)mUnSelectedPadding_Right,
