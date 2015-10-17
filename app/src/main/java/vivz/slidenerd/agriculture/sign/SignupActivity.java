@@ -247,7 +247,9 @@ public class SignupActivity extends FragmentActivity {
                     Toast.makeText(getApplicationContext(), "아이디 중복확인을 하세요!", Toast.LENGTH_SHORT).show();
                 } else if(!((uPw.getText().toString()).equals(uPw_re.getText().toString()))){
                     Toast.makeText(getApplicationContext(), "비밀번호가 달라요!", Toast.LENGTH_SHORT).show();
-                }else{
+                } else if(spaceCheck(uId.getText().toString())||spaceCheck(uPw.getText().toString()))
+                    Toast.makeText(getApplicationContext(), "아이디나 비밀번호에 공백이 있어요!", Toast.LENGTH_SHORT).show();
+                else{
                     //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
                     Log.d("seojang","비밀번호 일치 : "+uPw.getText().toString()+" , "+uPw_re.getText().toString());
                     try {
@@ -373,6 +375,17 @@ public class SignupActivity extends FragmentActivity {
         sb.append("</BODY>");
         sb.append("</HTML>");
         return sb.toString();
+    }
+
+    //공백확인
+    public boolean spaceCheck(String spaceCheck)
+    {
+        for(int i = 0 ; i < spaceCheck.length() ; i++)
+        {
+            if(spaceCheck.charAt(i) == ' ')
+                return true;
+        }
+        return false;
     }
 
     // AsyncTask는 generic 클래스이기 때문에 타입을 지정해주어야 한다. < Params, Progress, Result > 부분

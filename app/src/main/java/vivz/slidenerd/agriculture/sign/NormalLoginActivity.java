@@ -40,6 +40,8 @@ public class NormalLoginActivity extends ActionBarActivity {
     SHA256 sha;
     signIn signin;
 
+    public boolean isSucceed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,8 @@ public class NormalLoginActivity extends ActionBarActivity {
 
         // id, pw 일치 여부 확인 php
         signin = new signIn();
+
+        isSucceed=false;
 
         id_Insert = (EditText)findViewById(R.id.id_insert);
         id_Insert.setTypeface(yunGothicFont);
@@ -92,24 +96,7 @@ public class NormalLoginActivity extends ActionBarActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( userId.equals("") || userId == null) { // 로그인을 안했다면
-
-
-                    // 로그인 코드
-                    id = id_Insert.getText().toString();
-                    pw = sha.testSHA256(pw_Insert.getText().toString());
-
-                    signin.execute("http://218.150.181.131/seo/signin.php?userId=" + id + "&userPw=" + pw);
-                    Log.e("aaaa",pw);
-
-                    // sharedPreference 입력
-                    editor.putString("info_Id", "" + id);
-                    editor.putString("info_Pw", "" + pw);
-                    editor.commit();
-
-                }
-                // 로그인을 했다면
-                else {
+                if (!(userId.equals("") || userId == null)){
 
                     // 로그아웃
                     //sharedPreference 입력부분
@@ -117,13 +104,38 @@ public class NormalLoginActivity extends ActionBarActivity {
                     editor.putString("info_Pw", "");
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(homeIntent);
 
 
                 }
-                finish();
-                Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(homeIntent);
+                else if(!isIdEmpty()&&!isPwEmpty()&&(userId.equals("") || userId == null)) {
 
+
+                        // 로그인 코드
+                        id = id_Insert.getText().toString();
+                        pw = sha.testSHA256(pw_Insert.getText().toString());
+
+                        signin.execute("http://218.150.181.131/seo/signin.php?userId=" + id + "&userPw=" + pw);
+
+                        // sharedPreference 입력
+                        editor.putString("info_Id", "" + id);
+                        editor.putString("info_Pw", "" + pw);
+                        editor.commit();
+
+                    // 로그인을 했다면
+
+
+                    finish();
+                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(homeIntent);
+
+
+                }
+
+                else if(isIdEmpty()||isPwEmpty())
+                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -151,8 +163,22 @@ public class NormalLoginActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // 아이디 비어있는지 검사
+    boolean isIdEmpty()
+    {
+        // 공백문자 제거
+        String str =id_Insert.getText().toString().replaceAll("\\p{Z}", "");
+        return str.equals("");
 
+    }
 
+    // 비밀번호 비어있는지 검사
+    boolean isPwEmpty()
+    {
+        // 공백문자 제거
+        String str = pw_Insert.getText().toString().replaceAll("\\p{Z}", "");
+        return str.equals("");
+    }
 
 
     // 로그인 php
@@ -200,7 +226,10 @@ public class NormalLoginActivity extends ActionBarActivity {
 
             if (str.contains("Correct Id and Password")) {
 
+
                 Toast.makeText(getApplicationContext(), "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                Log.e("aaaaa", "로그인됨");
+
 
 
             }
