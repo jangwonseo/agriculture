@@ -29,13 +29,14 @@ public class MissionItem implements Serializable {
     {
         final Calendar c = Calendar.getInstance();
         submitYear = c.get(Calendar.YEAR);
-        submitMonth= c.get(Calendar.MONTH);
+        submitMonth= c.get(Calendar.MONTH)+1;
         submitDay  = c.get(Calendar.DAY_OF_MONTH);
         submitDate=submitYear + "-" + submitMonth + "-" + submitDay;
         return submitDate;
     }
 
     public String toString() {
+        updateDate();
         return "UserId=" + UserId + "&recruitId=" + Integer.toString(recruitId) + "&submitDate=" + submitDate;
     }
 
