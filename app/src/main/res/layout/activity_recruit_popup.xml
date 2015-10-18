@@ -52,7 +52,7 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="120"
-                    android:background="@drawable/joinin_2"
+                    android:background="@drawable/joinin8"
                     >
                     <!-- phonecall-->
                     <Button
@@ -66,7 +66,7 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="120"
-                    android:background="@drawable/joinin_3"
+                    android:background="@drawable/joinin7"
                     >
 
                     <Button
@@ -259,7 +259,7 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="138"
-                    android:background="@drawable/joinin_4">
+                    android:background="@drawable/joinin10">
 
                     <Button
                         android:id="@+id/btnMissionJoin"

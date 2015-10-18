@@ -152,19 +152,23 @@
             android:label="@string/title_activity_service_prepare"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:windowSoftInputMode="stateHidden" >
-
         </activity>
         <activity
             android:name=".home.ChangeMyinfoActivity"
             android:label="@string/title_activity_change_myinfo"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
         <activity
             android:name=".home.EventWindow"
-            android:label="@string/title_activity_event_window"
             android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_event_window"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".list.ListDetailActivity_"
+            android:label="@string/title_activity_list_detail_activity_"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
 

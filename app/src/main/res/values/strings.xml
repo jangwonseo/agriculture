@@ -33,6 +33,7 @@
     <string name="title_activity_service_prepare">service_prepare</string>
     <string name="title_activity_change_myinfo">ChangeMyinfoActivity</string>
     <string name="title_activity_event_window">EventWindow</string>
+    <string name="title_activity_list_detail_activity_">ListDetailActivity_</string>
 
 
     <!--    <string name="com_facebook_loginview_log_in_button_long">Login</string>
