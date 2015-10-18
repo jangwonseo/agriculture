@@ -102,11 +102,12 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         file_maps.put("Big Bang Theory", R.drawable.aathumbnail2);
         file_maps.put("House of Cards", R.drawable.aathumbnail3);
         file_maps.put("Game of Thrones", R.drawable.aathumbnail4);
-        file_maps.put("Hannibal", R.drawable.aathumbnail5);
-        file_maps.put("Big Bang Theory", R.drawable.aathumbnail6);
-        file_maps.put("House of Cards", R.drawable.aathumbnail7);
-        file_maps.put("Game of Thrones", R.drawable.aathumbnail8);
+        file_maps.put("Blueberry", R.drawable.aathumbnail5);
+        file_maps.put("Dadm", R.drawable.aathumbnail6);
+        file_maps.put("Flower vilage", R.drawable.aathumbnail7);
+        file_maps.put("Slow day", R.drawable.aathumbnail8);
 
+        Log.e("mapsKetset : ", file_maps.keySet().toString());
         for (String name : file_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
