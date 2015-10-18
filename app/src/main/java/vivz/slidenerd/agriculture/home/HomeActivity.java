@@ -218,9 +218,9 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
 
 
-        // geon remove
-      //  btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
-       // btnMyDiary.setOnClickListener(mClickListener);
+         //geon remove
+        btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
+        btnMyDiary.setOnClickListener(mClickListener);
 
 //        webvHomeImage.setOnTouchListener(new View.OnTouchListener() {
 //            public boolean onTouch(View v, MotionEvent event) {
