@@ -90,6 +90,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     int selectedSlide;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,62 +214,14 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         translateLeftAnim.setAnimationListener(animListener);
         translateRightAnim.setAnimationListener(animListener);
 
-        //geonchul_remove
-
-//        // 웹뷰 이미지 가져오는 부분
-//        webvHomeImage = (WebView)findViewById(R.id.webvHomeImage);
-//        // 배경이 하얕게 나오는데 투명하게 만들어줌
-//        webvHomeImage.setBackgroundColor(0);
-//        // 웹뷰 설정
-//        webvHomeImage.setVerticalScrollBarEnabled(false);
-//        webvHomeImage.setVerticalScrollbarOverlay(false);
-//        webvHomeImage.setHorizontalScrollBarEnabled(false);
-//        webvHomeImage.setHorizontalScrollbarOverlay(false);
-//        //webvHomeImage.setFocusableInTouchMode(false);
-//        webvHomeImage.setHorizontalScrollBarEnabled(false);
-//        webvHomeImage.setVerticalScrollBarEnabled(false);
-//        webvHomeImage.setInitialScale(100);
-//        //webvHomeImage.setFocusable(false);
-//
-//        webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/default.png"), "text/html", "utf-8", null);
-
         getInfo = new phpGetInfo();
         getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
 
-        //geonchul_remove
-//        btnLeftVilage = (Button)findViewById(R.id.btnLeftVilage);
-//        btnRightVilage = (Button)findViewById(R.id.btnRightVilage);
 
-        btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
-        btnMyDiary.setOnClickListener(mClickListener);
+        // geon remove
+      //  btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
+       // btnMyDiary.setOnClickListener(mClickListener);
 
-        //geonchul_remove
-//        btnLeftVilage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (recommendNum > 0 && recommendNum < 10) {
-//                    recommendNum--;
-//                } else if(recommendNum == 0){
-//                    recommendNum = 9;
-//                }
-//
-//                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
-//            }
-//        });
-//
-//        btnRightVilage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (recommendNum >= 0 && recommendNum < 9) {
-//                    recommendNum++;
-//                } else if (recommendNum == 9) {
-//                    recommendNum = 0;
-//                }
-//
-//                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(recommendNum).getThumbUrl()), "text/html", "utf-8", null);
-//            }
-//        });
-//
 //        webvHomeImage.setOnTouchListener(new View.OnTouchListener() {
 //            public boolean onTouch(View v, MotionEvent event) {
 //                switch (event.getAction()) {
@@ -442,13 +395,10 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str){
             // JSON 구문을 파싱해서 JSONArray 객체를 생성
-
             try {
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
@@ -475,7 +425,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
             }catch(Exception ex){
                 Toast.makeText(getApplicationContext(), "인터넷 연결이 되어있지 않습니다.", Toast.LENGTH_SHORT);
             }
-
+            this.cancel(true);
         }
     }
 //

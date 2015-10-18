@@ -217,7 +217,6 @@ public class NormalLoginActivity extends ActionBarActivity {
             else {
                 msg.what = 2;
             }
-
             signHandler.sendMessage(msg);
         }
     }
