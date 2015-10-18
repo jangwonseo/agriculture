@@ -68,14 +68,8 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     ArrayList<Item> recommendItems = new ArrayList<>();
     ArrayList<Item> recommendItems10 = new ArrayList<>();
 
-
-    //geonchul_remove
-//    // 홈 왼쪽, 오른쪽 체험 선택
-//    Button btnLeftVilage;
-//    Button btnRightVilage;
     Button btnMyDiary;
     public int recommendNum = 0;
-
 
     private boolean isPageOpen = false;
     //두번 눌러 종료
@@ -102,7 +96,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         //imageSlider
 
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
-
 
         HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
         file_maps.put("Hannibal", R.drawable.aathumbnail1);
