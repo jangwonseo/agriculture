@@ -88,6 +88,8 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     private SliderLayout mDemoSlider;
 
+    int selectedSlide;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,18 +131,9 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
 
-
-
-
-
-
-
         //////////////////////////
 
-
-
         SHA256 sha = new SHA256();
-
 
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
@@ -249,7 +242,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
         btnMyDiary.setOnClickListener(mClickListener);
 
-
         //geonchul_remove
 //        btnLeftVilage.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -300,7 +292,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
         //두번눌러 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
-
 
         // 프로필사진
         webvProfile = (WebView)findViewById(R.id.webvProfile);
@@ -400,6 +391,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     @Override
     public void onPageSelected(int position) {
         Log.d("Slider Demo", "Page Changed: " + position);
+        selectedSlide = position;
     }
 
     @Override
@@ -408,7 +400,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
-
+        Log.e("Slider : ", Integer.toString(selectedSlide));
     }
 
     // 추천할 마을 정보
@@ -480,7 +472,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                     recommendItems10.add(recommendItems.get(i));
                     Log.e("recomdItemsAdded: ", recommendItems.get(i).getName());
                 }
-                webvHomeImage.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + recommendItems10.get(0).getThumbUrl()), "text/html", "utf-8", null);
             }catch(Exception ex){
                 Toast.makeText(getApplicationContext(), "인터넷 연결이 되어있지 않습니다.", Toast.LENGTH_SHORT);
             }
