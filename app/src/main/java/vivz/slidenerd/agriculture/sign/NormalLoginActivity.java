@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class NormalLoginActivity extends ActionBarActivity {
     signIn signin;
 
     public boolean isSucceed;
+
+    SignHandler signHandler = new SignHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,40 +108,23 @@ public class NormalLoginActivity extends ActionBarActivity {
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
-                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    Intent homeIntent = new Intent(NormalLoginActivity.this, NormalLoginActivity.class);
                     startActivity(homeIntent);
-
-
                 }
                 else if(!isIdEmpty()&&!isPwEmpty()&&(userId.equals("") || userId == null)) {
 
+                    // 로그인 코드
+                    id = id_Insert.getText().toString();
+                    pw = sha.testSHA256(pw_Insert.getText().toString());
 
-                        // 로그인 코드
-                        id = id_Insert.getText().toString();
-                        pw = sha.testSHA256(pw_Insert.getText().toString());
-
-                        signin.execute("http://218.150.181.131/seo/signin.php?userId=" + id + "&userPw=" + pw);
-
-                        // sharedPreference 입력
-                        editor.putString("info_Id", "" + id);
-                        editor.putString("info_Pw", "" + pw);
-                        editor.commit();
-
-                    // 로그인을 했다면
-
-
-                    finish();
-                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
-                    startActivity(homeIntent);
+                    signin.execute("http://218.150.181.131/seo/signin.php?userId=" + id + "&userPw=" + pw);
 
 
                 }
-
                 else if(isIdEmpty()||isPwEmpty())
-                        Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -184,6 +170,8 @@ public class NormalLoginActivity extends ActionBarActivity {
     // 로그인 php
     public class signIn extends AsyncTask<String, Integer, String> {
 
+        Message msg = signHandler.obtainMessage(); // 취소 성공/실패를 위한 핸들러
+
         @Override
         protected String doInBackground(String... urls) {
             StringBuilder jsonHtml = new StringBuilder();
@@ -223,19 +211,50 @@ public class NormalLoginActivity extends ActionBarActivity {
         }
 
         protected void onPostExecute(String str) {
-
             if (str.contains("Correct Id and Password")) {
-
-
-                Toast.makeText(getApplicationContext(), "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
-                Log.e("aaaaa", "로그인됨");
-
-
-
+                msg.what = 1;
             }
-            else
-                Toast.makeText(getApplicationContext(), "로그인 에러", Toast.LENGTH_SHORT).show();
+            else {
+                msg.what = 2;
+            }
 
+            signHandler.sendMessage(msg);
         }
     }
+
+    // Handler 클래스
+    class SignHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case 1: // 로그인 성공
+                    Toast.makeText(getApplicationContext(), "로그인 되었습니다.", Toast.LENGTH_SHORT).show();
+                    Log.e("aaaaa", "로그인됨");
+                    // sharedPreference 입력
+                    editor.putString("info_Id", "" + id);
+                    editor.putString("info_Pw", "" + pw);
+                    editor.commit();
+
+                    // 로그인을 했다면
+                    finish();
+                    Intent homeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(homeIntent);
+                    break;
+                case 2: // 로그인 실패
+                    Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    // sharedPreference 입력
+                    editor.putString("info_Id", "");
+                    editor.putString("info_Pw", "");
+                    editor.commit();
+                    finish();
+                    Intent homeIntent1 = new Intent(NormalLoginActivity.this, NormalLoginActivity.class);
+                    startActivity(homeIntent1);
+                    break;
+            }
+        }
+
+    };
 }
