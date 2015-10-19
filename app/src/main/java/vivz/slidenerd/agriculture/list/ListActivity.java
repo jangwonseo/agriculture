@@ -288,6 +288,7 @@ class List_Adapter extends BaseAdapter {
         });
 
 
+
         Item listviewitem = data.get(position);
         thumb = (WebView) convertView.findViewById(R.id.thumb);
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
