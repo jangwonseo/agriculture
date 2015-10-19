@@ -168,6 +168,11 @@
         <activity
             android:name=".list.ListDetailActivity_"
             android:label="@string/title_activity_list_detail_activity_"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".list.ListActivity_"
+            android:label="@string/title_activity_list_activity_"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
     </application>
