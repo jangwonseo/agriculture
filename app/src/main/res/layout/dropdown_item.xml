@@ -4,4 +4,6 @@
     android:singleLine="true"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:ellipsize="marquee" />
+    android:ellipsize="marquee"
+    android:textColor="#000000"
+    android:background="#ffffff" />
