@@ -173,7 +173,14 @@
         <activity
             android:name=".list.ListActivity_"
             android:label="@string/title_activity_list_activity_"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".list.MapCategoryPopupActivity"
+            android:label="@string/title_activity_map_category_popup"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 

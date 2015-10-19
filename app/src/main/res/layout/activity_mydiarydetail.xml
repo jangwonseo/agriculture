@@ -91,7 +91,7 @@
                         android:layout_height="match_parent"
                         android:textColor="#ffffff"
                         android:gravity="bottom"
-                        android:textSize="21dp"
+                        android:textSize="18dp"
                         android:text="00 마을 전통문화체험"/>
 
                 </LinearLayout>
