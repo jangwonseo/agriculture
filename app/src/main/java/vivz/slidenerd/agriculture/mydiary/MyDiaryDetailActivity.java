@@ -47,6 +47,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
     String collegue;
     String date;
     String id;
+    String vilageName;
 
     //sharedPreference 선언부
     public SharedPreferences setting;
@@ -86,7 +87,11 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
         getRecruit.execute("http://218.150.181.131/seo/getRecruitDetail.php?idrecruit=" + i.getIdRecruit());
 
         // 미션 이름
+        vilageName=i.getVilageName();
         missionName = (TextView) findViewById(R.id.missionName);
+        if(vilageName==null||vilageName.compareTo("")==0)
+            missionName.setText("체험 마을");
+        else
         missionName.setText(i.getVilageName());
 
         // 주최자
