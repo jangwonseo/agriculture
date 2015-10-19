@@ -87,7 +87,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
 
         // 미션 이름
         missionName = (TextView) findViewById(R.id.missionName);
-        missionName.setText(i.getMissionName());
+        missionName.setText(i.getVilageName());
 
         // 주최자
         recruiter =(TextView) findViewById(R.id.recruiter);

@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="894"
-        android:background="@drawable/list3"
+        android:background="@drawable/list1_"
         android:orientation="vertical">
 
         <!-- 자연생태 이런 테마이름 들어가는곳-->
