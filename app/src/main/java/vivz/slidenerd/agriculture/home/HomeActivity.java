@@ -214,11 +214,10 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         translateLeftAnim.setAnimationListener(animListener);
         translateRightAnim.setAnimationListener(animListener);
 
-        getInfo = new phpGetInfo();
-        getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
-
-
-         //geon remove
+        //geon remove
+        //getInfo = new phpGetInfo();
+        //getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
+        
         btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
         btnMyDiary.setOnClickListener(mClickListener);
 
