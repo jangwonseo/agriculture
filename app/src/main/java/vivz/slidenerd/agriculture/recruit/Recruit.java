@@ -571,10 +571,14 @@ public class Recruit extends Activity implements TextWatcher{
                             }
                             try {
                                 String auto = recruit_autoComplete.getText().toString();
-                                if ( auto.equals("") ) {
-                                    vilageName = "";
+                                Log.d("seojangg","1111"+auto.toString());
+                                if ( auto.equals("") || vilageName == null) {
+                                    vilageName = "지정되지 않은 마을";
+                                    Log.d("seojangg","22222");
                                 }
+                                Log.d("seojangg","3333"+vilageName);
                                 recruitItem = new RecruitItem(URLEncoder.encode(auto, "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNumber), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
+                                Log.d("seojangg","4444");
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), "모집을 실패했습니다.", Toast.LENGTH_SHORT).show();
