@@ -577,7 +577,7 @@ public class Recruit extends Activity implements TextWatcher{
                                 recruitItem = new RecruitItem(URLEncoder.encode(auto, "UTF-8"), sharedUserId ,URLEncoder.encode( missionName.getText().toString(), "UTF-8"), URLEncoder.encode( vilageName, "UTF-8"), URLEncoder.encode(lineEnding, "UTF-8"), URLEncoder.encode(termStart.getText().toString(), "UTF-8"), URLEncoder.encode(termEnd.getText().toString(), "UTF-8"), Integer.parseInt(recruitNumber), 0 ,URLEncoder.encode(reward.getText().toString(), "UTF-8"), uploadFileName, URLEncoder.encode(phoneNumbers, "UTF-8"));
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), "회원가입을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "모집을 실패했습니다.", Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -663,7 +663,6 @@ public class Recruit extends Activity implements TextWatcher{
                     Toast.makeText(getApplicationContext(), "모집 등록을 완료하였습니다.", Toast.LENGTH_SHORT).show();
                     // 등록에 성공했기 때문에 등록 미완료로 초기화
 
-                    // 회원가입 완료시 자동으로 모집리스트 화면으로 이동
                     recruitListBtn.setBackgroundResource(R.drawable.recruit_button3);
                     recruitStartBtn.setBackgroundResource(R.drawable.recruit_button4);
                     recruitListLayout.setVisibility(LinearLayout.VISIBLE);
