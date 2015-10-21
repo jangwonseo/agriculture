@@ -80,7 +80,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
     public static TMapView		mMapView = null;
 
-    private Context 		mContext;
+    public static Context 		mContext;
     private ArrayList<Bitmap> mOverlayList;
 
     public static String mApiKey = "53cc71ce-5537-3535-b078-2bac2d238772"; // 발급받은 appKey
@@ -179,6 +179,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
     Typeface yunGothicFont;
 
+    public static Boolean isSubmit = false;
+
     /**
      * onCreate()
      */
@@ -236,6 +238,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }catch(Exception ex){
             ex.printStackTrace();
         }
+
+
 				/*
 		btn = (Button) findViewById(R.id.navi);
 		btn.bringToFront();
@@ -447,7 +451,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
      */
     private void initView() {
         for (int btnMapView : mArrayMapButton) {
-            Button ViewButton = (Button)findViewById(btnMapView);
+           Button ViewButton = (Button)findViewById(btnMapView);
             try {
                 ViewButton.setOnClickListener(this);
             }catch(NullPointerException ex){
@@ -716,14 +720,14 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
     }
 
-    public void submit() {
+    public static void submit() {
         if(srcButton.getText() == "") {
-            Toast.makeText(getApplicationContext(), "출발지를 설정해주세요.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "출발지를 설정해주세요.", Toast.LENGTH_LONG).show();
         } else if(desButton.getText() == "") {
-            Toast.makeText(getApplicationContext(), "도착지를 설정해주세요.", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "도착지를 설정해주세요.", Toast.LENGTH_LONG).show();
         } else {
-            Intent intent = new Intent(NavigateActivity.this, navigateSearchPopup.class);
-            startActivity(intent);
+            Intent intent = new Intent(mContext, navigateSearchPopup.class);
+            mContext.startActivity(intent);
         }
     }
     public void goNavigateSearch(){

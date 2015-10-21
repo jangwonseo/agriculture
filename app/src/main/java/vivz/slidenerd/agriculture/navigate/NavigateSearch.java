@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.skp.Tmap.TMapData;
 import com.skp.Tmap.TMapPOIItem;
@@ -52,6 +55,11 @@ public class NavigateSearch extends Activity {
         navigateText.setTypeface(yunGothicFont);
         mMapView = new TMapView(this);
 
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        final int height = displaymetrics.heightPixels;
+        int width = displaymetrics.widthPixels;
+
         navigateText.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -61,6 +69,7 @@ public class NavigateSearch extends Activity {
                     final Handler handler = new Handler();
                     listView2.invalidateViews();
                     search();
+
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -70,6 +79,9 @@ public class NavigateSearch extends Activity {
                         }
                     }, 3000);
                     listView2.invalidateViews();
+                    Toast toast = Toast.makeText(getApplicationContext(), "검색 중입니다.", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, height/4);
+                    toast.show();
                     return true;
                 }
                 // TODO Auto-generated method stub
@@ -83,6 +95,7 @@ public class NavigateSearch extends Activity {
                 final Handler handler = new Handler();
                 listView2.invalidateViews();
                 search();
+
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -92,6 +105,9 @@ public class NavigateSearch extends Activity {
                     }
                 }, 3000);
                 listView2.invalidateViews();
+                Toast toast = Toast.makeText(getApplicationContext(), "검색 중입니다.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, height/4);
+                toast.show();
             }
         });
 
@@ -154,6 +170,13 @@ public class NavigateSearch extends Activity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != ""){
+            NavigateActivity.submit();
+        }
+        super.onBackPressed();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
