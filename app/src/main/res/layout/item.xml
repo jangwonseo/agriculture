@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100px"
+    android:background="@drawable/border"
     android:orientation="horizontal"
     >
 
@@ -13,7 +14,7 @@
 
         <TextView
             android:id="@+id/poiName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="37px"
@@ -22,7 +23,7 @@
 
         <TextView
             android:id="@+id/poiAddr"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sub Title"
             android:textColor="#BB6622"
