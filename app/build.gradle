@@ -11,8 +11,8 @@ android {
         applicationId "vivz.slidenerd.agriculture"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 8
-        versionName "8.0"
+        versionCode 9
+        versionName "9.0"
     }
     buildTypes {
         release {
