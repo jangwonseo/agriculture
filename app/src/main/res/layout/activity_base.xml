@@ -153,7 +153,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/srcButton"
-                                android:background="@null" />
+                                android:background="@null"
+                                android:textColor="#000000" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -168,7 +169,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/desButton"
-                                android:background="@null"/>
+                                android:background="@null"
+                                android:textColor="#000000" />
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
