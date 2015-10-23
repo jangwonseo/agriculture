@@ -87,20 +87,17 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0px"
-                    android:layout_weight="110">
+                    android:layout_weight="100">
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="6"></LinearLayout>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="60">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="88">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0px"
@@ -112,9 +109,9 @@
                                 android:text="출발지"
                                 android:paddingLeft="2dp"
                                 android:textSize="12dp"
-                                android:gravity="center_vertical"
-                                android:background="#969696"
-                                />
+                                android:gravity="center_vertical|center_horizontal"
+                                android:background="#50CCB4"
+                                android:textColor="#FFFFFF" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -123,7 +120,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0px"
-                            android:layout_weight="45">
+                            android:layout_weight="45"
+                            android:gravity="center_vertical|center_horizontal">
                             <TextView
                                 android:id="@+id/endpointtxt"
                                 android:layout_width="match_parent"
@@ -131,37 +129,31 @@
                                 android:text="도착지"
                                 android:paddingLeft="2dp"
                                 android:textSize="12dp"
-                                android:gravity="center_vertical"
-                                android:background="#969696" />
+                                android:gravity="center_vertical|center_horizontal"
+                                android:background="#50CCB4"
+                                android:textColor="#FFFFFF" />
                         </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="6"></LinearLayout>
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="330">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="300">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="45"
-                            android:background="#969696">
+                            android:background="#FFFFFF">
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/srcButton"
-                                android:background="@null"/>
+                                android:background="@null" />
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -171,37 +163,36 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="45"
-                            android:background="#969696">
+                            android:background="#FFFFFF">
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/desButton"
                                 android:background="@null"/>
                         </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="6"></LinearLayout>
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="110">
+                        android:layout_weight="100">
                         <Button
                             android:id="@+id/submit"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="길찾기"
-                            android:textSize="15dp"/>
+                            android:textSize="15dp"
+                            android:background="#50CCB4"
+                            android:textColor="#FFFFFF"
+                            android:gravity="center_vertical|center_horizontal" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0px"
                         android:layout_height="match_parent"
-                        android:layout_weight="10"></LinearLayout>
+                        android:layout_weight="6"></LinearLayout>
 
                 </LinearLayout>
 
@@ -209,7 +200,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0px"
-                    android:layout_weight="10" />
+                    android:layout_weight="20" />
 
                 <LinearLayout
                     android:orientation="horizontal"

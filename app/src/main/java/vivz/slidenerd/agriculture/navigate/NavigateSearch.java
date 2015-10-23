@@ -51,6 +51,7 @@ public class NavigateSearch extends Activity {
         adapterMarker=new List_Adapter_Marker(mContext, R.layout.item,data);
         listView2.setAdapter(adapterMarker);
         searchButton = (Button) findViewById(R.id.searchButton);
+        searchButton.setTypeface(yunGothicFont);
         navigateText = (EditText) findViewById(R.id.navigateText);
         navigateText.setTypeface(yunGothicFont);
         mMapView = new TMapView(this);

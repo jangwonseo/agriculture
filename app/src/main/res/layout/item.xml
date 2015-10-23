@@ -11,7 +11,7 @@
         android:layout_height="210px"
         android:orientation="vertical"
         android:focusable="false"
-        android:background="#ffffff">
+        android:background="#DFF7F5">
 
         <LinearLayout
             android:orientation="horizontal"
