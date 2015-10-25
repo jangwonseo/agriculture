@@ -16,12 +16,12 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/login3">
+            >
             <Button
                 android:id="@+id/normallogin_back"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"
+                android:background="@drawable/btn_pressback"
                 />
 
         </LinearLayout>

@@ -15,32 +15,32 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/btn_pressback">
+            >
 
             <Button
                 android:id="@+id/mydiarybackbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"/>
+                android:background="@drawable/btn_pressback"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="389"
-            android:background="@drawable/information_20">
+            android:background="@drawable/menu_title">
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="81"
-            android:background="@drawable/home2">
+            >
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"/>
+                android:background="@drawable/btn_movetohome"/>
 
         </LinearLayout>
 

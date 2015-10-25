@@ -15,13 +15,13 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/mydiary10">
+            >
 
             <Button
                 android:id="@+id/myDiary_backbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"/>
+                android:background="@drawable/btn_pressback"/>
 
         </LinearLayout>
 
@@ -29,20 +29,19 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="470"
-            android:background="@drawable/mydiary11">
-
+            android:background="@drawable/menu_title">
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/mydiary9">
+            >
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"/>
+                android:background="@drawable/btn_movetohome"/>
 
         </LinearLayout>
 

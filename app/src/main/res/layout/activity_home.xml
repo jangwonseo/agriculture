@@ -31,7 +31,7 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="81"
-                android:background="@drawable/home2">
+                android:background="@drawable/btn_menuslidepage">
 
                 <Button
                     android:id="@+id/home_menubutton"

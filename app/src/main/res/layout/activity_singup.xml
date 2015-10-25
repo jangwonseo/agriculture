@@ -15,13 +15,13 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="70"
-            android:background="@drawable/userinformation4">
+            >
 
             <Button
                 android:id="@+id/signup_backbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null"/>
+                android:background="@drawable/btn_pressback"/>
 
         </LinearLayout>
 

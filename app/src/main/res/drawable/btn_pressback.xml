@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--Press Button-->
     <item android:state_pressed="true"
-        android:drawable="@drawable/mydiary11af">
+        android:drawable="@drawable/menu_backbuttonaf">
     </item>
     <!--Unpressd Button-->
     <item android:state_pressed="false"
-        android:drawable="@drawable/mydiary11">
+        android:drawable="@drawable/menu_backbutton">
     </item>
 </selector>
