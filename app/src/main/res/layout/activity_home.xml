@@ -117,13 +117,13 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="270"
-                    android:background="@drawable/home6">
+                    >
 
                     <Button
                         android:id="@+id/themebutton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null" />
+                        android:background="@drawable/btn_theme" />
 
                 </LinearLayout>
                 <!-- region-->
@@ -136,7 +136,7 @@
                         android:id="@+id/regionbutton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/home5" />
+                        android:background="@drawable/btn_region" />
 
                 </LinearLayout>
 
@@ -152,13 +152,13 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="270"
-                    android:background="@drawable/home7">
+                    >
 
                     <Button
                         android:id="@+id/gatheringbutton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null" />
+                        android:background="@drawable/btn_recruit"/>
 
                 </LinearLayout>
 
@@ -168,13 +168,13 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="270"
-                    android:background="@drawable/home11">
+                    >
 
                     <Button
                         android:id="@+id/etceterabutton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null" />
+                        android:background="@drawable/btn_foodandaccommodation" />
 
                 </LinearLayout>
 
