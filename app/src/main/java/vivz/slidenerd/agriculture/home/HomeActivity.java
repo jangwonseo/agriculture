@@ -1,8 +1,10 @@
 package vivz.slidenerd.agriculture.home;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.R;
@@ -45,7 +48,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
-
 public class HomeActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     //sharedPreference 선언부
     public SharedPreferences setting;
@@ -54,7 +56,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton, btnChangeMyinfo;
 
     //페이지가 열려 있는지 알기 위한 플래그
-
     //애니메이션 객체
     private Animation translateLeftAnim;
     private Animation translateRightAnim;
