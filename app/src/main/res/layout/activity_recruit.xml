@@ -510,14 +510,13 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="110"
-                        android:background="@drawable/file_upload"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/selectPicture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@null"/>
+                            android:background="@drawable/btn_fileupload"/>
 
 
 
@@ -724,13 +723,13 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="220"
-                        android:background="@drawable/recruit_regist">
+                        >
 
                         <Button
                             android:id="@+id/regist_button"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@null">
+                            android:background="@drawable/btn_recruitregist">
                         </Button>
 
                     </LinearLayout>

@@ -527,8 +527,8 @@ public class Recruit extends Activity implements TextWatcher{
                         Toast.makeText(getApplicationContext(), "모집을 위해 로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        recruitListBtn.setBackgroundResource(R.drawable.recruit_button1);
-                        recruitStartBtn.setBackgroundResource(R.drawable.recruit_button2);
+                        recruitListBtn.setBackgroundResource(R.drawable.recruit_start4);
+                        recruitStartBtn.setBackgroundResource(R.drawable.recruit_start5);
                         recruitListLayout.setVisibility(LinearLayout.GONE);  //gone은 눈에 안보일뿐 아니라 영역도 없어짐
                         recruitStartLayout.setVisibility(LinearLayout.VISIBLE);
                     }
