@@ -18,7 +18,7 @@
             >
 
             <Button
-                android:id="@+id/back"
+                android:id="@+id/navigatesearchbackbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_pressback"/>
@@ -37,7 +37,7 @@
             >
 
             <Button
-                android:id="@+id/myPage"
+                android:id="@+id/navigatesearch_menubutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_movetohome"/>

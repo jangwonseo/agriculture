@@ -26,6 +26,7 @@ import com.skp.Tmap.TMapView;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 
 public class NavigateSearch extends Activity {
     private ListView listView2;
@@ -36,6 +37,8 @@ public class NavigateSearch extends Activity {
     private EditText navigateText;
     private TMapView mMapView = null;
     private Typeface yunGothicFont;
+
+    private Button backButton,moveToHomeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,25 @@ public class NavigateSearch extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         final int height = displaymetrics.heightPixels;
         int width = displaymetrics.widthPixels;
+
+
+        backButton = (Button)findViewById(R.id.navigatesearchbackbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        moveToHomeButton = (Button)findViewById(R.id.navigatesearch_menubutton);
+        moveToHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
+            }
+        });
 
         navigateText.setOnKeyListener(new View.OnKeyListener()
         {
