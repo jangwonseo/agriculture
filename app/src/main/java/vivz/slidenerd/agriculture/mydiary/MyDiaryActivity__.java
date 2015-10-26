@@ -39,6 +39,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 import vivz.slidenerd.agriculture.recruit.*;
@@ -47,7 +48,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
     private LinearLayout recruitListLayout,interestedListLayout;
     private Button recruitListButton, interestedListButton;
-    private Button mydiarybackbutton;
+    private Button mydiarybackbutton, mydiaryMoveToHomeButton;
 
     //sharedPreference 선언부
     public SharedPreferences setting;
@@ -120,6 +121,9 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         // 뒤로가기 버튼
         mydiarybackbutton = (Button)findViewById(R.id.mydiarybackbutton);
         mydiarybackbutton.setOnClickListener(mClickListener);
+
+        mydiaryMoveToHomeButton = (Button)findViewById(R.id.mydiary_movetohome);
+        mydiaryMoveToHomeButton.setOnClickListener(mClickListener);
 
 
         recruitListButton = (Button)findViewById(R.id.recruitlistbutton);//신청체험버튼
@@ -223,10 +227,15 @@ public class MyDiaryActivity__ extends ActionBarActivity {
                     recruitListLayout.setVisibility(LinearLayout.GONE);
                     interestedListLayout.setVisibility(LinearLayout.VISIBLE);
                     break;
-
+                //뒤로가기버튼
                 case R.id.mydiarybackbutton:
-                    Log.d("seojang", "heheheheheihihi");
                     onBackPressed();
+                    break;
+
+                case R.id.mydiary_movetohome:
+                    Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                    moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(moveToHomeIntent);
                     break;
             }
         }

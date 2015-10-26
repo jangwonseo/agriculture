@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.recruit.RecruitListItem;
 import vivz.slidenerd.agriculture.recruit.MissionItem;
 
@@ -41,6 +42,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
     TextView missionName;
     Button phoneNum;
     Button btnMydiaryDetailCancel;
+    Button backButton, moveToHomeButton;
 
     getRecruit getRecruit;
 
@@ -138,6 +140,23 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
                 phpMyDiaryListCancel myCancel = new phpMyDiaryListCancel();
                 myCancel.execute("http://218.150.181.131/seo/phpMydiaryListCancel.php?userId=" + id + "&recruitId=" + i.getIdRecruit());
                 Log.e("MyCancel", "http://218.150.181.131/seo/phpMydiaryListCancel.php?userId=" + id + "&recruitId=" + i.getIdRecruit());
+            }
+        });
+
+        backButton = (Button)findViewById(R.id.mydiarydetail_backbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        moveToHomeButton = (Button)findViewById(R.id.mydiarydetail_movetohomebutton);
+        moveToHomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(moveToHomeIntent);
             }
         });
 

@@ -17,6 +17,7 @@
             android:layout_weight="70"
            >
             <Button
+                android:id="@+id/mydiarydetail_backbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_pressback"/>
@@ -35,6 +36,7 @@
             android:layout_weight="81"
             >
             <Button
+                android:id="@+id/mydiarydetail_movetohomebutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_movetohome"/>

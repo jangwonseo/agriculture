@@ -38,6 +38,7 @@
             >
 
             <Button
+                android:id="@+id/mydiary_movetohome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_movetohome"/>
