@@ -704,8 +704,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     _setMyPosition.setBackgroundResource(R.drawable.accommodation_food6);
                 }else{
                     _setMyPosition.setBackgroundResource(R.drawable.accommodation_food41af);
-                    break;
                 }
+
+                break;
             case R.id.zoom_In:mapZoomIn(); break;
             case R.id.zoom_Out: mapZoomOut(); break;
             case R.id.srcButton:

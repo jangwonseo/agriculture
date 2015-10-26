@@ -97,7 +97,8 @@
             android:name=".navigate.NavigateActivity"
             android:label="@string/title_activity_navigate"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".recruit.RecruitPopupActivity"
@@ -125,7 +126,8 @@
         </activity>
         <activity
             android:name=".navigate.NavigateSearch"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".navigate.navigateSearchPopup"

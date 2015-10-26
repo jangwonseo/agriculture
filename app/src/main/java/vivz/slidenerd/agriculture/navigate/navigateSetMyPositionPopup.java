@@ -60,6 +60,9 @@ public class navigateSetMyPositionPopup extends Activity {
                         }
                     });
                 }
+                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "") {
+                    NavigateActivity.submit();
+                }
             }
         });
 
@@ -84,6 +87,9 @@ public class navigateSetMyPositionPopup extends Activity {
 
                         }
                     });
+                }
+                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "") {
+                    NavigateActivity.submit();
                 }
             }
         });

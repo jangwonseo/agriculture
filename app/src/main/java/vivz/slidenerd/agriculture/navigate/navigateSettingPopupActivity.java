@@ -18,6 +18,7 @@ import com.skp.Tmap.TMapPoint;
 import java.io.Serializable;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 
 public class navigateSettingPopupActivity extends Activity implements View.OnClickListener {
     TextView poiName;
@@ -68,8 +69,15 @@ public class navigateSettingPopupActivity extends Activity implements View.OnCli
                 onBackPressed();
                 Toast.makeText(getApplicationContext(), "도착지로 설정되었습니다.", Toast.LENGTH_LONG).show();
                 Log.i("asd", "NavigateActivity.srcButton.getText() : " + NavigateActivity.srcButton.getText() + " NavigateActivity.desButton.getText() : " + NavigateActivity.desButton.getText());
-                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "")
+                if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != "") {
+                    NavigateActivity.submit();
                     onBackPressed();
+                    /*
+                    Intent moveToMapIntent  = new Intent(getApplicationContext(), NavigateActivity.class);
+                    moveToMapIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(moveToMapIntent);
+                    */
+                }
             }
         };
 
