@@ -47,6 +47,7 @@ import java.util.Calendar;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.recruit.RecruitListItem;
 import vivz.slidenerd.agriculture.sign.DatePickerFragment;
+import vivz.slidenerd.agriculture.sign.SHA256;
 
 public class ChangeMyinfoActivity extends ActionBarActivity {
 
@@ -84,6 +85,10 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
     private MemberItem memberItem; //회원정보를 담은 클래스
     private phpInsert phpTask;  //php insert 연동 소스
 
+    // 암호화 알고리즘 클래스
+
+    SHA256 sha;
+
 
     // 사진업로드 부분 ------------------------------------------
     private ImageView imgvSelectpic;
@@ -101,6 +106,9 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_myinfo);
+
+        // 암호화 클래스 선언
+        sha = new SHA256();
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -163,13 +171,16 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
                 //비밀번호 입력란과 비밀번호재입력란이 다르면 다르다고 해야함
                 if (!((ChangePassword.getText().toString()).equals(ChangePassword_re.getText().toString()))) {
                     Toast.makeText(getApplicationContext(), "비밀번호가 달라요!", Toast.LENGTH_SHORT).show();
-                } else {
+                }else if((ChangePassword.getText().toString()).equals("") || (ChangePassword.getText().toString()).equals(null)){
+                    Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요!", Toast.LENGTH_SHORT).show();
+                }else {
                     //이부분에 나온 값들을 db 로 연동시켜서 회원정보 저장시킬것!!
                     Log.d("seojang", "비밀번호 일치 : " + ChangePassword.getText().toString() + " , " + ChangePassword_re.getText().toString());
                     try {
                         info_Name = URLEncoder.encode(ChangeUserName.getText().toString(), "UTF-8");
                         info_Id = userId;
-                        info_Pw = ChangePassword.getText().toString();
+                        info_Pw = sha.testSHA256(ChangePassword.getText().toString());
+                        Log.d("seojang","password : "+info_Pw);
                         info_PhoneNum = ChangePhoneNum.getText().toString();
                         info_Birthday = ChangeBirthYear.getText().toString() + "_" + ChangeBirthMonth.getText().toString() + "_" + ChangeBirthDay.getText().toString();
 
