@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="55"
-                android:background="@drawable/login5">
+                android:background="#ffffff">
 
                 <EditText
                     android:id="@+id/id_insert"
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="55"
-                android:background="@drawable/login5">
+                android:background="#ffffff">
                 <EditText
                     android:id="@+id/pw_insert"
                     android:layout_width="match_parent"

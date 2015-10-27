@@ -8,7 +8,7 @@
         android:id="@+id/mainRelativeLayout"
         android:layout_width="496px"
         android:layout_height="420px"
-        android:background="@drawable/accommodation_food9"
+        android:background="#ffffff"
         android:layout_weight="1" >
 
     </RelativeLayout>

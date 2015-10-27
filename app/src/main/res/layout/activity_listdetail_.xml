@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="242"
-                android:background="@drawable/list_detail2">
+                android:background="#ffffff">
 
                 <WebView
                     android:layout_width="match_parent"

@@ -228,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="135"
-                    android:background="@drawable/mydiary_detail2">
+                    android:background="#ffffff">
                     <TextView
                         android:id="@+id/mission"
                         android:layout_width="match_parent"
@@ -253,7 +253,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="205"
-                    android:background="@drawable/mydiary_detail3">
+                    android:background="#ffffff">
                     <TextView
                         android:id="@+id/colleague"
                         android:layout_width="match_parent"

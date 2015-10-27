@@ -397,7 +397,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0px"
                             android:layout_weight="42"
-                            android:background="@drawable/recruit_start9"
+                            android:background="#ffffff"
                             android:orientation="horizontal">
                             <LinearLayout
                                 android:layout_width="0px"
@@ -471,7 +471,7 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="345"
-                        android:background="@drawable/recruit_start11">
+                        android:background="#ffffff">
 
                         <EditText
                             android:id="@+id/missionName"
@@ -549,7 +549,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="125"
-                    android:background="@drawable/recruit_start12">
+                    android:background="#ffffff">
                     <EditText
                         android:id="@+id/content"
                         android:background="@null"
@@ -583,7 +583,7 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="160"
-                        android:background="@drawable/recruit_start13">
+                        android:background="#ffffff">
                         <TextView
                             android:id="@+id/termStart"
                             android:background="@null"
@@ -606,7 +606,7 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="160"
-                        android:background="@drawable/recruit_start13">
+                        android:background="#ffffff">
                         <TextView
                             android:id="@+id/termEnd"
                             android:background="@null"
@@ -644,7 +644,7 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="80"
-                        android:background="@drawable/recruit_start14">
+                        android:background="#ffffff">
                         <EditText
                             android:id="@+id/recruitNum"
                             android:background="@null"
@@ -665,7 +665,7 @@
                         android:layout_width="0px"
                         android:layout_height="match_parent"
                         android:layout_weight="178"
-                        android:background="@drawable/recruit_start25">
+                        android:background="#FFFFFF">
                         <EditText
                             android:id="@+id/etxtPhone"
                             android:layout_width="match_parent"
@@ -689,7 +689,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0px"
                     android:layout_weight="55"
-                    android:background="@drawable/recruit_start15">
+                    android:background="#ffffff">
 
                     <EditText
                         android:id="@+id/reward"

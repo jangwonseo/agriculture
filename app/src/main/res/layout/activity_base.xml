@@ -337,7 +337,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0"
-                            android:background="@drawable/accommodation_food22"
+                            android:background="#ffffff"
                             android:orientation="horizontal" >
 
                             <LinearLayout
