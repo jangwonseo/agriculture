@@ -52,28 +52,29 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="120"
-                    android:background="@drawable/joinin8"
+
                     >
                     <!-- phonecall-->
                     <Button
                         android:id="@+id/btnPhoneCall"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null"/>
+                        android:background="@drawable/btn_joininphonecall"/>
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="120"
-                    android:background="@drawable/joinin7"
+
                     >
 
+                    <!-- facebook share-->
                     <Button
+                        android:id="@+id/shareButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/shareButton"
-                        android:background="@null"/>
+                        android:background="@drawable/btn_joininfacebookshare"/>
 
                 </LinearLayout>
 
@@ -259,13 +260,13 @@
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_weight="138"
-                    android:background="@drawable/joinin10">
+                    >
 
                     <Button
                         android:id="@+id/btnMissionJoin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@null"/>
+                        android:background="@drawable/btn_joininregist"/>
 
                 </LinearLayout>
                 <LinearLayout

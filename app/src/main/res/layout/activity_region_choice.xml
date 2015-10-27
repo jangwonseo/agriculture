@@ -39,11 +39,8 @@
                 android:id="@+id/regionchoice_menubutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/btn_movetohome"
-                />
-
+                android:background="@drawable/btn_movetohome" />
         </LinearLayout>
-
     </LinearLayout>
 
     <!-- map-->
