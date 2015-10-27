@@ -65,12 +65,12 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     // 홈에 추천 마을(체험) 이미지
     WebView webvHomeImage;
-    phpGetInfo getInfo;
     ArrayList<Item> recommendItems = new ArrayList<>();
-    ArrayList<Item> recommendItems10 = new ArrayList<>();
+    //ArrayList<Item> recommendItems10 = new ArrayList<>();
 
     Button btnMyDiary;
     public int recommendNum = 0;
+    phpGetInfo getInfo;
 
     private boolean isPageOpen = false;
     //두번 눌러 종료
@@ -215,33 +215,11 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         translateLeftAnim.setAnimationListener(animListener);
         translateRightAnim.setAnimationListener(animListener);
 
-        //geon remove
-        //getInfo = new phpGetInfo();
-        //getInfo.execute("http://218.150.181.131/seo/phpRecommendVilage.php");
+        getInfo = new phpGetInfo();
+        getInfo.execute("http://218.150.181.131/seo/phpHomeSlider.php");
         
         btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
         btnMyDiary.setOnClickListener(mClickListener);
-
-//        webvHomeImage.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        try {
-//                            /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
-//                            Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
-//                            HomeIntent.putExtra("item", recommendItems10.get(recommendNum)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
-//                            // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
-//                            startActivity(HomeIntent);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
 
         //두번눌러 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -354,6 +332,16 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     @Override
     public void onSliderClick(BaseSliderView slider) {
         Log.e("Slider : ", Integer.toString(selectedSlide));
+
+        try {
+            /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
+            Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
+            HomeIntent.putExtra("item", recommendItems.get(selectedSlide)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+            // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+            startActivity(HomeIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // 추천할 마을 정보
@@ -415,16 +403,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                 ex.printStackTrace();
             }
 
-            // 모든 체험정보를 가져오면 임의로 10개의 체험을 뽑는다.
-            Log.e("recomdItemsSize: ", Integer.toString(recommendItems.size()));
-            try {
-                for (int i = 0; i < 10; i++) {
-                    recommendItems10.add(recommendItems.get(i));
-                    Log.e("recomdItemsAdded: ", recommendItems.get(i).getName());
-                }
-            }catch(Exception ex){
-                Toast.makeText(getApplicationContext(), "인터넷 연결이 되어있지 않습니다.", Toast.LENGTH_SHORT);
-            }
             this.cancel(true);
         }
     }
