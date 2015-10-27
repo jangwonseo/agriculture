@@ -23,6 +23,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
     private Button traditionalButton;
     private Button wellBeingButton;
     private Button menuButton;
+    private Button btnVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,9 @@ public class ThemeChoiceActivity extends ActionBarActivity {
             }
         });
 
+        btnVideo = (Button)findViewById(R.id.btnVideo);
+        btnVideo.setOnClickListener(mClickListener);
+
 
     }
 
@@ -83,6 +87,10 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                     break;
                 case R.id.btn_wellBeing:
                     intentTheme.putExtra("themeflag","wellBeing");
+                    startActivity(intentTheme);
+                    break;
+                case R.id.btnVideo:
+                    intentTheme.putExtra("themeflag", "video");
                     startActivity(intentTheme);
                     break;
 

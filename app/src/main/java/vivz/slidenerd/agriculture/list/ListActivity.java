@@ -26,6 +26,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
@@ -88,6 +89,8 @@ public class ListActivity extends ActionBarActivity {
             tempThemeName = "경남/부산";
         else if (themeName.equals("kyungbuk"))
             tempThemeName = "경북/대구";
+        else if (themeName.equals("video"))
+            tempThemeName = "생생한 체험 이야기";
         else
             tempThemeName = "기타";
 
@@ -153,6 +156,9 @@ public class ListActivity extends ActionBarActivity {
                 themeName.equals("chungbuk") || themeName.equals("jeonnam") || themeName.equals("jeonbuk") ||
                 themeName.equals("kyungnam") || themeName.equals("kyungbuk"))
             task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
+
+        else if (themeName.equals("video"))
+            task.execute("http://218.150.181.131/seo/phpListVideo.php");
 
     }
 
@@ -221,8 +227,12 @@ public class ListActivity extends ActionBarActivity {
 
                     Log.d("seojang", "this is a apple4444");
                     Log.d("seojang", "정보확인하기 : " + vilageName.getString("prcafsManMoblphon"));
-
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
+                    /*
+                    Item item = new Item(vilageName.getString("thumbUrlCours1"), URLEncoder.encode(vilageName.getString("vilageNm"), "UTF-8"),
+                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
+                            vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
+                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id")); */
+                    Item item = new Item(vilageName.getString("thumbUrlCours1"),vilageName.getString("vilageNm"),
                             vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
                             vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
                             vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));

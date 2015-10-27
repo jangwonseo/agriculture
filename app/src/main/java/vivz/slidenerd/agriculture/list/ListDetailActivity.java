@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -263,8 +264,15 @@ public class ListDetailActivity extends ActionBarActivity {
         //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
 
         // 체험 비디오 가져오기가져오기
-        task=new phpDown();
-        task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + i.getVilageId() + "");
+
+        try {
+            task=new phpDown();
+            //String str = URLEncoder.encode(i.getName(), "UTF-8");
+            task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + URLEncoder.encode(i.getName(), "UTF-8") + "");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
 
         // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
         dupChecker = new dupChecker();
