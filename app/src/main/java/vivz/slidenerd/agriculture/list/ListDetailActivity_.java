@@ -29,14 +29,14 @@ public class ListDetailActivity_ extends ActionBarActivity {
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
         informationProgram = (TextView)findViewById(R.id.information_program);
         informationProgram.setTypeface(yunGothicFont);
-        vilageHomepage = (TextView)findViewById(R.id.homepagevilage);
+        //vilageHomepage = (TextView)findViewById(R.id.homepagevilage);
         vilageHomepage.setTypeface(yunGothicFont);
         experienceVilage = (TextView)findViewById(R.id.experienceVilage);
         experienceVilage.setTypeface(yunGothicFont);
 
 
         //버튼 인스턴스 화
-        phoneCall = (Button)findViewById(R.id.phonecall);
+        //phoneCall = (Button)findViewById(R.id.phonecall);
         phoneCall.setOnClickListener(detailClickListener);
         addMydiary = (Button)findViewById(R.id.addmydiary);
         addMydiary.setOnClickListener(detailClickListener);
@@ -53,9 +53,9 @@ public class ListDetailActivity_ extends ActionBarActivity {
 
             switch (v.getId())
             {
-                case R.id.phonecall:
+                //case R.id.phonecall:
 
-                    break;
+                    //break;
                 case R.id.addmydiary:
 
                     break;

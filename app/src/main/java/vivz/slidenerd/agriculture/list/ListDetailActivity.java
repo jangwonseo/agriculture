@@ -97,13 +97,13 @@ public class ListDetailActivity extends ActionBarActivity {
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         btnView=(View)findViewById(R.id.btnView);
-        accommodation = (Button) findViewById(R.id.accommodation);
-        accommodation.setOnClickListener(mClickListener);
-        bank = (Button) findViewById(R.id.bank);
-        bank.setOnClickListener(mClickListener);
-        gasStation = (Button) findViewById(R.id.gasStation);
-        gasStation.setOnClickListener(mClickListener);
-        restaurant = (Button) findViewById(R.id.restaurant);
+        //accommodation = (Button) findViewById(R.id.accommodation);
+        //accommodation.setOnClickListener(mClickListener);
+        //bank = (Button) findViewById(R.id.bank);
+        //bank.setOnClickListener(mClickListener);
+        //gasStation = (Button) findViewById(R.id.gasStation);
+        //gasStation.setOnClickListener(mClickListener);
+        restaurant = (Button) findViewById(R.id.findmap);
         restaurant.setOnClickListener(mClickListener);
         // 제스처를 사용하기 위해 미리 선언.
         gestureDetector = new GestureDetector(this, new SwipeGestureDetector(){
@@ -190,11 +190,11 @@ public class ListDetailActivity extends ActionBarActivity {
             }
         });
 
-        myDiary= (Button) findViewById(R.id.btn_myDiary);
+        myDiary= (Button) findViewById(R.id.addmydiary);
         myDiary.setOnClickListener(mClickListener);
 
-        vod=(Button) findViewById(R.id.btn_vod);
-        vod.setOnClickListener(mClickListener);
+        //vod=(Button) findViewById(R.id.btn_vod);
+        //vod.setOnClickListener(mClickListener);
 
         thumb = (WebView)findViewById(R.id.thumb);
 
@@ -235,25 +235,25 @@ public class ListDetailActivity extends ActionBarActivity {
         Linkify.addLinks(vilageHmpgUrl, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
 */
 
-        main2Web = (WebView)findViewById(R.id.main2Web);
-
-        //웹뷰의 글씨들 크기 조정해줌. good;
-        main2Web.getSettings().setDefaultFontSize(40);
-
-        // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
-        main2Web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        main2Web.getSettings().setLoadWithOverviewMode(true);
-        main2Web.getSettings().setUseWideViewPort(true);
-        main2Web.getSettings().setJavaScriptEnabled(true);
-
-        //체험 정보 가져오기
-        main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?tableName=" + i.getTableName() + "&vilageId=" + i.getVilageId());
-
-
-
-        // 제스처 등록
-
-        main2Web.setOnTouchListener(gestureListener);
+//        main2Web = (WebView)findViewById(R.id.main2Web);
+//
+//        //웹뷰의 글씨들 크기 조정해줌. good;
+//        main2Web.getSettings().setDefaultFontSize(40);
+//
+//        // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
+//        main2Web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        main2Web.getSettings().setLoadWithOverviewMode(true);
+//        main2Web.getSettings().setUseWideViewPort(true);
+//        main2Web.getSettings().setJavaScriptEnabled(true);
+//
+//        //체험 정보 가져오기
+//        main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?tableName=" + i.getTableName() + "&vilageId=" + i.getVilageId());
+//
+//
+//
+//        // 제스처 등록
+//
+//        main2Web.setOnTouchListener(gestureListener);
         thumb.setOnTouchListener(gestureListener);
         vilageHomepage.setOnTouchListener(gestureListener);
         vilageNameDown.setOnTouchListener(gestureListener);
@@ -299,7 +299,7 @@ public class ListDetailActivity extends ActionBarActivity {
         {
             switch (v.getId())
             {
-                case R.id.btn_myDiary:
+                case R.id.addmydiary:
 
                     // 로그인이 안돼있다면
                     if(id.compareTo("")==0 || id == null) {
@@ -357,6 +357,7 @@ public class ListDetailActivity extends ActionBarActivity {
                         startActivity(new Intent(Intent.ACTION_VIEW,
                                 Uri.parse("http://" + vodUrls )));
                     break;
+                /*
                 case R.id.accommodation:
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_accommodation;
                     Intent intentAccommodation = new Intent(getApplicationContext(), NavigateActivity.class);
@@ -366,6 +367,7 @@ public class ListDetailActivity extends ActionBarActivity {
                     intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentAccommodation);
                     break;
+
                 case R.id.bank:
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_bank;
                     Intent intentBank = new Intent(getApplicationContext(), NavigateActivity.class);
@@ -384,7 +386,8 @@ public class ListDetailActivity extends ActionBarActivity {
                     intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentGasStation);
                     break;
-                case R.id.restaurant:
+                    */
+                case R.id.findmap:
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_restaurant;
                     Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -393,6 +396,7 @@ public class ListDetailActivity extends ActionBarActivity {
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentRestaurant);
                     break;
+
             }
 
 

@@ -168,11 +168,6 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".list.ListDetailActivity_"
-            android:label="@string/title_activity_list_detail_activity_"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
-        <activity
             android:name=".list.MapCategoryPopupActivity"
             android:label="@string/title_activity_map_category_popup"
             android:configChanges="orientation|keyboardHidden"
