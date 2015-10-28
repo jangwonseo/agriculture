@@ -226,16 +226,14 @@ public class ListActivity extends ActionBarActivity {
                     JSONObject vilageName = jAr.getJSONObject(i);
 
                     Log.d("seojang", "this is a apple4444");
-                    Log.d("seojang", "정보확인하기 : " + vilageName.getString("prcafsManMoblphon"));
-                    /*
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), URLEncoder.encode(vilageName.getString("vilageNm"), "UTF-8"),
-                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
-                            vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id")); */
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"),vilageName.getString("vilageNm"),
-                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
-                            vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
+                    Log.d("seojang", "정보확인하기 : " + vilageName.getString("chargerMoblphonNo"));
+
+                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
+                            vilageName.getString("exprnProgrmNm"), vilageName.getString("exprnLiverStgDc"), vilageName.getString("adres1"),
+                            vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"), vilageName.getString("tableName"),
+                            vilageName.getString("operEraBegin"), vilageName.getString("operEraEnd"), vilageName.getString("nmprCoMumm")
+                            , vilageName.getString("nmprCoMxmm"), vilageName.getString("operTimeMnt"), vilageName.getString("pc"),
+                            vilageName.getString("onlineResvePosblAt"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
                     data.add(item);
@@ -315,7 +313,7 @@ class List_Adapter extends BaseAdapter {
         thumb.setFocusable(false);
 
         if (thumb != null) {
-            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + listviewitem.getThumbUrl()), "text/html", "utf-8", null);
+            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + listviewitem.getThumbUrlCours1()), "text/html", "utf-8", null);
 
         }
         //icon.setImageResource(listviewitem.getIcon());
@@ -323,7 +321,7 @@ class List_Adapter extends BaseAdapter {
         // 마을 이름
         TextView name = (TextView) convertView.findViewById(R.id.vilageName);
         name.setTypeface(yunGothicFont);
-        name.setText(listviewitem.getName());
+        name.setText(listviewitem.getExprnProgrmNm());
 //
 //        // 텍스트 짤림방지
 //        if (listviewitem.getName().length() <= 9)
@@ -353,11 +351,11 @@ class List_Adapter extends BaseAdapter {
         // 마을 간단 소개
         TextView vilageAccount = (TextView) convertView.findViewById(R.id.vilageAccount);
         vilageAccount.setTypeface(yunGothicFont);
-        vilageAccount.setText(listviewitem.getVilageSlgn());
+        vilageAccount.setText(listviewitem.getExprnLiverStgDc());
         // 마을 주소
         TextView addr = (TextView) convertView.findViewById(R.id.vilageAddr);
         addr.setTypeface(yunGothicFont);
-        addr.setText(listviewitem.getAddr());
+        addr.setText(listviewitem.getAdres1());
 
 
         return convertView;

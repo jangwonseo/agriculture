@@ -140,7 +140,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         Log.e("aaa","다이어리 넘어왔냐는 건 "+isDiary);
         i = (Item)item;
-        vilageId=i.getVilageId();
+        vilageId=i.getExprnDstncId();
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -168,7 +168,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         vilageNameDown = (TextView)findViewById(R.id.vilageNameDown); // 마을 이름
         vilageNameDown.setTypeface(yunGothicFont);
-        vilageNameDown.setText(i.getName());  // Main에서 가져온 마을 이름
+        vilageNameDown.setText(i.getExprnProgrmNm());  // Main에서 가져온 마을 이름
 
         vilageHomepage = (TextView)findViewById(R.id.vilageHomepage); // 마을 홈페이지
         vilageHomepage.setTypeface(yunGothicFont);
@@ -179,7 +179,7 @@ public class ListDetailActivity extends ActionBarActivity {
         call = (Button)findViewById(R.id.call);
 
         // 파이널 변수로 만들지 않으면 리스너 함수내부에서 사용이 불가능해서 임시변수 하나 만듦
-        final String phoneNumber = i.getPrcafsManMoblphon();
+        final String phoneNumber = i.getChargerMoblphonNo();
 
         // 다이얼에 전화번호 올려놓기
         call.setOnClickListener(new Button.OnClickListener() {
@@ -213,7 +213,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         if(thumb != null)
         {
-            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrl()), "text/html", "utf-8", null);
+            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrlCours1()), "text/html", "utf-8", null);
 
         }
 
@@ -268,7 +268,7 @@ public class ListDetailActivity extends ActionBarActivity {
         try {
             task=new phpDown();
             //String str = URLEncoder.encode(i.getName(), "UTF-8");
-            task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + URLEncoder.encode(i.getName(), "UTF-8") + "");
+            task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + URLEncoder.encode(i.getExprnProgrmNm(), "UTF-8") + "");
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -319,7 +319,7 @@ public class ListDetailActivity extends ActionBarActivity {
                                     recruitTask = new phpUp();
 
                                     recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
-                                            + i.getTableName() + "&vilageId=" + i.getVilageId());
+                                            + i.getTableName() + "&vilageId=" + i.getExprnDstncId());
 
                                     // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 
@@ -391,7 +391,7 @@ public class ListDetailActivity extends ActionBarActivity {
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_restaurant;
                     Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentRestaurant.putExtra("addr", i.getAddr());
+                    intentRestaurant.putExtra("addr", i.getAdres1());
                     // Log.i("asd", "addr : " + i.getAddr());
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentRestaurant);

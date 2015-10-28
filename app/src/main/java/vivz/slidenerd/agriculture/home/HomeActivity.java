@@ -391,10 +391,12 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("vilageNm"),
-                            vilageName.getString("adres1"), vilageName.getString("prcafsManMoblphon"),
-                            vilageName.getString("vilageHmpgEnnc"), vilageName.getString("vilageHmpgUrl"),
-                            vilageName.getString("vilageSlgn"), vilageName.getString("tableName"), vilageName.getString("id"));
+                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
+                            vilageName.getString("exprnProgrmNm"), vilageName.getString("exprnLiverStgDc"), vilageName.getString("adres1"),
+                            vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"), vilageName.getString("tableName"),
+                            vilageName.getString("operEraBegin"), vilageName.getString("operEraEnd"), vilageName.getString("nmprCoMumm")
+                            , vilageName.getString("nmprCoMxmm"), vilageName.getString("operTimeMnt"), vilageName.getString("pc"),
+                            vilageName.getString("onlineResvePosblAt"));
                     recommendItems.add(item);
                 }
 

@@ -14,22 +14,8 @@ thumbUrlCours1, exprnDstncId, chargerMoblphonNo, exprnProgrmNm, exprnLiverStgDc,
 vilageNm, tableName, operEraBegin, operEraEnd, nmprCoMumm, nmprCoMxmm, operTimeMnt, pc, onlineResvePosblAt
 */
 public class Item implements Serializable {
-    private String thumbUrlCours1;            // 이미지 경로
-    private String exprnProgrmNm;                // 마을 이름
-    private String adres1;                // 주소
-    private String chargerMoblphonNo;   // 체험담당자 전화번호
-    private String exprnLiverStgDc;          // 체험 간단 소개
-    private String tableName;           // 테마
-    private String exprnDstncId;
-    private String vilageHmpgUrl;
-    private String vilageNm;
-    private String operEraBegin;
-    private String operEraEnd;
-    private String nmprCoMumm;
-    private String nmprCoMxmm;
-    private String operTimeMnt;
-    private String pc;
-    private String onlineResvePosblAt;
+    private String thumbUrlCours1, exprnDstncId, chargerMoblphonNo, exprnProgrmNm, exprnLiverStgDc, adres1, vilageHmpgUrl,
+    vilageNm, tableName, operEraBegin, operEraEnd, nmprCoMumm, nmprCoMxmm, operTimeMnt, pc, onlineResvePosblAt;
 
     public Item() {
     }
@@ -126,19 +112,19 @@ public class Item implements Serializable {
 
     }
 
-    public Item(String thumbUrlCours1, String exprnProgrmNm, String adres1, String chargerMoblphonNo,
-                String exprnLiverStgDc, String tableName, String exprnDstncId, String vilageHmpgUrl,
-                String vilageNm, String operEraBegin, String operEraEnd, String nmprCoMumm, String nmprCoMxmm,
-                String operTimeMnt, String pc, String onlineResvePosblAt) {
+    public Item(String thumbUrlCours1, String exprnDstncId, String chargerMoblphonNo, String exprnProgrmNm,
+                String exprnLiverStgDc, String adres1, String vilageHmpgUrl, String vilageNm, String tableName,
+                String operEraBegin, String operEraEnd, String nmprCoMumm, String nmprCoMxmm, String operTimeMnt,
+                String pc, String onlineResvePosblAt) {
         this.thumbUrlCours1 = thumbUrlCours1;
-        this.exprnProgrmNm = exprnProgrmNm;
-        this.adres1 = adres1;
-        this.chargerMoblphonNo = chargerMoblphonNo;
-        this.exprnLiverStgDc = exprnLiverStgDc;
-        this.tableName = tableName;
         this.exprnDstncId = exprnDstncId;
+        this.chargerMoblphonNo = chargerMoblphonNo;
+        this.exprnProgrmNm = exprnProgrmNm;
+        this.exprnLiverStgDc = exprnLiverStgDc;
+        this.adres1 = adres1;
         this.vilageHmpgUrl = vilageHmpgUrl;
         this.vilageNm = vilageNm;
+        this.tableName = tableName;
         this.operEraBegin = operEraBegin;
         this.operEraEnd = operEraEnd;
         this.nmprCoMumm = nmprCoMumm;
