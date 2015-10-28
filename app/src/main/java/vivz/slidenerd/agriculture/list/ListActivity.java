@@ -225,8 +225,7 @@ public class ListActivity extends ActionBarActivity {
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
 
-                    Log.d("seojang", "this is a apple4444");
-                    Log.d("seojang", "정보확인하기 : " + vilageName.getString("chargerMoblphonNo"));
+                    Log.d("seojang", "정보확인하기 : " + vilageName.getString("exprnProgrmNm"));
 
                     Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
                             vilageName.getString("exprnProgrmNm"), vilageName.getString("exprnLiverStgDc"), vilageName.getString("adres1"),
@@ -319,9 +318,10 @@ class List_Adapter extends BaseAdapter {
         //icon.setImageResource(listviewitem.getIcon());
 
         // 마을 이름
-        TextView name = (TextView) convertView.findViewById(R.id.vilageName);
-        name.setTypeface(yunGothicFont);
-        name.setText(listviewitem.getExprnProgrmNm());
+        TextView Ename = (TextView) convertView.findViewById(R.id.ExpgName);
+        Ename.setTypeface(yunGothicFont);
+        Ename.setText(listviewitem.getExprnProgrmNm());
+        Log.e("ExpgName", listviewitem.getExprnProgrmNm());
 //
 //        // 텍스트 짤림방지
 //        if (listviewitem.getName().length() <= 9)
@@ -351,7 +351,7 @@ class List_Adapter extends BaseAdapter {
         // 마을 간단 소개
         TextView vilageAccount = (TextView) convertView.findViewById(R.id.vilageAccount);
         vilageAccount.setTypeface(yunGothicFont);
-        vilageAccount.setText(listviewitem.getExprnLiverStgDc());
+        vilageAccount.setText(listviewitem.getOperEraBegin() + " ~ " + listviewitem.getOperEraEnd());
         // 마을 주소
         TextView addr = (TextView) convertView.findViewById(R.id.vilageAddr);
         addr.setTypeface(yunGothicFont);

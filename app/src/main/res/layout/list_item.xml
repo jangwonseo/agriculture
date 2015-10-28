@@ -87,22 +87,18 @@
                 android:layout_height="0px"
                 android:layout_weight="39"
                 android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="267">
 
                     <TextView
-                        android:id="@+id/vilageName"
+                        android:id="@+id/ExpgName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:focusable="false"
                         android:textColor="#FFFFFF"
                         android:textSize="14dp"
                         android:textStyle="bold"
+                        android:text="aa"
                         android:gravity="center_vertical"/>
 
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -114,8 +110,8 @@
 
                 <TextView
                     android:id="@+id/vilageAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:focusable="false"
                     android:text="Sub Title"
                     android:textColor="#FFFFFF"
@@ -140,8 +136,8 @@
 
                 <TextView
                     android:id="@+id/vilageAddr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:focusable="false"
                     android:text="Sub Title"
                     android:textColor="#FFFFFF"

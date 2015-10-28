@@ -320,6 +320,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
                                     recruitTask.execute("http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
                                             + i.getTableName() + "&vilageId=" + i.getExprnDstncId());
+                                    Log.e("myDiary", "http://218.150.181.131/seo/insert_myDiary.php?userId=" + id + "&tableName="
+                                            + i.getTableName() + "&vilageId=" + i.getExprnDstncId());
 
                                     // MyDiary 담기 누르면 그 액티비티로 바로 이동되도록 하는 소스
 

@@ -88,24 +88,25 @@ public class Item implements Serializable {
 
         String addrEncoded = null;
         String vilageSlgnEncoded = null;
+        String ExpgName = null;
 //        String vilageHmpgEnncEncoded = null;
 //        String vilageHmpgUrlEncoded = null;
 //        String vilageKndNmEncoded = null;
         try {
             addrEncoded = URLEncoder.encode(adres1, "UTF-8");
             vilageSlgnEncoded = URLEncoder.encode(exprnLiverStgDc,"UTF-8");
-
+            ExpgName = URLEncoder.encode(exprnProgrmNm, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
         Log.e("regist", "thumbUrlCours1=" + thumbUrlCours1 +"&exprnDstncId=" + exprnDstncId + "&chargerMoblphonNo=" + chargerMoblphonNo +
-        "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + exprnLiverStgDc + "&adres1=" + adres1 + "&vilageHmpgUrl=" + vilageHmpgUrl +
+        "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + vilageSlgnEncoded + "&adres1=" + addrEncoded + "&vilageHmpgUrl=" + vilageHmpgUrl +
         "&vilageNm=" + vilageNm + "&tableName=" + tableName + "&operEraBegin=" + operEraBegin + "&operEraEnd=" + operEraEnd +
         "&nmprCoMumm=" + nmprCoMumm + "&nmprCoMxmm=" + nmprCoMxmm + "&operTimeMnt=" + operTimeMnt + "&pc=" + pc + "&onlineResvePosblAt=" +
                 onlineResvePosblAt);
         return ("thumbUrlCours1=" + thumbUrlCours1 +"&exprnDstncId=" + exprnDstncId + "&chargerMoblphonNo=" + chargerMoblphonNo +
-                "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + exprnLiverStgDc + "&adres1=" + adres1 + "&vilageHmpgUrl=" + vilageHmpgUrl +
+                "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + vilageSlgnEncoded + "&adres1=" + addrEncoded + "&vilageHmpgUrl=" + vilageHmpgUrl +
                 "&vilageNm=" + vilageNm + "&tableName=" + tableName + "&operEraBegin=" + operEraBegin + "&operEraEnd=" + operEraEnd +
                 "&nmprCoMumm=" + nmprCoMumm + "&nmprCoMxmm=" + nmprCoMxmm + "&operTimeMnt=" + operTimeMnt + "&pc=" + pc + "&onlineResvePosblAt=" +
                 onlineResvePosblAt);
