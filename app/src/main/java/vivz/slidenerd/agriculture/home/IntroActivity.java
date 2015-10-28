@@ -31,11 +31,6 @@ public class IntroActivity extends Activity {
         setContentView(R.layout.activity_intro);
         introHandler = new Handler();
         introHandler.postDelayed(irun, 1000);//약 1.0초동안 인트로 화면
-        //haha
-        //branch test
-        //test 2
-        // test 3
-        //tset 4
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
 
@@ -46,6 +41,8 @@ public class IntroActivity extends Activity {
         @Override
         public void run() {
             Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
+            //인트로화면처럼 다시 리로드 될리 없는 액티비티에서으 이동시 화면이 전환됨과 동시에 종료
+            introIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(introIntent);
             finish();
 

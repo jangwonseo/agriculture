@@ -161,8 +161,9 @@ public class ListDetailActivity extends ActionBarActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
             }
         });

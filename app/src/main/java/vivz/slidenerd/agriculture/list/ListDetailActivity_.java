@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.home.HomeActivity;
 
 public class ListDetailActivity_ extends ActionBarActivity {
     //폰트
@@ -19,6 +20,9 @@ public class ListDetailActivity_ extends ActionBarActivity {
 
     //전화버튼,마이다이어리버튼,부대시설지도버튼
     Button phoneCall, addMydiary, findMap;
+
+    //뒤로가기버튼, 홈버튼
+    Button menuButton,backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,25 @@ public class ListDetailActivity_ extends ActionBarActivity {
         addMydiary.setOnClickListener(detailClickListener);
         findMap = (Button)findViewById(R.id.findmap);
         findMap.setOnClickListener(detailClickListener);
+
+        //홈버튼, 뒤로가기버튼
+        menuButton = (Button)findViewById(R.id.listdetail_menubutton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
+                startActivity(moveToHomeIntent);
+            }
+        });
+        backButton = (Button)findViewById(R.id.listdeail_backbutton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
 
     }

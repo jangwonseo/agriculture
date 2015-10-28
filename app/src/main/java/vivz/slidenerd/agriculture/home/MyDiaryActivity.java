@@ -35,7 +35,7 @@ public class MyDiaryActivity extends ActionBarActivity {
     TextView txtView;
     Button video;   // 리스트뷰에 있는 재생버튼
     Button addItem; // 리스트뷰에 있는 관심있는 항목 추가 버튼
-    Button backButton;
+    Button backButton,menuButton;//뒤로가기버튼, 홈 버튼
     TextView keys;
     phpDown task;
     String themeName;
@@ -58,6 +58,7 @@ public class MyDiaryActivity extends ActionBarActivity {
         //m_Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         vilageList = (ListView) findViewById(R.id.vilageList);
 
+        //뒤로가기버튼, 홈버튼
         backButton  = (Button)findViewById(R.id.myDiary_backbutton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +66,7 @@ public class MyDiaryActivity extends ActionBarActivity {
                 onBackPressed();
             }
         });
+        menuButton = (Button)findViewById(R.id.mydiary_movetohome_);
 
 
         // ListView에 어댑터 연결

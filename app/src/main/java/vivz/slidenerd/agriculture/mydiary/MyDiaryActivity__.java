@@ -235,6 +235,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
                 case R.id.mydiary_movetohome:
                     Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                     moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                     startActivity(moveToHomeIntent);
                     break;
             }
