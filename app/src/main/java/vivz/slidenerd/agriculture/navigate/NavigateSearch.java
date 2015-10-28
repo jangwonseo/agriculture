@@ -196,9 +196,6 @@ public class NavigateSearch extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(NavigateActivity.srcButton.getText() != "" && NavigateActivity.desButton.getText() != ""){
-            NavigateActivity.submit();
-        }
         super.onBackPressed();
     }
 

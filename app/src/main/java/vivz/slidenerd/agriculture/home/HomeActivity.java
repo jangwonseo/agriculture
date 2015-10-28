@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -91,6 +95,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     int selectedSlide;
 
+    HashMap<String, Integer> file_maps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,31 +106,33 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
-        HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Hannibal", R.drawable.aathumbnail1);
-        file_maps.put("Big Bang Theory", R.drawable.aathumbnail2);
-        file_maps.put("House of Cards", R.drawable.aathumbnail3);
-        file_maps.put("Game of Thrones", R.drawable.aathumbnail4);
-        file_maps.put("Blueberry", R.drawable.aathumbnail5);
-        file_maps.put("Dadm", R.drawable.aathumbnail6);
-        file_maps.put("Flower vilage", R.drawable.aathumbnail7);
-        file_maps.put("Slow day", R.drawable.aathumbnail8);
+        if(file_maps == null) {
+            file_maps = new HashMap<String, Integer>();
 
-        Log.e("mapsKetset : ", file_maps.keySet().toString());
-        for (String name : file_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-//                    .description(name)  // 이미지에대해 이름을 표시해줌.
-                    .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
+            file_maps.put("Hannibal", R.drawable.aathumbnail1);
+            file_maps.put("Big Bang Theory", R.drawable.aathumbnail2);
+            file_maps.put("House of Cards", R.drawable.aathumbnail3);
+            file_maps.put("Game of Thrones", R.drawable.aathumbnail4);
+            file_maps.put("Blueberry", R.drawable.aathumbnail5);
+            file_maps.put("Dadm", R.drawable.aathumbnail6);
+            file_maps.put("Flower vilage", R.drawable.aathumbnail7);
+            file_maps.put("Slow day", R.drawable.aathumbnail8);
+            Log.e("mapsKetset : ", file_maps.keySet().toString());
+            for (String name : file_maps.keySet()) {
+                TextSliderView textSliderView = new TextSliderView(this);
+                // initialize a SliderLayout
+                textSliderView
+    //                    .description(name)  // 이미지에대해 이름을 표시해줌.
+                        .image(file_maps.get(name))
+                        .setScaleType(BaseSliderView.ScaleType.Fit)
+                        .setOnSliderClickListener(this);
 
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle().putString("extra", name);
+                //add your extra information
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle().putString("extra", name);
 
-            mDemoSlider.addSlider(textSliderView);
+                mDemoSlider.addSlider(textSliderView);
+            }
         }
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -260,17 +267,9 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     // 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
     public String creHtmlBody(String imgUrl) {
-        StringBuffer sb = new StringBuffer("<HTML>");
-        sb.append("<HEAD>");
-        sb.append("</HEAD>");
-        sb.append("<BODY style='margin:0; padding:0; text-align:center;'>");
-        //sb.append("<img src = \"" + imgUrl + "\">"); // 자기 비율에 맞게 나온다.
-        sb.append("<img width='100%' height='100%' style='-moz-border-radius: 220px;" +
-                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"); // 꽉 채운 화면으로 나온다.
-
-        sb.append("</BODY>");
-        sb.append("</HTML>");
-        return sb.toString();
+        return "<HTML>"+"<HEAD>"+"</HEAD>"+"<BODY style='margin:0; padding:0; text-align:center;'>"+
+                "<img width='100%' height='100%' style='-moz-border-radius: 220px;" +
+                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"+"</BODY>"+"</HTML>";
     }
 
     Button.OnClickListener mClickListener = new View.OnClickListener()
@@ -310,10 +309,27 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     protected void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mDemoSlider.stopAutoCycle();
+        System.gc();
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        recycleBitmap(mDemoSlider);
+        System.gc();
+        super.onDestroy();
+    }
 
+    private static void recycleBitmap(SliderLayout iv)
+    {
+        Drawable d = iv.getBackground();
+        if( d instanceof BitmapDrawable)
+        {
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            b.recycle();
+        }
+        d=null;
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

@@ -602,17 +602,27 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     }
     @Override
     protected void onPause() {
+        System.gc();
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         gps.CloseGps();
         if(mOverlayList != null){
             mOverlayList.clear();
         }
+        System.gc();
+        super.onDestroy();
     }
+
+    @Override
+    protected void onStop() {
+
+        System.gc();
+        super.onStop();
+    }
+
     /**
      * onClick Event
      */
