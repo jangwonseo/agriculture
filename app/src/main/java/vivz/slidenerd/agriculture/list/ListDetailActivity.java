@@ -85,7 +85,8 @@ public class ListDetailActivity extends ActionBarActivity {
     //폰트
     Typeface yunGothicFont;
 
-
+    // 체험 세부내용
+    TextView exprnLiverStgDc, operEra, posiblePeople, operTime, price, onlineResve, adres1;
 
     //phpDown phpJson;
     @Override
@@ -174,6 +175,29 @@ public class ListDetailActivity extends ActionBarActivity {
         vilageHomepage.setTypeface(yunGothicFont);
         vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
         Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
+
+        // 체험 세부내용
+        exprnLiverStgDc = (TextView)findViewById(R.id.exprnLiverStgDc);
+        exprnLiverStgDc.setTypeface(yunGothicFont);
+        exprnLiverStgDc.setText("체험설명 " + i.getExprnLiverStgDc());
+        operEra = (TextView)findViewById(R.id.operEra);
+        operEra.setTypeface(yunGothicFont);
+        operEra.setText("체험기간 " + i.getOperEraBegin() + " ~ " + i.getOperEraEnd());
+        posiblePeople = (TextView)findViewById(R.id.posiblePeople);
+        posiblePeople.setTypeface(yunGothicFont);
+        posiblePeople.setText("체험인원 " + i.getNmprCoMumm() + " ~ " + i.getNmprCoMxmm());
+        operTime = (TextView)findViewById(R.id.operTime);
+        operTime.setTypeface(yunGothicFont);
+        operTime.setText("소요시간 " + i.getOperTimeMnt() + "분");
+        price = (TextView)findViewById(R.id.price);
+        price.setTypeface(yunGothicFont);
+        price.setText("가격 " + i.getPc() + "원");
+        onlineResve = (TextView)findViewById(R.id.onlineResve);
+        onlineResve.setTypeface(yunGothicFont);
+        onlineResve.setText("온라인예약유무 " + i.getOnlineResvePosblAt());
+        adres1 = (TextView)findViewById(R.id.adres1);
+        adres1.setTypeface(yunGothicFont);
+        adres1.setText("체험마을주소 " + i.getAdres1());
 
         // 전화 걸기 버튼
         call = (Button)findViewById(R.id.call);
