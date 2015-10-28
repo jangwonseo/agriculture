@@ -59,6 +59,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.R;
 
@@ -322,7 +323,7 @@ public class SignupActivity extends FragmentActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -360,6 +361,14 @@ public class SignupActivity extends FragmentActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 
     // 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절

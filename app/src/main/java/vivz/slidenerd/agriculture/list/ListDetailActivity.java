@@ -26,6 +26,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 
@@ -153,7 +154,7 @@ public class ListDetailActivity extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -305,6 +306,14 @@ public class ListDetailActivity extends ActionBarActivity {
 
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
     public  String creHtmlBody(String imagUrl){
         StringBuffer sb = new StringBuffer("<HTML>");

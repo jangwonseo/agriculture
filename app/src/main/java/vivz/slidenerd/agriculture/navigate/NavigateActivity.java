@@ -66,6 +66,7 @@ import com.skp.Tmap.TMapView.MapCaptureImageListenerCallback;
 import com.skp.Tmap.TMapView.TMapLogoPositon;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.navigate.LogManager;
 
 public class NavigateActivity extends BaseActivity implements onLocationChangedCallback
@@ -187,7 +188,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_navigate);
 
         //윤고딕 폰트
@@ -612,6 +612,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         if(mOverlayList != null){
             mOverlayList.clear();
         }
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
         super.onDestroy();
     }

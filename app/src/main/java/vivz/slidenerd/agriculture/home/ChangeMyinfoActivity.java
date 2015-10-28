@@ -45,6 +45,7 @@ import java.net.URLEncoder;
 import java.util.Calendar;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.recruit.RecruitListItem;
 import vivz.slidenerd.agriculture.sign.DatePickerFragment;
 import vivz.slidenerd.agriculture.sign.SHA256;
@@ -231,7 +232,7 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
         BackBtnChangeMyinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -259,6 +260,13 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
         getUserInfo = new phpGetUserInfo();
         getUserInfo.execute("http://218.150.181.131/seo/phpGetUserInfo.php?userId="+userId);
 
+    }
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 
     // 모집 리스트 출력 부분
@@ -374,6 +382,9 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
             ChangeBirthDay.setText(String.valueOf(dayOfMonth));
         }
     };
+
+
+
 
     class MemberItem implements Serializable {
         private String info_Name; //이름

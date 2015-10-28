@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 
 
@@ -55,7 +56,7 @@ public class NormalLoginActivity extends ActionBarActivity {
         nomalLoginBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
@@ -125,6 +126,13 @@ public class NormalLoginActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 
     @Override

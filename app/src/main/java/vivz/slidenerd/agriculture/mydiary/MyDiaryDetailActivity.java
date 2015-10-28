@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.Calendar;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.recruit.RecruitListItem;
 import vivz.slidenerd.agriculture.recruit.MissionItem;
@@ -147,7 +148,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
         moveToHomeButton = (Button)findViewById(R.id.mydiarydetail_movetohomebutton);
@@ -162,6 +163,14 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 
     // MydiaryDetail 부분에서 취소하기

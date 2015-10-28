@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.navigate.navigateSettingPopupActivity;
@@ -109,7 +110,7 @@ public class ListActivity extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+               finish();
             }
         });
 
@@ -163,6 +164,14 @@ public class ListActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
+    }
+
 
     // AsyncTask는 generic 클래스이기 때문에 타입을 지정해주어야 한다. < Params, Progress, Result > 부분
     /*
@@ -173,7 +182,7 @@ public class ListActivity extends ActionBarActivity {
         AsyncTask:execute(…) 메소드는 생성된 AsyncTask 인스턴스 별로 꼭 한번만 사용 가능하다. 같은 인스턴스가 또 execute(…)를 실행하면 exception이 발생하며, 이는 AsyncTask:cancel(…) 메소드에 의해 작업완료 되기 전 취소된 AsyncTask 인스턴스라도 마찬가지이다. 그럼으로 background 작업이 필요할 때마다 new 연산자를 이용해 해당 작업에 대한 AsyncTask 인스턴스를 새로 생성해야 한다.
         AsyncTask의 callback 함수 onPreExecute(), doInBackground(…), onProgressUpdate(…), onPostExecute(…)는 직접 호출 하면 안 된다. (꼭 callback으로만 사용)
      */
-    public class phpDown extends AsyncTask<String, Integer, String> {
+    class phpDown extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... urls) {

@@ -39,6 +39,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
@@ -195,6 +196,14 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         cancelHandler = new CancelHandler();
     }
 
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
+    }
+
     // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
     public String creHtmlBody(String imgUrl) {
         StringBuffer sb = new StringBuffer("<HTML>");
@@ -229,7 +238,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
                     break;
                 //뒤로가기버튼
                 case R.id.mydiarybackbutton:
-                    onBackPressed();
+                    finish();
                     break;
 
                 case R.id.mydiary_movetohome:

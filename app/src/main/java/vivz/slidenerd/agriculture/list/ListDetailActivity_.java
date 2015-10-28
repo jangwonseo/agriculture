@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 
 public class ListDetailActivity_ extends ActionBarActivity {
@@ -62,11 +63,18 @@ public class ListDetailActivity_ extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
 
+    }
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 
     Button.OnClickListener detailClickListener = new View.OnClickListener()

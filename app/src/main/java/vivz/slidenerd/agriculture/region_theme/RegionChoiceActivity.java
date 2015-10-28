@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListActivity;
 
@@ -57,16 +58,15 @@ public class RegionChoiceActivity extends ActionBarActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
         menuButton = (Button)findViewById(R.id.regionchoice_menubutton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
             }
         });
@@ -147,5 +147,13 @@ public class RegionChoiceActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
 }

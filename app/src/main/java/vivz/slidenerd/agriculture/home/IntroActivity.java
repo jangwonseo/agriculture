@@ -41,8 +41,6 @@ public class IntroActivity extends Activity {
         @Override
         public void run() {
             Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
-            //인트로화면처럼 다시 리로드 될리 없는 액티비티에서으 이동시 화면이 전환됨과 동시에 종료
-            introIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(introIntent);
             finish();
 

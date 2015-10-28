@@ -15,6 +15,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 
 
@@ -58,12 +59,21 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                finish();
             }
         });
 
+        //이거 위치 의도된거임?
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
     }
     @Override
     protected void onResume() {

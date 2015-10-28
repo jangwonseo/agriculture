@@ -315,6 +315,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     @Override
     protected void onDestroy() {
+        Log.d("seojang","destroy  destroy  destroy  destroy");
         recycleBitmap(mDemoSlider);
         System.gc();
         super.onDestroy();

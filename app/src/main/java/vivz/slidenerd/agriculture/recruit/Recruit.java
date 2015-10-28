@@ -76,6 +76,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 
@@ -451,6 +452,14 @@ public class Recruit extends Activity implements TextWatcher{
     }
 
     @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+
+        super.onDestroy();
+    }
+
+    @Override
     protected Dialog onCreateDialog(int id) {
         switch(id){
             case DATE_START_ID : return new DatePickerDialog(this,mStartDateSetListener,mStartYear,mStartMonth,mStartDay);
@@ -535,9 +544,7 @@ public class Recruit extends Activity implements TextWatcher{
                     break;
 
                 case R.id.BackbtnRecruit:
-                    Log.e("RECBackBtn", "BBBBBBBBBBBB");
-                    onBackPressed();
-                    //finish();
+                    finish();
                     break;
                 case R.id.recruit_menubutton:
                     Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
