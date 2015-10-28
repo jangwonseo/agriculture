@@ -9,54 +9,93 @@ import java.net.URLEncoder;
 /**
  * Created by geon on 2015-09-30.
  */
+/*
+thumbUrlCours1, exprnDstncId, chargerMoblphonNo, exprnProgrmNm, exprnLiverStgDc, adres1, vilageHmpgUrl,
+vilageNm, tableName, operEraBegin, operEraEnd, nmprCoMumm, nmprCoMxmm, operTimeMnt, pc, onlineResvePosblAt
+*/
 public class Item implements Serializable {
-    private String thumbUrl;            // 이미지 경로
-    private String name;                // 마을 이름
-    private String addr;                // 주소
-    private String prcafsManMoblphon;   // 실무자 전화번호
-    private String vilageHmpgEnnc;      // 마을 홈피 유무
-    private String vilageHmpgUrl;       // 마을 홈피 주소
-    private String vilageSlgn;          // 마을 간단 소개
+    private String thumbUrlCours1;            // 이미지 경로
+    private String exprnProgrmNm;                // 마을 이름
+    private String adres1;                // 주소
+    private String chargerMoblphonNo;   // 체험담당자 전화번호
+    private String exprnLiverStgDc;          // 체험 간단 소개
     private String tableName;           // 테마
-    private String vilageId;
+    private String exprnDstncId;
+    private String vilageHmpgUrl;
+    private String vilageNm;
+    private String operEraBegin;
+    private String operEraEnd;
+    private String nmprCoMumm;
+    private String nmprCoMxmm;
+    private String operTimeMnt;
+    private String pc;
+    private String onlineResvePosblAt;
 
     public Item() {
     }
 
-    public String getThumbUrl() {
-        return thumbUrl;
+    public String getThumbUrlCours1() {
+        return thumbUrlCours1;
     }
 
-    public String getName() {
-        return name;
+    public String getExprnProgrmNm() {
+        return exprnProgrmNm;
     }
 
-    public String getAddr() {
-        return addr;
+    public String getAdres1() {
+        return adres1;
     }
 
-    public String getPrcafsManMoblphon() {
-        return prcafsManMoblphon;
+    public String getChargerMoblphonNo() {
+        return chargerMoblphonNo;
     }
 
-    public String getVilageHmpgEnnc() {
-        return vilageHmpgEnnc;
-    }
-
-    public String getVilageHmpgUrl() {
-        return vilageHmpgUrl;
-    }
-
-    public String getVilageSlgn() {
-        return vilageSlgn;
+    public String getExprnLiverStgDc() {
+        return exprnLiverStgDc;
     }
 
     public String getTableName() {
         return tableName;
     }
 
-    public String getVilageId() {
-        return vilageId;
+    public String getExprnDstncId() {
+        return exprnDstncId;
+    }
+
+    public String getVilageHmpgUrl() {
+        return vilageHmpgUrl;
+    }
+
+    public String getVilageNm() {
+        return vilageNm;
+    }
+
+    public String getOperEraBegin() {
+        return operEraBegin;
+    }
+
+    public String getOperEraEnd() {
+        return operEraEnd;
+    }
+
+    public String getNmprCoMumm() {
+        return nmprCoMumm;
+    }
+
+    public String getNmprCoMxmm() {
+        return nmprCoMxmm;
+    }
+
+    public String getOperTimeMnt() {
+        return operTimeMnt;
+    }
+
+    public String getPc() {
+        return pc;
+    }
+
+    public String getOnlineResvePosblAt() {
+        return onlineResvePosblAt;
     }
 
     public String toString() {
@@ -67,33 +106,45 @@ public class Item implements Serializable {
 //        String vilageHmpgUrlEncoded = null;
 //        String vilageKndNmEncoded = null;
         try {
-            addrEncoded = URLEncoder.encode(addr, "UTF-8");
-            vilageSlgnEncoded = URLEncoder.encode(vilageSlgn,"UTF-8");
+            addrEncoded = URLEncoder.encode(adres1, "UTF-8");
+            vilageSlgnEncoded = URLEncoder.encode(exprnLiverStgDc,"UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        Log.e("regist", "thumbUrl=" + thumbUrl + "&name=" + name + "&addr=" + addrEncoded + "&prcafsManMoblphon=" + prcafsManMoblphon +
-                "&vilageHmpgEnnc=" + vilageHmpgEnnc + "&vilageHmpgUrl=" + vilageHmpgUrl +
-                "&vilageSlgn=" + vilageSlgnEncoded + "&tableName=" + tableName + "&vilageId=" + vilageId);
-        return ("thumbUrl=" + thumbUrl + "&name=" + name + "&addr=" + addrEncoded + "&prcafsManMoblphon=" + prcafsManMoblphon +
-                "&vilageHmpgEnnc=" + vilageHmpgEnnc + "&vilageHmpgUrl=" + vilageHmpgUrl +
-                "&vilageSlgn=" + vilageSlgnEncoded +  "&tableName=" + tableName +  "&vilageId=" + vilageId);
+        Log.e("regist", "thumbUrlCours1=" + thumbUrlCours1 +"&exprnDstncId=" + exprnDstncId + "&chargerMoblphonNo=" + chargerMoblphonNo +
+        "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + exprnLiverStgDc + "&adres1=" + adres1 + "&vilageHmpgUrl=" + vilageHmpgUrl +
+        "&vilageNm=" + vilageNm + "&tableName=" + tableName + "&operEraBegin=" + operEraBegin + "&operEraEnd=" + operEraEnd +
+        "&nmprCoMumm=" + nmprCoMumm + "&nmprCoMxmm=" + nmprCoMxmm + "&operTimeMnt=" + operTimeMnt + "&pc=" + pc + "&onlineResvePosblAt=" +
+                onlineResvePosblAt);
+        return ("thumbUrlCours1=" + thumbUrlCours1 +"&exprnDstncId=" + exprnDstncId + "&chargerMoblphonNo=" + chargerMoblphonNo +
+                "&exprnProgrmNm=" + exprnProgrmNm + "&exprnLiverStgDc=" + exprnLiverStgDc + "&adres1=" + adres1 + "&vilageHmpgUrl=" + vilageHmpgUrl +
+                "&vilageNm=" + vilageNm + "&tableName=" + tableName + "&operEraBegin=" + operEraBegin + "&operEraEnd=" + operEraEnd +
+                "&nmprCoMumm=" + nmprCoMumm + "&nmprCoMxmm=" + nmprCoMxmm + "&operTimeMnt=" + operTimeMnt + "&pc=" + pc + "&onlineResvePosblAt=" +
+                onlineResvePosblAt);
 
     }
 
-    public Item(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageSlgn, String tableName, String vilageId) {
-
-        this.thumbUrl = thumbUrl;
-        this.name = name;
-        this.addr = addr;
-        this.prcafsManMoblphon = prcafsManMoblphon;
-        this.vilageHmpgEnnc = vilageHmpgEnnc;
-        this.vilageHmpgUrl = vilageHmpgUrl;
-        this.vilageSlgn = vilageSlgn;
+    public Item(String thumbUrlCours1, String exprnProgrmNm, String adres1, String chargerMoblphonNo,
+                String exprnLiverStgDc, String tableName, String exprnDstncId, String vilageHmpgUrl,
+                String vilageNm, String operEraBegin, String operEraEnd, String nmprCoMumm, String nmprCoMxmm,
+                String operTimeMnt, String pc, String onlineResvePosblAt) {
+        this.thumbUrlCours1 = thumbUrlCours1;
+        this.exprnProgrmNm = exprnProgrmNm;
+        this.adres1 = adres1;
+        this.chargerMoblphonNo = chargerMoblphonNo;
+        this.exprnLiverStgDc = exprnLiverStgDc;
         this.tableName = tableName;
-        this.vilageId = vilageId;
+        this.exprnDstncId = exprnDstncId;
+        this.vilageHmpgUrl = vilageHmpgUrl;
+        this.vilageNm = vilageNm;
+        this.operEraBegin = operEraBegin;
+        this.operEraEnd = operEraEnd;
+        this.nmprCoMumm = nmprCoMumm;
+        this.nmprCoMxmm = nmprCoMxmm;
+        this.operTimeMnt = operTimeMnt;
+        this.pc = pc;
+        this.onlineResvePosblAt = onlineResvePosblAt;
     }
 }
