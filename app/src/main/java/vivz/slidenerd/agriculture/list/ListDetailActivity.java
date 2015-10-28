@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -314,6 +315,16 @@ public class ListDetailActivity extends ActionBarActivity {
         System.gc();
 
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                finish();
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
     public  String creHtmlBody(String imagUrl){
         StringBuffer sb = new StringBuffer("<HTML>");

@@ -134,6 +134,8 @@ public class SignChoiceActivityFragment extends Fragment {
 
     }
 
+
+
     @Override
     public void onResume() {
         super.onResume();
