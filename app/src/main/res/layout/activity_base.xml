@@ -1,393 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@android:color/black">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="66"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="70"
-            >
-
-            <Button
-                android:id="@+id/navigate_back"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_pressback"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="389"
-            android:background="@drawable/menu_title"></LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="81"
-            >
-
-            <Button
-                android:id="@+id/base_menubutton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_movetohome" />
-        </LinearLayout>
-
-    </LinearLayout>
+    android:layout_height="fill_parent">
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="894">
-
-        <FrameLayout
+        android:background="@android:color/black">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0px"
+            android:layout_weight="66"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/contentView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@android:color/white">
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="70"
+                >
+
+                <Button
+                    android:id="@+id/navigate_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_pressback"/>
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="769" />
-
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="349"
+                android:background="@drawable/menu_title"></LinearLayout>
             <LinearLayout
-                android:orientation="vertical"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="40"
+                >
+
+                <Button
+                    android:id="@+id/base_tutorialButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_movetohome" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="81"
+                >
+
+                <Button
+                    android:id="@+id/base_menubutton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_movetohome" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="894">
+
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="20">
-
+                    android:id="@+id/contentView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/white">
                 </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="100">
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="6"></LinearLayout>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="88">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45">
-                            <TextView
-                                android:id="@+id/srcTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="출발지"
-                                android:paddingLeft="2dp"
-                                android:textSize="12dp"
-                                android:gravity="center_vertical|center_horizontal"
-                                android:background="#50CCB4"
-                                android:textColor="#FFFFFF" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:gravity="center_vertical|center_horizontal">
-                            <TextView
-                                android:id="@+id/endpointtxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="도착지"
-                                android:paddingLeft="2dp"
-                                android:textSize="12dp"
-                                android:gravity="center_vertical|center_horizontal"
-                                android:background="#50CCB4"
-                                android:textColor="#FFFFFF" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="6"></LinearLayout>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="300">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:background="#FFFFFF">
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/srcButton"
-                                android:background="@null"
-                                android:textColor="#000000" />
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="10"></LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:background="#FFFFFF">
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/desButton"
-                                android:background="@null"
-                                android:textColor="#000000" />
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="6"></LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="100">
-                        <Button
-                            android:id="@+id/submit"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="길찾기"
-                            android:textSize="15dp"
-                            android:background="#50CCB4"
-                            android:textColor="#FFFFFF"
-                            android:gravity="center_vertical|center_horizontal" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="6"></LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="20" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="45">
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="10" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="45"
-                        android:background="@drawable/accommodation_food6"
-                        android:id="@+id/_setMyPosition">
-
-                        <Button
-                            android:id="@+id/setMyPosition"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="10" />
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="45"
-                        android:background="@drawable/accommodation_food7"
-                        android:id="@+id/_getMyPosition" >
-
-                        <Button
-                            android:id="@+id/getMyPosition"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="10" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0" />
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="60"
-                        android:background="@drawable/accommodation_food2"
-                        android:id="@+id/_accommodation"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/accommodation"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="60"
-                        android:background="@drawable/accommodation_food3"
-                        android:id="@+id/_restaurant"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/restaurant"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="60"
-                        android:background="@drawable/accommodation_food4"
-                        android:id="@+id/_gasStation"
-                        android:orientation="vertical">
-
-                        <Button
-                            android:id="@+id/gasStation"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@null" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="60"
-                        android:background="@drawable/accommodation_food5"
-                        android:orientation="vertical">
-
-                        <Spinner
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/spinner"
-                            android:spinnerMode="dropdown"
-                            android:background="@null"
-                            android:alpha="0" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="18" />
-
-                    <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="138"
-                        android:orientation="vertical" >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0"
-                            android:background="#ffffff"
-                            android:orientation="horizontal" >
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="95"
-                                android:orientation="horizontal" >
-
-                                <LinearLayout
-                                    android:layout_width="0px"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:text="1km"
-                                    android:id="@+id/search_radius"
-                                    android:textColor="#000000"
-                                    android:paddingTop="2dp" />
-
-                                <LinearLayout
-                                    android:layout_width="0px"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="2" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0px"
-                                android:layout_height="match_parent"
-                                android:layout_weight="48"
-                                android:background="@drawable/accommodation_food23" >
-
-                                <Spinner
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:id="@+id/spinner2"
-                                    android:background="@null"
-                                    android:alpha="0"
-                                    android:spinnerMode="dropdown" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="10" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -396,85 +86,425 @@
                     android:layout_weight="769" />
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="90"
-                    android:orientation="horizontal" >
+                    android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="20">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="100">
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"></LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="88">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45">
+                                <TextView
+                                    android:id="@+id/srcTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="출발지"
+                                    android:paddingLeft="2dp"
+                                    android:textSize="12dp"
+                                    android:gravity="center_vertical|center_horizontal"
+                                    android:background="#50CCB4"
+                                    android:textColor="#FFFFFF" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="10"></LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45"
+                                android:gravity="center_vertical|center_horizontal">
+                                <TextView
+                                    android:id="@+id/endpointtxt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="도착지"
+                                    android:paddingLeft="2dp"
+                                    android:textSize="12dp"
+                                    android:gravity="center_vertical|center_horizontal"
+                                    android:background="#50CCB4"
+                                    android:textColor="#FFFFFF" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"></LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="300">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45"
+                                android:background="#FFFFFF">
+                                <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/srcButton"
+                                    android:background="@null"
+                                    android:textColor="#000000" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="10"></LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45"
+                                android:background="#FFFFFF">
+                                <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/desButton"
+                                    android:background="@null"
+                                    android:textColor="#000000" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"></LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="100">
+                            <Button
+                                android:id="@+id/submit"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="길찾기"
+                                android:textSize="15dp"
+                                android:background="#50CCB4"
+                                android:textColor="#FFFFFF"
+                                android:gravity="center_vertical|center_horizontal" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="6"></LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="20" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="45">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="45"
+                            android:background="@drawable/accommodation_food6"
+                            android:id="@+id/_setMyPosition">
+
+                            <Button
+                                android:id="@+id/setMyPosition"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10" />
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="45"
+                            android:background="@drawable/accommodation_food7"
+                            android:id="@+id/_getMyPosition" >
+
+                            <Button
+                                android:id="@+id/getMyPosition"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10" />
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0" />
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="60"
+                            android:background="@drawable/accommodation_food2"
+                            android:id="@+id/_accommodation"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/accommodation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="60"
+                            android:background="@drawable/accommodation_food3"
+                            android:id="@+id/_restaurant"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/restaurant"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="60"
+                            android:background="@drawable/accommodation_food4"
+                            android:id="@+id/_gasStation"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/gasStation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@null" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="60"
+                            android:background="@drawable/accommodation_food5"
+                            android:orientation="vertical">
+
+                            <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/spinner"
+                                android:spinnerMode="dropdown"
+                                android:background="@null"
+                                android:alpha="0" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="18" />
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="138"
+                            android:orientation="vertical" >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0"
+                                android:background="#ffffff"
+                                android:orientation="horizontal" >
+
+                                <LinearLayout
+                                    android:layout_width="0px"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="95"
+                                    android:orientation="horizontal" >
+
+                                    <LinearLayout
+                                        android:layout_width="0px"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="1km"
+                                        android:id="@+id/search_radius"
+                                        android:textColor="#000000"
+                                        android:paddingTop="2dp" />
+
+                                    <LinearLayout
+                                        android:layout_width="0px"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0px"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="48"
+                                    android:background="@drawable/accommodation_food23" >
+
+                                    <Spinner
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/spinner2"
+                                        android:background="@null"
+                                        android:alpha="0"
+                                        android:spinnerMode="dropdown" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
                         android:layout_weight="10" />
 
                     <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="50"
-                        android:background="@drawable/accommodation_food16"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="769" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="90"
+                        android:orientation="horizontal" >
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="5"></LinearLayout>
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="10" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:background="@drawable/accommodation_food17"
-                            android:orientation="horizontal"
-                            >
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="50"
+                            android:background="@drawable/accommodation_food16"
+                            android:orientation="vertical">
 
-                            <Button
-                                android:id="@+id/zoom_In"
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null" />
+                                android:layout_height="0px"
+                                android:layout_weight="5"></LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45"
+                                android:background="@drawable/accommodation_food17"
+                                android:orientation="horizontal"
+                                >
+
+                                <Button
+                                    android:id="@+id/zoom_In"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0px"
+                                android:layout_weight="45"
+                                android:background="@drawable/accommodation_food18"
+                                android:orientation="horizontal"
+                                >
+
+                                <Button
+                                    android:id="@+id/zoom_Out"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@null" />
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0px"
-                            android:layout_weight="45"
-                            android:background="@drawable/accommodation_food18"
-                            android:orientation="horizontal"
-                            >
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="480"
+                            android:orientation="horizontal" >
 
-                            <Button
-                                android:id="@+id/zoom_Out"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@null" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Text"
+                                android:id="@+id/time" />
                         </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="0px"
-                        android:layout_height="match_parent"
-                        android:layout_weight="480"
-                        android:orientation="horizontal" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="New Text"
-                            android:id="@+id/time" />
-                    </LinearLayout>
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="10"
+                        android:orientation="horizontal" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="10"
-                    android:orientation="horizontal" />
+            </FrameLayout>
+        </LinearLayout>
 
-            </LinearLayout>
 
-        </FrameLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tutorialLinearLayout"
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tutorialImageView"
+            android:background="@drawable/tutorial8"
+            android:visibility="invisible" />
+    </LinearLayout>
+</FrameLayout>

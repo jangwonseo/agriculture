@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -28,8 +29,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     private Typeface yunGothicFont;
     private TextView startPointTxt,endPointTxt;
     public Button searchWay;
-
-
+    private ImageView tutorialImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setContentView(R.layout.activity_base);
@@ -42,6 +42,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         endPointTxt.setTypeface(yunGothicFont);
         searchWay = (Button)findViewById(R.id.submit);
         searchWay.setTypeface(yunGothicFont);
+        tutorialImageView = (ImageView) findViewById(R.id.tutorialImageView);
 
         mCtx = this;
 

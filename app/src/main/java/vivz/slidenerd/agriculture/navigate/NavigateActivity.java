@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Typeface;
 import android.location.Location;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -153,10 +155,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     private LinearLayout _gasStation;
     private LinearLayout _getMyPosition;
     private LinearLayout _setMyPosition;
-    private LinearLayout _car;
-    private LinearLayout _bicycle;
-    private LinearLayout _walk;
-
     private boolean menu1_pressed = false;
     private boolean menu2_pressed = false;
     private boolean setMyPosition_pressed = false;
@@ -164,6 +162,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     private boolean zoomIn_pressed = false;
     private boolean zoomOut_pressed = false;
     private boolean searchClean_pressed = false;
+    private Button base_tutorialButton;
+    private ImageView tutorialImageView;
+
 
     public static Button srcButton;
     public static Button desButton;
@@ -239,28 +240,6 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             ex.printStackTrace();
         }
 
-
-				/*
-		btn = (Button) findViewById(R.id.navi);
-		btn.bringToFront();
-		*/
-
-/*
-        TMapPoint point =  mMapView.getCenterPoint();
-
-        TMapData tmapdata = new TMapData();
-        if (mMapView.isValidTMapPoint(point)) {
-            tmapdata.convertGpsToAddress(point.getLatitude(), point.getLongitude(), new ConvertGPSToAddressListenerCallback() {
-                @Override
-                public void onConvertToGPSToAddress(String strAddress) {
-                    LogManager.printLog("선택한 위치의 주소는 " + strAddress);
-                    time.setText(strAddress);
-                    //navigateSetMyPositionPopup.address.setText(strAddress);
-
-                }
-            });
-        }
-*/
         final Handler handler = new Handler();
 
         time = (TextView) findViewById(R.id.time);
@@ -274,9 +253,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         _gasStation = (LinearLayout) findViewById(R.id._gasStation);
         _setMyPosition = (LinearLayout) findViewById(R.id._setMyPosition);
         _getMyPosition = (LinearLayout) findViewById(R.id._getMyPosition);
-        _car = (LinearLayout) findViewById(R.id._car);
-        _bicycle = (LinearLayout) findViewById(R.id._bicycle);
-        _walk = (LinearLayout) findViewById(R.id._walk);
+        tutorialImageView = (ImageView) findViewById(R.id.tutorialImageView);
         srcButton = (Button) findViewById(R.id.srcButton);
         desButton = (Button) findViewById(R.id.desButton);
 
@@ -419,6 +396,20 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         //removeMarker();
         mMapView.setTMapLogoPosition(TMapLogoPositon.POSITION_BOTTOMRIGHT);
         //mMapView.setTMapPoint(gps.getLocation().getLatitude(), gps.getLocation().getLongitude());
+
+        base_tutorialButton = (Button)findViewById(R.id.base_tutorialButton);
+        base_tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tutorialImageView.setVisibility(View.VISIBLE);
+                tutorialImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tutorialImageView.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
     }
     public void listRead(ArrayList<TMapPOIItem> poiItem){
         data.clear();
