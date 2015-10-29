@@ -56,10 +56,11 @@ public class ThemeChoiceActivity extends ActionBarActivity {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
+                moveToHomeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(moveToHomeIntent);
+                finish();
             }
         });
 
@@ -105,7 +106,6 @@ public class ThemeChoiceActivity extends ActionBarActivity {
     protected void onDestroy() {
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
-
         super.onDestroy();
     }
 
@@ -113,6 +113,10 @@ public class ThemeChoiceActivity extends ActionBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                moveToHomeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(moveToHomeIntent);
                 finish();
                 return true;
         }

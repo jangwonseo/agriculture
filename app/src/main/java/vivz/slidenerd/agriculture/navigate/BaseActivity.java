@@ -53,6 +53,7 @@ public class BaseActivity extends Activity implements View.OnClickListener {
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
+                finish();
             }
         });
         backButton = (Button)findViewById(R.id.navigate_back);

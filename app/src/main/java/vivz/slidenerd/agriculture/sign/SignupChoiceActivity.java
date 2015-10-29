@@ -48,8 +48,11 @@ public class SignupChoiceActivity extends ActionBarActivity {
             //move to SignupActivity
             if (profile != null) {
                 Intent SignupIntent = new Intent(getApplicationContext(), SignupActivity.class);
+                SignupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                SignupIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 SignupIntent.putExtra("isFacebookFlag","1");
                 startActivity(SignupIntent);
+                finish();
             }
         }
 
@@ -87,7 +90,10 @@ public class SignupChoiceActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), service_prepare.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -97,8 +103,11 @@ public class SignupChoiceActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 Intent normalSingupIntent = new Intent(getApplication(),SignupActivity.class);
+                normalSingupIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                normalSingupIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 normalSingupIntent.putExtra("isFacebookFlag","0");
                 startActivity(normalSingupIntent);
+                finish();
             }
         });
 

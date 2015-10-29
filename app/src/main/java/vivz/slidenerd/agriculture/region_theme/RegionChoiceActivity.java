@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.region_theme;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -68,7 +69,9 @@ public class RegionChoiceActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                moveToHomeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(moveToHomeIntent);
+                finish();
             }
         });
     }
@@ -159,6 +162,10 @@ public class RegionChoiceActivity extends ActionBarActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
+                Intent moveToHomeIntent  = new Intent(getApplicationContext(), HomeActivity.class);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                moveToHomeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(moveToHomeIntent);
                 finish();
                 return true;
         }

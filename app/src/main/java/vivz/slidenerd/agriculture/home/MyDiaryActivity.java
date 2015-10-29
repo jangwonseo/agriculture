@@ -76,6 +76,7 @@ public class MyDiaryActivity extends ActionBarActivity {
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
+                finish();
             }
         });
 

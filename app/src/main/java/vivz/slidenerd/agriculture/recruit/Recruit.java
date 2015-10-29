@@ -562,6 +562,7 @@ public class Recruit extends Activity implements TextWatcher{
                     moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                     startActivity(moveToHomeIntent);
+                    finish();
                     break;
                 case R.id.regist_button: // 등록 버튼
 

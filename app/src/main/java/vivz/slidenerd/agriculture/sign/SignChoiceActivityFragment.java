@@ -81,6 +81,8 @@ public class SignChoiceActivityFragment extends Fragment {
             //move to HomeActivity
             if(profile != null){
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         }

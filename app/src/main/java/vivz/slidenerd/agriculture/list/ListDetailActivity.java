@@ -168,6 +168,7 @@ public class ListDetailActivity extends ActionBarActivity {
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
+                finish();
             }
         });
 
@@ -440,10 +441,10 @@ public class ListDetailActivity extends ActionBarActivity {
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_restaurant;
                     Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intentRestaurant.putExtra("addr", i.getAdres1());
-                    // Log.i("asd", "addr : " + i.getAddr());
-                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentRestaurant);
+                    finish();
                     break;
 
             }
