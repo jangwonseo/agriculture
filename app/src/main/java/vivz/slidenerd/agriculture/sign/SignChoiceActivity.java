@@ -24,19 +24,17 @@ public class SignChoiceActivity extends ActionBarActivity {
     private static final String STATE_SELECTED_FRAGMENT_INDEX = "selected_fragment_index";
     public static final String FRAGMENT_TAG = "fragment_tag";
     private FragmentManager mFragmentManager;
+    private Fragment fragment;
+    private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signchoice);
 
-
-
-
-
         mFragmentManager = getSupportFragmentManager();
-        Fragment fragment = mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        fragment = mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
+        transaction = mFragmentManager.beginTransaction();
         transaction.replace(android.R.id.content, new SignChoiceActivityFragment(), FRAGMENT_TAG);
         transaction.commit();
     }

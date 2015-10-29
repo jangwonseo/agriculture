@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,11 +71,13 @@ public class SignChoiceActivityFragment extends Fragment {
     private ProfileTracker mProfileTracker;
 
     private FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
+        private AccessToken accessToken;
+        private Profile profile;
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.d("VIVZ", "onSuccess");
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
+            accessToken = loginResult.getAccessToken();
+            profile = Profile.getCurrentProfile();
             fetchUserInfo();
             mTextDetails.setText(constructWelcomeMessage(profile));
 
@@ -106,8 +109,6 @@ public class SignChoiceActivityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         mCallbackManager = CallbackManager.Factory.create();
         setupTokenTracker();

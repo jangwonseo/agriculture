@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.home;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -18,11 +19,6 @@ import vivz.slidenerd.agriculture.R;
 public class IntroActivity extends Activity {
     LinearLayout introbtn;
     Handler introHandler;
-    //intro activity
-    //dfdfdsf
-    //jangwon
-    ///dfsdfasdfasf
-    ///ddd
     SharedPreferences setting;
     SharedPreferences.Editor editor;
     @Override
@@ -42,11 +38,48 @@ public class IntroActivity extends Activity {
         public void run() {
             Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(introIntent);
-            finish();
-
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
         }
     };
+
+    @Override
+    protected void onDestroy() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.intro).setBackground(null);
+        }else{
+            findViewById(R.id.intro).setBackgroundResource(0);
+        }
+        System.gc();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.intro).setBackground(null);
+        }else{
+            findViewById(R.id.intro).setBackgroundResource(0);
+        }
+        System.gc();
+        super.onStop();
+    }
+    @Override
+    protected void onPause() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.intro).setBackground(null);
+        }else{
+            findViewById(R.id.intro).setBackgroundResource(0);
+        }
+        System.gc();
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
+    }
 
     @Override
     public void onBackPressed(){
@@ -83,11 +116,5 @@ public class IntroActivity extends Activity {
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
 
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
 }

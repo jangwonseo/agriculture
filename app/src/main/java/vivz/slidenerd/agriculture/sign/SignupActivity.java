@@ -331,7 +331,10 @@ public class SignupActivity extends FragmentActivity {
                     repetitionId = 0; // 회원가입이 완료되었기 때문에, 아이디 중복확인 OK 상태를 NONE으로 변경
 
                     Intent homeIntent = new Intent(getApplicationContext(),HomeActivity.class);
+                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(homeIntent);
+                    finish();
                 }
 
             }

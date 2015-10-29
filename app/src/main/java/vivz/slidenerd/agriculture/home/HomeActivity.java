@@ -1,26 +1,29 @@
 package vivz.slidenerd.agriculture.home;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,10 +37,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
 import vivz.slidenerd.agriculture.mydiary.MyDiaryActivity__;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
@@ -47,17 +49,12 @@ import vivz.slidenerd.agriculture.region_theme.ThemeChoiceActivity;
 import vivz.slidenerd.agriculture.sign.SHA256;
 import vivz.slidenerd.agriculture.sign.SignChoiceActivity;
 
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
-
 public class HomeActivity extends Activity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
 
-    private Button goTheme,goRegion,goGathering,goEtcetera,menuButton,myinfoButton, btnChangeMyinfo;
+    private Button goTheme, goRegion, goGathering, goEtcetera, menuButton, myinfoButton, btnChangeMyinfo;
 
     //페이지가 열려 있는지 알기 위한 플래그
     //애니메이션 객체
@@ -68,34 +65,36 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     private LinearLayout slidingPage01;
 
     // 홈에 추천 마을(체험) 이미지
-    WebView webvHomeImage;
-    ArrayList<Item> recommendItems = new ArrayList<>();
+    private WebView webvHomeImage;
+    private ArrayList<Item> recommendItems = new ArrayList<>();
     //ArrayList<Item> recommendItems10 = new ArrayList<>();
 
-    Button btnMyDiary;
+    private Button btnMyDiary;
     public int recommendNum = 0;
-    phpGetInfo getInfo;
+    private phpGetInfo getInfo;
 
     private boolean isPageOpen = false;
     //두번 눌러 종료
     private BackPressCloseHandler backPressCloseHandler;
 
     // 프로필 사진
-    WebView webvProfile;
+    private WebView webvProfile;
 
-    LinearLayout HomeBackGround;
-
-    String userId;
-
-    Button eventButton;
+    private LinearLayout HomeBackGround;
+    private String userId;
+    private Button eventButton;
 
     private Typeface yunGothicFont; //윤고딕폰트
 
+    //이미지 슬라이더 관련
     private SliderLayout mDemoSlider;
-
     int selectedSlide;
+    private HashMap<String, Integer> file_maps;
+    private TextSliderView textSliderView;
 
-    HashMap<String, Integer> file_maps;
+    private SlidingPageAnimationListener animListener;
+
+    private SHA256 sha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +102,9 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         setContentView(R.layout.activity_home);
 
         //imageSlider
-
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
-        if(file_maps == null) {
+        if (file_maps == null) {
             file_maps = new HashMap<String, Integer>();
 
             file_maps.put("Hannibal", R.drawable.aathumbnail1);
@@ -119,10 +117,10 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
             file_maps.put("Slow day", R.drawable.aathumbnail8);
             Log.e("mapsKetset : ", file_maps.keySet().toString());
             for (String name : file_maps.keySet()) {
-                TextSliderView textSliderView = new TextSliderView(this);
+                textSliderView = new TextSliderView(this);
                 // initialize a SliderLayout
                 textSliderView
-    //                    .description(name)  // 이미지에대해 이름을 표시해줌.
+                        //                    .description(name)  // 이미지에대해 이름을 표시해줌.
                         .image(file_maps.get(name))
                         .setScaleType(BaseSliderView.ScaleType.Fit)
                         .setOnSliderClickListener(this);
@@ -142,24 +140,24 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
         //////////////////////////
 
-        SHA256 sha = new SHA256();
+        sha = new SHA256();
 
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
-        editor= setting.edit();
+        editor = setting.edit();
         userId = setting.getString("info_Id", "");
 
-        goTheme = (Button)findViewById(R.id.themebutton);
-        goRegion = (Button)findViewById(R.id.regionbutton);
-        goGathering = (Button)findViewById(R.id.gatheringbutton);
-        goEtcetera = (Button)findViewById(R.id.etceterabutton);
+        goTheme = (Button) findViewById(R.id.themebutton);
+        goRegion = (Button) findViewById(R.id.regionbutton);
+        goGathering = (Button) findViewById(R.id.gatheringbutton);
+        goEtcetera = (Button) findViewById(R.id.etceterabutton);
 
-        menuButton = (Button)findViewById(R.id.home_menubutton);
-        myinfoButton = (Button)findViewById(R.id.home_myinfo);
-        btnChangeMyinfo = (Button)findViewById(R.id.btnChangeMyinfo);
+        menuButton = (Button) findViewById(R.id.home_menubutton);
+        myinfoButton = (Button) findViewById(R.id.home_myinfo);
+        btnChangeMyinfo = (Button) findViewById(R.id.btnChangeMyinfo);
 
         goTheme.setOnClickListener(mClickListener);
         goRegion.setOnClickListener(mClickListener);
@@ -170,7 +168,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
             @Override
             public void onClick(View view) {
                 // 애니메이션 적용
-                if (isPageOpen){
+                if (isPageOpen) {
                     slidingPage01.startAnimation(translateRightAnim);
                 } else {
                     slidingPage01.setVisibility(View.VISIBLE);
@@ -179,11 +177,11 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
             }
         });
-        HomeBackGround = (LinearLayout)findViewById(R.id.homebackground);
+        HomeBackGround = (LinearLayout) findViewById(R.id.homebackground);
         HomeBackGround.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isPageOpen){
+                if (isPageOpen) {
                     slidingPage01.startAnimation(translateRightAnim);
                 }
             }
@@ -200,7 +198,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         btnChangeMyinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( userId.equals("") || userId == null) {
+                if (userId.equals("") || userId == null) {
                     Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     // 내정보 수정 myinfo
@@ -218,21 +216,21 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         translateRightAnim = AnimationUtils.loadAnimation(this, R.anim.translate_right);
 
         // 애니메이션 객체에 리스너 설정
-        SlidingPageAnimationListener animListener = new SlidingPageAnimationListener();
+        animListener = new SlidingPageAnimationListener();
         translateLeftAnim.setAnimationListener(animListener);
         translateRightAnim.setAnimationListener(animListener);
 
         getInfo = new phpGetInfo();
         getInfo.execute("http://218.150.181.131/seo/phpHomeSlider.php");
-        
-        btnMyDiary=(Button)findViewById(R.id.btn_myDiary);
+
+        btnMyDiary = (Button) findViewById(R.id.btn_myDiary);
         btnMyDiary.setOnClickListener(mClickListener);
 
         //두번눌러 종료
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         // 프로필사진
-        webvProfile = (WebView)findViewById(R.id.webvProfile);
+        webvProfile = (WebView) findViewById(R.id.webvProfile);
 
         // 웹뷰 설정
         // 배경이 하얕게 나오는데 투명하게 만들어줌
@@ -248,7 +246,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         webvProfile.setFocusable(false);
         webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
-        eventButton = (Button)findViewById(R.id.eventbutton);
+        eventButton = (Button) findViewById(R.id.eventbutton);
         eventButton.setTypeface(yunGothicFont);
         eventButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,17 +265,14 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     // 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
     public String creHtmlBody(String imgUrl) {
-        return "<HTML>"+"<HEAD>"+"</HEAD>"+"<BODY style='margin:0; padding:0; text-align:center;'>"+
+        return "<HTML>" + "<HEAD>" + "</HEAD>" + "<BODY style='margin:0; padding:0; text-align:center;'>" +
                 "<img width='100%' height='100%' style='-moz-border-radius: 220px;" +
-                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">"+"</BODY>"+"</HTML>";
+                "-webkit-border-radius: 220px; ' src = \"" + imgUrl + "\">" + "</BODY>" + "</HTML>";
     }
 
-    Button.OnClickListener mClickListener = new View.OnClickListener()
-    {
-        public void onClick(View v)
-        {
-            switch (v.getId())
-            {
+    Button.OnClickListener mClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            switch (v.getId()) {
                 case R.id.themebutton:
                     Intent intentTheme = new Intent(getApplication(), ThemeChoiceActivity.class);
                     startActivity(intentTheme);
@@ -295,7 +290,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                     startActivity(intentNavigate);
                     break;
                 case R.id.btn_myDiary:
-                    if ( userId.equals("") || userId == null ) {
+                    if (userId.equals("") || userId == null) {
                         Toast.makeText(getApplicationContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Intent intentMyDiary = new Intent(getApplicationContext(), MyDiaryActivity__.class);
@@ -306,30 +301,64 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     };
 
     @Override
+    protected void onResume() {
+        mDemoSlider.startAutoCycle();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.homebackground).setBackground(getResources().getDrawable(R.drawable.home1));
+        }else{
+            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
+        }
+        System.gc();
+        super.onResume();
+    }
+
+    @Override
     protected void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mDemoSlider.stopAutoCycle();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.homebackground).setBackground(null);
+        }else{
+            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
+        }
         System.gc();
         super.onStop();
     }
 
     @Override
+    protected void onPause() {
+        mDemoSlider.stopAutoCycle();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.homebackground).setBackground(null);
+        }else{
+            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
+        }
+        System.gc();
+
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
-        Log.d("seojang","destroy  destroy  destroy  destroy");
+        mDemoSlider.destroyDrawingCache();
+        mDemoSlider.stopAutoCycle();
         recycleBitmap(mDemoSlider);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.homebackground).setBackground(null);
+        }else{
+            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
+        }
         System.gc();
         super.onDestroy();
     }
 
-    private static void recycleBitmap(SliderLayout iv)
-    {
+    private static void recycleBitmap(SliderLayout iv) {
         Drawable d = iv.getBackground();
-        if( d instanceof BitmapDrawable)
-        {
-            Bitmap b = ((BitmapDrawable)d).getBitmap();
+        if (d instanceof BitmapDrawable) {
+            Bitmap b = ((BitmapDrawable) d).getBitmap();
             b.recycle();
         }
-        d=null;
+        d = null;
     }
 
     @Override
@@ -354,9 +383,9 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
             /** 이부분 클릭 시 다른 액티비티를 띄우는 부분 **/
             Intent HomeIntent = new Intent(getApplicationContext(), ListDetailActivity.class);
 
-            int i=0;
+            int i = 0;
 
-            switch(selectedSlide) {
+            switch (selectedSlide) {
                 case 0:
                     i = 0;
                     break;
@@ -392,32 +421,44 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     }
 
     // 추천할 마을 정보
-    public class phpGetInfo extends AsyncTask<String, Integer,String> {
+    public class phpGetInfo extends AsyncTask<String, Integer, String> {
+
+        //doInBackground
+        private URL url;
+        private HttpURLConnection conn;
+        private BufferedReader br;
+        private StringBuilder jsonHtml;
+        private String line;
+
+        //onPostExecute
+        private JSONArray jAr;
+        private JSONObject vilageName;
+        private Item item;
 
         @Override
         protected String doInBackground(String... urls) {
-            StringBuilder jsonHtml = new StringBuilder();
-            String line ="";
-            try{
+            jsonHtml = new StringBuilder();
+            line = "";
+            try {
                 // 텍스트 연결 url 설정
-                URL url = new URL(urls[0]);
+                url = new URL(urls[0]);
                 // 이미지 url
                 Log.e("tag", "url : " + urls[0]);
                 // URL 페이지 커넥션 객체 생성
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn = (HttpURLConnection) url.openConnection();
                 // 연결되었으면.
 
-                if(conn != null){
+                if (conn != null) {
                     conn.setConnectTimeout(10000);
                     conn.setUseCaches(false);
                     // 연결되었음 코드가 리턴되면.
                     Log.e("tag", "setUseCaches is false");
-                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                        for(;;){
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for (; ; ) {
                             // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
                             line = br.readLine();
-                            if(line == null) break;
+                            if (line == null) break;
                             // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
                             jsonHtml.append(line);
                         }
@@ -426,19 +467,19 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                     conn.disconnect();
 
                 }
-            } catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
         }
 
-        protected void onPostExecute(String str){
+        protected void onPostExecute(String str) {
             // JSON 구문을 파싱해서 JSONArray 객체를 생성
             try {
-                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
+                jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
-                    JSONObject vilageName = jAr.getJSONObject(i);
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
+                    vilageName = jAr.getJSONObject(i);
+                    item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
                             vilageName.getString("exprnProgrmNm"), vilageName.getString("exprnLiverStgDc"), vilageName.getString("adres1"),
                             vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"), vilageName.getString("tableName"),
                             vilageName.getString("operEraBegin"), vilageName.getString("operEraEnd"), vilageName.getString("nmprCoMumm")
@@ -456,6 +497,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         }
     }
 //
+
     /**
      * 애니메이션 리스너 정의
      */
@@ -539,7 +581,7 @@ class RecommendItem implements Serializable {
 //        String vilageKndNmEncoded = null;
         try {
             addrEncoded = URLEncoder.encode(addr, "UTF-8");
-            vilageSlgnEncoded = URLEncoder.encode(vilageSlgn,"UTF-8");
+            vilageSlgnEncoded = URLEncoder.encode(vilageSlgn, "UTF-8");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -550,12 +592,12 @@ class RecommendItem implements Serializable {
                 "&vilageSlgn=" + vilageSlgnEncoded + "&tableName=" + tableName + "&vilageId=" + vilageId);
         return ("thumbUrl=" + thumbUrl + "&name=" + name + "&addr=" + addrEncoded + "&prcafsManMoblphon=" + prcafsManMoblphon +
                 "&vilageHmpgEnnc=" + vilageHmpgEnnc + "&vilageHmpgUrl=" + vilageHmpgUrl +
-                "&vilageSlgn=" + vilageSlgnEncoded +  "&tableName=" + tableName +  "&vilageId=" + vilageId);
+                "&vilageSlgn=" + vilageSlgnEncoded + "&tableName=" + tableName + "&vilageId=" + vilageId);
 
     }
 
     public RecommendItem(String thumbUrl, String name, String addr, String prcafsManMoblphon, String vilageHmpgEnnc, String vilageHmpgUrl,
-                String vilageSlgn, String tableName, String vilageId) {
+                         String vilageSlgn, String tableName, String vilageId) {
 
         this.thumbUrl = thumbUrl;
         this.name = name;

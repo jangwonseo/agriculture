@@ -22,7 +22,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="펀팜"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
