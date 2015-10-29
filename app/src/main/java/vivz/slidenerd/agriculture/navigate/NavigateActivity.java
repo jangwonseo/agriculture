@@ -22,6 +22,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
@@ -155,6 +157,17 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     private LinearLayout _gasStation;
     private LinearLayout _getMyPosition;
     private LinearLayout _setMyPosition;
+    private LinearLayout _etcMenu1;
+    private LinearLayout _etcMenu2;
+    private LinearLayout _zoomIn;
+    private LinearLayout _zoomOut;
+    private LinearLayout _searchButton;
+    private LinearLayout _srcText;
+    private LinearLayout _desText;
+    private LinearLayout _topMenu;
+
+
+
     private boolean menu1_pressed = false;
     private boolean menu2_pressed = false;
     private boolean setMyPosition_pressed = false;
@@ -254,6 +267,16 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         _setMyPosition = (LinearLayout) findViewById(R.id._setMyPosition);
         _getMyPosition = (LinearLayout) findViewById(R.id._getMyPosition);
         tutorialImageView = (ImageView) findViewById(R.id.tutorialImageView);
+
+        _etcMenu1 = (LinearLayout) findViewById(R.id.etcMenu1);
+        _etcMenu2 = (LinearLayout) findViewById(R.id.etcMenu2);
+        _zoomIn = (LinearLayout) findViewById(R.id.zoomIn);
+        _zoomOut = (LinearLayout) findViewById(R.id.zoomOut);
+        _searchButton = (LinearLayout) findViewById(R.id.searchButtonLinearLayout);
+        _srcText = (LinearLayout) findViewById(R.id.srcText);
+        _desText = (LinearLayout) findViewById(R.id.desText);
+        _topMenu = (LinearLayout) findViewById(R.id.topMenu);
+
         srcButton = (Button) findViewById(R.id.srcButton);
         desButton = (Button) findViewById(R.id.desButton);
 
@@ -397,6 +420,11 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         mMapView.setTMapLogoPosition(TMapLogoPositon.POSITION_BOTTOMRIGHT);
         //mMapView.setTMapPoint(gps.getLocation().getLatitude(), gps.getLocation().getLongitude());
 
+        try {
+            tutorialImageView.setBackgroundResource(R.drawable.tutorial8);
+        }catch(OutOfMemoryError ex){
+            ex.printStackTrace();
+        }
         base_tutorialButton = (Button)findViewById(R.id.base_tutorialButton);
         base_tutorialButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,6 +439,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
+
     public void listRead(ArrayList<TMapPOIItem> poiItem){
         data.clear();
 		/*int j = data.size();
@@ -480,6 +509,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             public void onEnableScrollWithZoomLevelEvent(float zoom, TMapPoint centerPoint) {
                 getMyPositionCnt = 3;
                 _getMyPosition.setBackgroundResource(R.drawable.accommodation_food7);
+
                 LogManager.printLog("MainActivity onEnableScrollWithZoomLevelEvent " + zoom + " " + centerPoint.getLatitude() + " " + centerPoint.getLongitude());
             }
         });
@@ -605,8 +635,47 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
+        /*
+        recycleBitmap(tutorialImageView);
+        recycleBitmap(_accommodation);
+        recycleBitmap(_restaurant);
+        recycleBitmap(_gasStation);
+        recycleBitmap(_getMyPosition);
+        recycleBitmap(_setMyPosition);
+        recycleBitmap(_etcMenu1);
+        recycleBitmap(_etcMenu2);
+        recycleBitmap(_topMenu);
+        recycleBitmap(_searchButton);
+        recycleBitmap(_desText);
+        recycleBitmap(_srcText);
+        recycleBitmap(_zoomIn);
+        recycleBitmap(_zoomOut);
+*/
+
         super.onDestroy();
     }
+
+    private static void recycleBitmap(ImageView iv) {
+        if(iv == null)
+            return;
+        Drawable d = iv.getDrawable();
+        if (d instanceof BitmapDrawable) {
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            b.recycle();
+        } // 현재로서는 BitmapDrawable 이외의 drawable 들에 대한 직접적인 메모리 해제는 불가능하다.
+
+        d.setCallback(null);
+    }
+    private static void recycleBitmap(LinearLayout iv) {
+        Drawable d = iv.getBackground();
+        if (d instanceof BitmapDrawable) {
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            b.recycle();
+        } // 현재로서는 BitmapDrawable 이외의 drawable 들에 대한 직접적인 메모리 해제는 불가능하다.
+
+        d.setCallback(null);
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -853,8 +922,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -880,8 +950,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -907,8 +978,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -935,8 +1007,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -962,8 +1035,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -989,9 +1063,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
-
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -1017,8 +1091,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 } else {
                     showMarkerPoint2(poiItem);
                     displayMapInfo2(poiItem);
+                    TMapPOIItem item;
                     for (int i = 0; i < poiItem.size(); i++) {
-                        TMapPOIItem item = poiItem.get(i);
+                        item = poiItem.get(i);
                         LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                 + item.getPOIAddress().replace("null", ""));
                     }
@@ -1059,8 +1134,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                         } else {
                             showMarkerPoint2(poiItem);
                             displayMapInfo2(poiItem);
+                            TMapPOIItem item;
                             for (int i = 0; i < poiItem.size(); i++) {
-                                TMapPOIItem item = poiItem.get(i);
+                                item = poiItem.get(i);
                                 LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                         + item.getPOIAddress().replace("null", ""));
                             }
@@ -1098,8 +1174,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                         } else {
                             showMarkerPoint2(poiItem);
                             displayMapInfo2(poiItem);
+                            TMapPOIItem item;
                             for (int i = 0; i < poiItem.size(); i++) {
-                                TMapPOIItem item = poiItem.get(i);
+                                item = poiItem.get(i);
                                 LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                         + item.getPOIAddress().replace("null", ""));
                             }
@@ -1137,8 +1214,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                         } else {
                             showMarkerPoint2(poiItem);
                             displayMapInfo2(poiItem);
+                            TMapPOIItem item;
                             for (int i = 0; i < poiItem.size(); i++) {
-                                TMapPOIItem item = poiItem.get(i);
+                                item = poiItem.get(i);
                                 LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                         + item.getPOIAddress().replace("null", ""));
                             }
@@ -1176,8 +1254,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                         } else {
                             showMarkerPoint2(poiItem);
                             displayMapInfo2(poiItem);
+                            TMapPOIItem item;
                             for (int i = 0; i < poiItem.size(); i++) {
-                                TMapPOIItem item = poiItem.get(i);
+                                item = poiItem.get(i);
                                 LogManager.printLog("POI Name: " + item.getPOIName() + "," + "Address: "
                                         + item.getPOIAddress().replace("null", ""));
                             }
@@ -1201,8 +1280,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     return;
                 }
                 mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+                TMapPOIItem item;
                 for (int i = 0; i < poiItem.size(); i++) {
-                    TMapPOIItem item = poiItem.get(i);
+                    item = poiItem.get(i);
 
                     LogManager.printLog("POI Name: " + item.getPOIName().toString() + ", " +
                             "Address: " + item.getPOIAddress().replace("null", "") + ", " +
@@ -1361,11 +1441,12 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         listRead(poiItem);
         adapterMarker=new List_Adapter_Marker(mContext,R.layout.item,data);
         adapterMarker.notifyDataSetChanged();
-
+        TMapMarkerItem marker1;
+        String strID;
         for (int i = 0; i < poiItem.size(); i++) {
 
-            TMapMarkerItem marker1 = new TMapMarkerItem();
-            String strID = String.format("%s", poiItem.get(i).getPOIName());
+            marker1 = new TMapMarkerItem();
+            strID = String.format("%s", poiItem.get(i).getPOIName());
             //String strID = String.format("%02d", i);
 
             marker1.setID(strID);

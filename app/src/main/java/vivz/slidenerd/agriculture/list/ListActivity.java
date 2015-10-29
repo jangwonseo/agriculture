@@ -25,11 +25,14 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
+import vivz.slidenerd.agriculture.NonLeakingWebView;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -53,7 +56,6 @@ public class ListActivity extends ActionBarActivity {
     List_Adapter adapter;
     //폰트설정
     public Typeface yunGothicFont;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +169,12 @@ public class ListActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
+
+//Adapter가 있으면 어댑터에서 생성한 recycle메소드를 실행
+
+        if (adapter != null)
+            adapter.recycle();
+
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
 
@@ -272,8 +280,13 @@ public class ListActivity extends ActionBarActivity {
 class List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<Item> data;
+
+    //멤버변수로 해제할 Set을 생성
+    private List<WeakReference<View>> mRecycleList = new ArrayList<WeakReference<View>>();
+    public int selectedIndex = -1;
+
     private int layout;
-    WebView thumb;
+    NonLeakingWebView thumb;
     Typeface yunGothicFont;
     Button isRecruit;
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
@@ -283,6 +296,15 @@ class List_Adapter extends BaseAdapter {
         this.data = data;
         this.layout = layout;
     }
+
+//onDestory에서 쉽게 해제할 수 있도록 메소드 생성
+
+
+     public void recycle() {
+               for (WeakReference<View> ref : mRecycleList) {
+                     RecycleUtils.recursiveRecycle(ref.get());
+               }
+     }
 
     @Override
     public int getCount() {
@@ -319,7 +341,9 @@ class List_Adapter extends BaseAdapter {
 
 
         Item listviewitem = data.get(position);
-        thumb = (WebView) convertView.findViewById(R.id.thumb);
+
+        thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
+
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
         // 웹뷰 설정
@@ -380,6 +404,10 @@ class List_Adapter extends BaseAdapter {
         addr.setText(listviewitem.getAdres1());
 
 
+        //메모리 해제할 View를 추가
+        mRecycleList.add(new WeakReference<View>(convertView));
+
+
         return convertView;
     }
 
@@ -397,6 +425,7 @@ class List_Adapter extends BaseAdapter {
         sb.append("</HTML>");
         return sb.toString();
     }
+
 }
 
 

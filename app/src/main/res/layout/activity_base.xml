@@ -13,7 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="66"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/topMenu">
 
             <LinearLayout
                 android:layout_width="0px"
@@ -116,7 +117,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0px"
-                                android:layout_weight="45">
+                                android:layout_weight="45"
+                                android:id="@+id/srcText">
                                 <TextView
                                     android:id="@+id/srcTextView"
                                     android:layout_width="match_parent"
@@ -136,7 +138,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0px"
                                 android:layout_weight="45"
-                                android:gravity="center_vertical|center_horizontal">
+                                android:gravity="center_vertical|center_horizontal"
+                                android:id="@+id/desText">
                                 <TextView
                                     android:id="@+id/endpointtxt"
                                     android:layout_width="match_parent"
@@ -195,7 +198,8 @@
                         <LinearLayout
                             android:layout_width="0px"
                             android:layout_height="match_parent"
-                            android:layout_weight="100">
+                            android:layout_weight="100"
+                            android:id="@+id/searchButtonLinearLayout">
                             <Button
                                 android:id="@+id/submit"
                                 android:layout_width="match_parent"
@@ -326,7 +330,8 @@
                             android:layout_height="match_parent"
                             android:layout_weight="60"
                             android:background="@drawable/accommodation_food5"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/etcMenu1">
 
                             <Spinner
                                 android:layout_width="match_parent"
@@ -384,7 +389,8 @@
                                     android:layout_width="0px"
                                     android:layout_height="match_parent"
                                     android:layout_weight="48"
-                                    android:background="@drawable/accommodation_food23" >
+                                    android:background="@drawable/accommodation_food23"
+                                    android:id="@+id/etcMenu2">
 
                                     <Spinner
                                         android:layout_width="match_parent"
@@ -439,7 +445,7 @@
                                 android:layout_weight="45"
                                 android:background="@drawable/accommodation_food17"
                                 android:orientation="horizontal"
-                                >
+                                android:id="@+id/zoomIn">
 
                                 <Button
                                     android:id="@+id/zoom_In"
@@ -454,7 +460,7 @@
                                 android:layout_weight="45"
                                 android:background="@drawable/accommodation_food18"
                                 android:orientation="horizontal"
-                                >
+                                android:id="@+id/zoomOut">
 
                                 <Button
                                     android:id="@+id/zoom_Out"
@@ -497,14 +503,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tutorialLinearLayout"
         android:orientation="horizontal">
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tutorialImageView"
-            android:background="@drawable/tutorial8"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
     </LinearLayout>
 </FrameLayout>

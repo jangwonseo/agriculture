@@ -29,10 +29,10 @@ public class BaseActivity extends Activity implements View.OnClickListener {
     private Typeface yunGothicFont;
     private TextView startPointTxt,endPointTxt;
     public Button searchWay;
-    private ImageView tutorialImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.setContentView(R.layout.activity_base);
+        super.onCreate(savedInstanceState);
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
@@ -42,8 +42,6 @@ public class BaseActivity extends Activity implements View.OnClickListener {
         endPointTxt.setTypeface(yunGothicFont);
         searchWay = (Button)findViewById(R.id.submit);
         searchWay.setTypeface(yunGothicFont);
-        tutorialImageView = (ImageView) findViewById(R.id.tutorialImageView);
-
         mCtx = this;
 
         contentView  = (LinearLayout)findViewById(R.id.contentView);
@@ -65,8 +63,6 @@ public class BaseActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        //이거 위치 의도된거임?
-        super.onCreate(savedInstanceState);
 
     }
 

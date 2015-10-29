@@ -26,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import vivz.slidenerd.agriculture.NonLeakingWebView;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -71,8 +72,8 @@ public class ListDetailActivity extends ActionBarActivity {
     Button gasStation;
     Button restaurant;
 
-    WebView main2Web;
-    WebView thumb;
+    NonLeakingWebView main2Web;
+    NonLeakingWebView thumb;
 
     boolean dupChk;
     String vodUrls;
@@ -223,7 +224,7 @@ public class ListDetailActivity extends ActionBarActivity {
         //vod=(Button) findViewById(R.id.btn_vod);
         //vod.setOnClickListener(mClickListener);
 
-        thumb = (WebView)findViewById(R.id.thumb);
+        thumb = (NonLeakingWebView)findViewById(R.id.thumb);
 
         // 웹뷰 설정
         thumb.setVerticalScrollBarEnabled(false);
@@ -313,6 +314,7 @@ public class ListDetailActivity extends ActionBarActivity {
     protected void onDestroy() {
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
+        thumb.destroy();
 
         super.onDestroy();
     }
