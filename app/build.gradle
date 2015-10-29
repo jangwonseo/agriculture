@@ -9,7 +9,7 @@ android {
     }
     defaultConfig {
         applicationId "vivz.slidenerd.agriculture"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 13
         versionName "13.0"
@@ -25,7 +25,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
     compile project(':com.skp.Tmap_1.0.33')
     compile project(':ImageSliderLibrary')
 }

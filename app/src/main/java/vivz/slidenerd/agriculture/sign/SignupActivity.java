@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,11 +18,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -42,25 +43,31 @@ import com.facebook.internal.ImageRequest;
 import com.facebook.internal.ImageResponse;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
-import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.R;
 
@@ -73,7 +80,7 @@ public class SignupActivity extends FragmentActivity {
 
     private Intent flagIntent;
 
-    public TextView ProfileImage;
+    public ImageView ProfileImage;
     private Button backButton;
 
 
@@ -106,6 +113,10 @@ public class SignupActivity extends FragmentActivity {
     public String fbEmail;
     public String fbBirthday;
     private JSONObject user;
+    public String fbYear;
+    public String fbMonth;
+    public String fbDay;
+
 
     //DB로 전송할 정보
     private String info_Id = null;
@@ -140,6 +151,11 @@ public class SignupActivity extends FragmentActivity {
     private String imagepath=null;
     String uploadFileName=null;
     //-----------------------------------------------------------
+    // 새로 추가한 이미지 로더에 쓰인 변수
+    String imageURL;
+    Bitmap bitmap = null;
+
+
 
     // 아이디 체크하는 부분
     phpIdCheck idCheckphp;
@@ -157,10 +173,12 @@ public class SignupActivity extends FragmentActivity {
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor= setting.edit();
+        ProfileImage = (ImageView)findViewById(R.id.profile_image);
 
 
         flagIntent = getIntent();
         String isFacebook = flagIntent.getStringExtra("isFacebookFlag");
+        final String isFbforInner = isFacebook;
 
         //입력필드 셋팅
         uName = (EditText)findViewById(R.id.user_name);
@@ -183,9 +201,10 @@ public class SignupActivity extends FragmentActivity {
             //세션으로부터 회원정보를 가져옴(페이스북)
 
             fetchUserInfo();
+
             //페이스북 세션토큰
             final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            fbId = accessToken.getUserId();
+            fbId = accessToken.getUserId().toString();
             //페이스북 프로필 이미지를 가져온다.
             ImageRequest request = getImageRequest();
             if (request != null) {
@@ -201,6 +220,7 @@ public class SignupActivity extends FragmentActivity {
                     }
                 }
             }
+
         }
         //일반 회원가입일 경우
         else{
@@ -281,14 +301,17 @@ public class SignupActivity extends FragmentActivity {
                     new Thread(new Runnable() {
                         public void run() {
 
-                            if (imagepath == null) {
+                            if(isFbforInner.equals("1"))
+                                uploadFbFile();
+                            else if (imagepath == null) {
                                 imagepath = "";
                                 dialog.dismiss();
                                 Log.e("Uploading file : ", "file is null, User don't select picture.");
                                 return;
-                            } else {
-                                uploadFile(imagepath);
                             }
+                            else
+                                uploadFile(imagepath);
+
                         }
                     }).start();
                     ///////////////////////////////////////////////////////
@@ -324,7 +347,7 @@ public class SignupActivity extends FragmentActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -362,24 +385,6 @@ public class SignupActivity extends FragmentActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
-        System.gc();
-
-        super.onDestroy();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch(keyCode){
-            case KeyEvent.KEYCODE_BACK:
-                finish();
-                return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     // 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
@@ -520,59 +525,123 @@ public class SignupActivity extends FragmentActivity {
 
 
     private void fetchUserInfo() {
-        final AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
 
-        if (accessToken != null) {
-            GraphRequest request = GraphRequest.newMeRequest(
-                    accessToken, new GraphRequest.GraphJSONObjectCallback() {
-                        @Override
-                        public void onCompleted(JSONObject me, GraphResponse response) {
-                            user = me;
+        GraphRequest request = GraphRequest.newMeRequest(
+                AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject me, GraphResponse response) {
 
-                            fbId = user.optString("id");
-                            fbPicture = user.optString("picture");
-                            fbName = user.optString("name");
-                            fbGender = user.optString("gender");
-                            fbEmail = user.optString("email");
-                            fbBirthday = user.optString("birthday");
+                        user = me;
+
+                        Log.e("aaa",response.toString());
+                        Log.e("aaa",me.toString());
+                        try {
+                            Log.e("aaa",me.getString("birthday"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
-            Bundle parameters = new Bundle();
-            parameters.putString(FIELDS, REQUEST_FIELDS);
-            request.setParameters(parameters);
-            GraphRequest.executeBatchAsync(request);
-        } else {
-            user = null;
-        }
+                        fbId = user.optString("id");
+
+                        //fbPicture = user.optString("picture");
+                        fbName = user.optString("name");
+                        fbGender = user.optString("gender");
+                        fbEmail = user.optString("email");
+                        fbBirthday = user.optString("birthday");
+
+                        try {
+                            String[] birth = fbBirthday.split("/");
+                            Log.e("aaa", fbBirthday);
+
+                            fbDay = birth[0];
+                            fbMonth = birth[1];
+                            fbYear = birth[2];
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                        Log.e("aaa",fbName);
+                        // 페이스북에서 받아온 정보 입력
+
+                        uId.setText(fbEmail);
+                        uName.setText(fbName);
+
+                        if(fbGender.equals("male"))
+                            uSex="1";
+                        else uSex="2";
+                        uBirthday_year.setText(fbYear);
+                        uBirthday_month.setText(fbMonth);
+                        uBirthday_day.setText(fbDay);
+
+
+                        Log.e("aaa",fbId + fbName + " " + fbGender + " " + fbEmail + " " + fbBirthday);
+
+
+                    }
+                });
+        Bundle parameters = new Bundle();
+        // parameters.putString(FIELDS, REQUEST_FIELDS);
+        parameters.putString("fields", "id,name,picture,email,gender, birthday");
+        request.setParameters(parameters);
+        GraphRequest.executeBatchAsync(request);
+
     }
+
+    //ImageRequest 객체를 이용해 해당 url에서 정보 받아옴.
     private ImageRequest getImageRequest() {
         ImageRequest request = null;
         //getProfilePrictureUri 메소드의 파라미터는 id, 가져올때 이미지 가로,세로 크기만큼 가져옴.
-        ImageRequest.Builder requestBuilder = new ImageRequest.Builder(getApplication(), ImageRequest.getProfilePictureUri(fbId, 156, 156));
+        ImageRequest.Builder requestBuilder = new ImageRequest.Builder(getApplication(),
+                ImageRequest.getProfilePictureUri(AccessToken.getCurrentAccessToken().getUserId().toString(), 156, 156));
 
         request = requestBuilder.setCallerTag(this).setCallback(new ImageRequest.Callback() {
             @Override
             public void onCompleted(ImageResponse response) {
-                processImageResponse(fbId, response);
+
+                try {
+                    // 이미지가 존재하면 유저 프로필 사진 가져오는 함수 호출
+                    getUserPic(AccessToken.getCurrentAccessToken().getUserId().toString(),response);
+                    Log.e("aaa", "7");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }).build();
         return request;
     }
-    private void processImageResponse(String id, ImageResponse response) {
-        if (response != null) {
-            Bitmap bitmap = getCircleBitmap(response.getBitmap());
+
+
+    // getImageRequest 에서 호출되는 함수
+    // 이 함수를 이용해 이미지를 가져와 bitmap형식으로 만들고 이미지를 둥글게하는
+    // getCircleBitmap 함수를 호출하며 사진이 들어갈 imageView에 set해준다.
+    public Bitmap getUserPic(String userID, ImageResponse response) throws IOException {
+        Log.e("aaa","1");
+        imageURL = "https://graph.facebook.com/"+userID+"/picture";
+        Log.e("aaa","2");
+        try {
+            Log.e("aaa","3");
+            bitmap = getCircleBitmap(response.getBitmap());
             if (bitmap != null) {
+                Log.e("aaa","4");
                 BitmapDrawable drawable = new BitmapDrawable(getApplication().getResources(), bitmap);
-                //getProfilePrictureUri 의 2,3번째 파라미터의 2배로 값을 잡으면 2배 확대된다. setBounds에 의해서,
-                drawable.setBounds(0, 0, 312, 312);
-                userProfilePic = drawable;
-                userProfilePicID = id;
-                ProfileImage.setCompoundDrawables(drawable, null, null, null);
-                ProfileImage.setTag(response.getRequest().getImageUri());
+                Log.e("aaa","5");
+                ProfileImage.setImageBitmap(drawable.getBitmap());
             }
+            else
+                Log.e("aaa","이미지 로드 실패");
+        } catch (Exception e) {
+            Log.d("TAG", "Loading Picture FAILED");
+            e.printStackTrace();
         }
+        Log.e("aaa","6");
+        return bitmap;
     }
+
+
+    // 이미지 라운드 처리 및 크기 조절
     public Bitmap getCircleBitmap(Bitmap bitmap) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
@@ -588,6 +657,9 @@ public class SignupActivity extends FragmentActivity {
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
+
+
+
     private void showDatePicker() {
         DatePickerFragment date = new DatePickerFragment();
         /**
@@ -606,6 +678,7 @@ public class SignupActivity extends FragmentActivity {
         date.show(getSupportFragmentManager(), "Date Picker");
     }
 
+
     DatePickerDialog.OnDateSetListener ondate = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
@@ -615,6 +688,131 @@ public class SignupActivity extends FragmentActivity {
         }
     };
 
+    public int uploadFbFile() {
+
+
+
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+
+
+        try {
+            // open a URL connection to the Servlet
+
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG , 100 , stream);
+            byte[] b = stream.toByteArray();
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(b);
+
+            URL url = new URL(upLoadServerUri + "?fileName=" + uploadFileName);
+
+            // Open a HTTP  connection to  the URL
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setDoInput(true); // Allow Inputs
+            conn.setDoOutput(true); // Allow Outputs
+            conn.setUseCaches(false); // Don't use a Cached Copy
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            conn.setRequestProperty("uploaded_file", fbId + "Profile.jpg");
+
+            dos = new DataOutputStream(conn.getOutputStream());
+
+            dos.writeBytes(twoHyphens + boundary + lineEnd);
+
+
+            //dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+            //+ fileName + "\"" + lineEnd);
+            // 파일이름 : 현재시간과 확장자의 조합으로 파일 이름을 만든다.
+            String uploadingFileName = uId.getText().toString()+"Profile.jpg";
+            dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                    + uploadingFileName + "\"" + lineEnd);
+            Log.e("fileName : ", uploadingFileName);
+
+            dos.writeBytes(lineEnd);
+
+            // create a buffer of  maximum size
+            bytesAvailable = byteArrayInputStream.available();
+
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+
+            // read file and write it into form...
+            bytesRead = byteArrayInputStream.read(buffer, 0, bufferSize);
+
+            while (bytesRead > 0) {
+
+                dos.write(buffer, 0, bufferSize);
+                bytesAvailable = byteArrayInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = byteArrayInputStream.read(buffer, 0, bufferSize);
+
+            }
+
+            // send multipart form data necesssary after file data...
+            dos.writeBytes(lineEnd);
+            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            // Responses from the server (code and message)
+            serverResponseCode = conn.getResponseCode();
+            String serverResponseMessage = conn.getResponseMessage();
+
+            Log.i("uploadFile", "HTTP Response is : "
+                    + serverResponseMessage + ": " + serverResponseCode);
+
+            if(serverResponseCode == 200){
+
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        String msg = "등록이 완료 되었습니다.";
+                        Log.e("upload message : ",msg);
+                        Toast.makeText(SignupActivity.this, "사진 업로드 완료", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            //close the streams //
+            dos.flush();
+            dos.close();
+
+        } catch (MalformedURLException ex) {
+
+            dialog.dismiss();
+            ex.printStackTrace();
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Log.e("upload message : ", "MalformedURLException Exception : check script url.");
+                    Toast.makeText(SignupActivity.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+        } catch (Exception e) {
+
+            dialog.dismiss();
+            e.printStackTrace();
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Log.e("upload message : ","Got Exception : see logcat ");
+                    Toast.makeText(SignupActivity.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+                }
+            });
+            Log.e("Upload file Exception", "Exception : "  + e.getMessage(), e);
+        }
+        dialog.dismiss();
+        return serverResponseCode;
+
+
+    }
 
     public int uploadFile(String sourceFileUri) {
         Log.e("sourceFIle : ", sourceFileUri.toString());
@@ -784,7 +982,7 @@ public class SignupActivity extends FragmentActivity {
             //Log.e("fileName : ", uploadFileName);
 
             try {
-                Bitmap image_bitmap 	= MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                 imgvSelectpic.setBackgroundColor(Color.BLACK);
                 imgvSelectpic.setImageBitmap(image_bitmap);
             } catch (FileNotFoundException e) {
@@ -888,3 +1086,4 @@ public class SignupActivity extends FragmentActivity {
         }
     }
 }
+

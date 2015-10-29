@@ -40,27 +40,32 @@
             android:layout_weight="390"
             android:background="@drawable/facebooksignup_button"
             android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/fbbutton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"/>
             <!--
+              <Button
+                  android:id="@+id/fbbutton"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@null"/>
+              -->
             <com.facebook.login.widget.LoginButton
+                xmlns:fb="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/facebooklogin_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="#00ff0000"
-                facebook:login_text=""
-                facebook:logout_text=""/>
--->
+                android:text=""
+                fb:com_facebook_login_text=""
+                fb:com_facebook_logout_text=""
+                />
+
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="75">
+
 
         </LinearLayout>
 
@@ -71,7 +76,10 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="25">
-
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
