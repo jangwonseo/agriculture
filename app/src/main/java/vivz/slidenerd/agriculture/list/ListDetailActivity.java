@@ -219,6 +219,7 @@ public class ListDetailActivity extends ActionBarActivity {
             }
         });
 
+
         myDiary= (Button) findViewById(R.id.addmydiary);
         myDiary.setOnClickListener(mClickListener);
 

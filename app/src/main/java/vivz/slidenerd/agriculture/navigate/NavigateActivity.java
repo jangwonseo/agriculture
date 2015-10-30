@@ -233,20 +233,26 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
             switch(isClicked_menu1){
                 case isClicked_accommodation:
+                    isClicked_menu1=isClicked_none;
                     Toast.makeText(getApplicationContext(), "해당 마을의 <숙박> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_accommodation(intent.getStringExtra("addr"));
                     break;
                 case isClicked_bank:
+                    isClicked_menu1=isClicked_none;
                     Toast.makeText(getApplicationContext(), "해당 마을의 <은행> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_bank(intent.getStringExtra("addr"));
                     break;
                 case isClicked_gasStation:
+                    isClicked_menu1=isClicked_none;
                     Toast.makeText(getApplicationContext(), "해당 마을의 <주유소> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_gasStation(intent.getStringExtra("addr"));
                     break;
                 case isClicked_restaurant:
+                    isClicked_menu1=isClicked_none;
                     Toast.makeText(getApplicationContext(), "해당 마을의 <식당> 위치정보 로딩 중....", Toast.LENGTH_SHORT).show();
                     search_restaurant(intent.getStringExtra("addr"));
+                    break;
+                case isClicked_none:
                     break;
             }
         }catch(Exception ex){
@@ -1238,8 +1244,11 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     return;
                 }
 
-                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
-
+               try {
+                   mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+               }catch(Exception ex) {
+                    ex.printStackTrace();
+                }
                 TMapData tmapdata = new TMapData();
                 tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "한식;중식;일식;TV맛집;양식", nRadius, 33, new FindAroundNamePOIListenerCallback() {
 
@@ -1425,7 +1434,11 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         String strInfo = "Center Latitude" + info.getTMapPoint().getLatitude() + "Center Longitude" + info.getTMapPoint().getLongitude() +
                 "Level " + info.getTMapZoomLevel();
 
-        NavigateActivity.mMapView.setCenterPoint(info.getTMapPoint().getLongitude(), info.getTMapPoint().getLatitude(), true);
+        try {
+            NavigateActivity.mMapView.setCenterPoint(info.getTMapPoint().getLongitude(), info.getTMapPoint().getLatitude(), true);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
         NavigateActivity.mMapView.setZoomLevel(info.getTMapZoomLevel());
 
         Log.i("zoom", "zoomlevel : " + info.getTMapZoomLevel());

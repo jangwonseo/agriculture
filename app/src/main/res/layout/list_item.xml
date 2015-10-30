@@ -31,7 +31,7 @@
             android:layout_weight="129"
             android:background="@drawable/list4">
 
-            <vivz.slidenerd.agriculture.NonLeakingWebView
+            <ImageView
                 android:id="@+id/thumb"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -40,6 +40,15 @@
                 android:focusable="false"
                 android:longClickable="false"
                 android:scrollbars="none" />
+            <!--<vivz.slidenerd.agriculture.NonLeakingWebView
+                android:id="@+id/thumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:clickable="false"
+                android:focusable="false"
+                android:longClickable="false"
+                android:scrollbars="none" />-->
             <!-- clickable 은 false로 해야 리스트뷰에 영향을 안준다고 한다. -->
 
         </LinearLayout>

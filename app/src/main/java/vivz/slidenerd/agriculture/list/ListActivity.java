@@ -2,7 +2,16 @@ package vivz.slidenerd.agriculture.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +41,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
 import vivz.slidenerd.agriculture.NonLeakingWebView;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
@@ -56,6 +66,7 @@ public class ListActivity extends ActionBarActivity {
     List_Adapter adapter;
     //폰트설정
     public Typeface yunGothicFont;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,8 +159,10 @@ public class ListActivity extends ActionBarActivity {
                 intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
                 intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-
+                finish();
 
             }
         });
@@ -173,8 +186,9 @@ public class ListActivity extends ActionBarActivity {
 
 //Adapter가 있으면 어댑터에서 생성한 recycle메소드를 실행
 
-        if (adapter != null)
+        if (adapter != null) {
             adapter.recycle();
+        }
 
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
@@ -284,10 +298,13 @@ class List_Adapter extends BaseAdapter {
 
     //멤버변수로 해제할 Set을 생성
     private List<WeakReference<View>> mRecycleList = new ArrayList<WeakReference<View>>();
+    private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
+
     public int selectedIndex = -1;
 
     private int layout;
-    NonLeakingWebView thumb;
+    //NonLeakingWebView thumb;
+    ImageView thumb;
     Typeface yunGothicFont;
     Button isRecruit;
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
@@ -302,9 +319,12 @@ class List_Adapter extends BaseAdapter {
 
 
      public void recycle() {
-               for (WeakReference<View> ref : mRecycleList) {
-                     RecycleUtils.recursiveRecycle(ref.get());
-               }
+           for (WeakReference<View> ref : mRecycleList) {
+             RecycleUtils.recursiveRecycle(ref.get());
+         }
+         for (WeakReference<ImageView> ref : mRecycleList2) {
+             RecycleUtils.recursiveRecycle(ref.get());
+         }
      }
 
     @Override
@@ -343,25 +363,32 @@ class List_Adapter extends BaseAdapter {
 
         Item listviewitem = data.get(position);
 
-        thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
+        thumb = (ImageView) convertView.findViewById(R.id.thumb);
+        //thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
+
+
 
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
         // 웹뷰 설정
         thumb.setVerticalScrollBarEnabled(false);
-        thumb.setVerticalScrollbarOverlay(false);
+     //  thumb.setVerticalScrollbarOverlay(false);
         thumb.setHorizontalScrollBarEnabled(false);
-        thumb.setHorizontalScrollbarOverlay(false);
+        //thumb.setHorizontalScrollbarOverlay(false);
         thumb.setFocusableInTouchMode(false);
         thumb.setHorizontalScrollBarEnabled(false);
         thumb.setVerticalScrollBarEnabled(false);
-        thumb.setInitialScale(100);
+       // thumb.setInitialScale(100);
         thumb.setFocusable(false);
 
         if (thumb != null) {
-            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + listviewitem.getThumbUrlCours1()), "text/html", "utf-8", null);
-
+            new DownloadImageTask(thumb)
+                    .execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
         }
+
+
+
+
         //icon.setImageResource(listviewitem.getIcon());
 
         // 마을 이름
@@ -407,11 +434,23 @@ class List_Adapter extends BaseAdapter {
 
         //메모리 해제할 View를 추가
         mRecycleList.add(new WeakReference<View>(convertView));
-
+        mRecycleList2.add(new WeakReference<ImageView>(thumb));
 
         return convertView;
     }
 
+
+    private static void recycleBitmap(ImageView iv) {
+        if(iv == null)
+            return;
+        Drawable d = iv.getDrawable();
+        if (d instanceof BitmapDrawable) {
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            b.recycle();
+        } // 현재로서는 BitmapDrawable 이외의 drawable 들에 대한 직접적인 메모리 해제는 불가능하다.
+
+        d.setCallback(null);
+    }
     // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
     // + 웹뷰에 둥근 모서리 처리를 하기 위해서 style을 추가함.
     public String creHtmlBody(String imgUrl) {

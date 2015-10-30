@@ -79,23 +79,38 @@ public class ThemeChoiceActivity extends ActionBarActivity {
             {
                 case R.id.btn_nature:
                     intentTheme.putExtra("themeflag","nature");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_traditional:
                     intentTheme.putExtra("themeflag","traditional");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_experience:
                     intentTheme.putExtra("themeflag","experience");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_wellBeing:
                     intentTheme.putExtra("themeflag","wellBeing");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btnVideo:
                     intentTheme.putExtra("themeflag", "video");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
 
             }

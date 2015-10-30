@@ -86,42 +86,66 @@ public class RegionChoiceActivity extends ActionBarActivity {
                 case R.id.btn_kangwon:
 
                     intentTheme.putExtra("themeflag","kangwon");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_kyungki:
 
                     intentTheme.putExtra("themeflag","kyungki");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_chungnam:
 
                     intentTheme.putExtra("themeflag","chungnam");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_chungbuk:
 
                     intentTheme.putExtra("themeflag","chungbuk");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_jeonnam:
 
                     intentTheme.putExtra("themeflag","jeonnam");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_jeonbuk:
 
                     intentTheme.putExtra("themeflag","jeonbuk");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_kyungnam:
 
-                    intentTheme.putExtra("themeflag","kyungnam");
+                    intentTheme.putExtra("themeflag", "kyungnam");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
                 case R.id.btn_kyungbuk:
 
                     intentTheme.putExtra("themeflag","kyungbuk");
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     startActivity(intentTheme);
+                    finish();
                     break;
             }
         }
