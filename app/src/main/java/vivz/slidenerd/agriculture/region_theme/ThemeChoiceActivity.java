@@ -16,6 +16,7 @@ import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.list.ListActivity;
+import vivz.slidenerd.agriculture.list.VideoListActivity;
 
 
 public class ThemeChoiceActivity extends ActionBarActivity {
@@ -75,6 +76,7 @@ public class ThemeChoiceActivity extends ActionBarActivity {
         public void onClick(View v)
         {
             Intent intentTheme = new Intent(getApplication(),ListActivity.class);
+            Intent intentVideo = new Intent(getApplication(),VideoListActivity.class);
             switch (v.getId())
             {
                 case R.id.btn_nature:
@@ -106,10 +108,10 @@ public class ThemeChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btnVideo:
-                    intentTheme.putExtra("themeflag", "video");
-                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intentTheme);
+                    //intentVideo.putExtra("themeflag", "video");
+                    intentVideo.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentVideo.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intentVideo);
                     finish();
                     break;
 
