@@ -17,6 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
@@ -42,6 +47,9 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
     RecruitListItem item;
 
+    // 페이스북 객체
+    ShareDialog shareDialog;
+
     //정적 텍스트뷰(고정)
     TextView static_txtvVilageName, static_txtvMissionName, static_txtvRecruitNum, static_txtvRecruitContent, static_txtvRecruitTerm, static_txtvReward;
 
@@ -56,7 +64,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     Button shareButton;
 
     String imgUrl = "http://218.150.181.131/seo/image/"; // 사진이 없을 경우 디폴트 사진 띄우는 경로
-
+    String loadingURL = null;
     phpMissionJoin missionJoin;
 
     // 참가 성공여부
@@ -70,19 +78,33 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_recruit_popup);
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
 
+        shareDialog = new ShareDialog(this);
+
+
         shareButton = (Button) findViewById(R.id.shareButton);
+//        shareButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(RecruitPopupActivity.this, service_prepare.class);
+//                startActivity(intent);
+//            }
+//        });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecruitPopupActivity.this, service_prepare.class);
-                startActivity(intent);
+
+                if(isLoggedIn())
+                    feed();
+
             }
         });
+
 
         setting = getSharedPreferences("setting", MODE_PRIVATE);
         editor = setting.edit();
@@ -151,7 +173,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         webvRecPopup.setFocusable(false);
 
         String ImageURL = item.getImageURL();
-        String loadingURL = null;
+
         if (ImageURL.equals("null") || ImageURL == null) {
             loadingURL = imgUrl + "default.png";
         } else {
@@ -305,5 +327,36 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
     }
 
-    ;
+    // 페이스북 로그인 확인
+    public boolean isLoggedIn() {
+        if(AccessToken.getCurrentAccessToken()!=null)
+            return true;
+
+        return false;
+
+    }
+
+
+    // 페이스북 포스팅 부분
+    private void feed()
+    {
+        Log.e("aaa","포스트 준비");
+        try
+        {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentTitle(item.getVilageName() + "에 함께 가요!!")
+                    .setContentDescription(item.getRecruitContent())
+                    .setImageUrl(Uri.parse(loadingURL))
+                    .build();
+            Log.e("aaa","내용 준비");
+            shareDialog.show(linkContent);
+            Log.e("aaa", "포스트");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
 }
