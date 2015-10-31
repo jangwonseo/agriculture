@@ -264,7 +264,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="78"
                             android:background="@drawable/slidepage5">
-                            <WebView
+                            <ImageView
                                 android:id="@+id/webvProfile"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"

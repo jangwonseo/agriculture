@@ -17,6 +17,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -26,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
+import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
 import vivz.slidenerd.agriculture.NonLeakingWebView;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
@@ -73,7 +76,10 @@ public class ListDetailActivity extends ActionBarActivity {
     Button restaurant;
 
     NonLeakingWebView main2Web;
-    NonLeakingWebView thumb;
+    ImageView thumb;
+    public static int width = 0;
+    public static int height = 0;
+
 
     boolean dupChk;
     String vodUrls;
@@ -226,25 +232,26 @@ public class ListDetailActivity extends ActionBarActivity {
         //vod=(Button) findViewById(R.id.btn_vod);
         //vod.setOnClickListener(mClickListener);
 
-        thumb = (NonLeakingWebView)findViewById(R.id.thumb);
+        thumb = (ImageView)findViewById(R.id.thumb);
 
         // 웹뷰 설정
         thumb.setVerticalScrollBarEnabled(false);
-        thumb.setVerticalScrollbarOverlay(false);
+        //thumb.setVerticalScrollbarOverlay(false);
         thumb.setHorizontalScrollBarEnabled(false);
-        thumb.setHorizontalScrollbarOverlay(false);
+       // thumb.setHorizontalScrollbarOverlay(false);
         thumb.setFocusableInTouchMode(false);
         thumb.setHorizontalScrollBarEnabled(false);
         thumb.setVerticalScrollBarEnabled(false);
 
-        thumb.setInitialScale(100);
+       // thumb.setInitialScale(100);
         thumb.setFocusable(false);
 
 
         if(thumb != null)
         {
-            thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrlCours1()), "text/html", "utf-8", null);
-
+            //thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrlCours1()), "text/html", "utf-8", null);
+            new DownloadImageTask_NoCircle(thumb)
+                   .execute("http://www.welchon.com" + i.getThumbUrlCours1());
         }
 
 /*
@@ -316,7 +323,7 @@ public class ListDetailActivity extends ActionBarActivity {
     protected void onDestroy() {
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
-        thumb.destroy();
+        //thumb.destroy();
 
         super.onDestroy();
     }

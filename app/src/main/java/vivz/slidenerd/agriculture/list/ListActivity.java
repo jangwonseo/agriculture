@@ -301,7 +301,7 @@ class List_Adapter extends BaseAdapter {
     private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
 
     public int selectedIndex = -1;
-
+    int i = 0;
     private int layout;
     //NonLeakingWebView thumb;
     ImageView thumb;
@@ -366,8 +366,8 @@ class List_Adapter extends BaseAdapter {
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
         //thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
 
-
-
+        //i++;
+       // Log.i("asd123", " i : " + i + " W : " + thumb.getWidth() + " H : " + thumb.getHeight());
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
         // 웹뷰 설정
@@ -384,7 +384,7 @@ class List_Adapter extends BaseAdapter {
         if (thumb != null) {
             new DownloadImageTask(thumb)
                     .execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
-        }
+       }
 
 
 

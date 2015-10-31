@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.list.Item;
 import vivz.slidenerd.agriculture.list.ListDetailActivity;
@@ -65,7 +67,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     private LinearLayout slidingPage01;
 
     // 홈에 추천 마을(체험) 이미지
-    private WebView webvHomeImage;
+    private ImageView webvHomeImage;
     private ArrayList<Item> recommendItems = new ArrayList<>();
     //ArrayList<Item> recommendItems10 = new ArrayList<>();
 
@@ -78,7 +80,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     private BackPressCloseHandler backPressCloseHandler;
 
     // 프로필 사진
-    private WebView webvProfile;
+    private ImageView webvProfile;
 
     private LinearLayout HomeBackGround;
     private String userId;
@@ -230,21 +232,24 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         // 프로필사진
-        webvProfile = (WebView) findViewById(R.id.webvProfile);
+        webvProfile = (ImageView) findViewById(R.id.webvProfile);
 
         // 웹뷰 설정
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webvProfile.setBackgroundColor(0);
         webvProfile.setVerticalScrollBarEnabled(false);
-        webvProfile.setVerticalScrollbarOverlay(false);
+        //webvProfile.setVerticalScrollbarOverlay(false);
         webvProfile.setHorizontalScrollBarEnabled(false);
-        webvProfile.setHorizontalScrollbarOverlay(false);
+        //webvProfile.setHorizontalScrollbarOverlay(false);
         webvProfile.setFocusableInTouchMode(false);
         webvProfile.setHorizontalScrollBarEnabled(false);
         webvProfile.setVerticalScrollBarEnabled(false);
-        webvProfile.setInitialScale(100);
+        //webvProfile.setInitialScale(100);
         webvProfile.setFocusable(false);
-        webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
+
+        new DownloadImageTask(webvProfile)
+              .execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
+        //webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
         eventButton = (Button) findViewById(R.id.eventbutton);
         eventButton.setTypeface(yunGothicFont);
