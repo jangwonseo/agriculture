@@ -23,9 +23,12 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import vivz.slidenerd.agriculture.DownloadImageTask;
 import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
@@ -77,6 +80,9 @@ public class ListDetailActivity extends ActionBarActivity {
 
     NonLeakingWebView main2Web;
     ImageView thumb;
+
+    private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
+
     public static int width = 0;
     public static int height = 0;
 
@@ -316,16 +322,22 @@ public class ListDetailActivity extends ActionBarActivity {
         dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
 
 
-
+        mRecycleList2.add(new WeakReference<ImageView>(thumb));
     }
 
     @Override
     protected void onDestroy() {
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
-        //thumb.destroy();
+        recycle();
 
         super.onDestroy();
+    }
+
+    public void recycle() {
+        for (WeakReference<ImageView> ref : mRecycleList2) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
     }
 
     @Override

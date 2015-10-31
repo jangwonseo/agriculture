@@ -117,7 +117,7 @@
                 android:layout_weight="115"
                 android:background="@drawable/joinin_5">
 
-                <WebView
+                <ImageView
                     android:id="@+id/webvRecPopup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

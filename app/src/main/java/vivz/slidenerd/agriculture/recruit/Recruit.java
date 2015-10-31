@@ -64,6 +64,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -76,6 +77,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -454,6 +456,10 @@ public class Recruit extends Activity implements TextWatcher{
 
     @Override
     protected void onDestroy() {
+        if (adapter != null) {
+            adapter.recycle();
+        }
+
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
 
@@ -1189,11 +1195,15 @@ class List_Adapter extends BaseAdapter {
     private ArrayList<RecruitListItem> data;
     private int layout;
 
+    //멤버변수로 해제할 Set을 생성
+    private List<WeakReference<View>> mRecycleList = new ArrayList<WeakReference<View>>();
+    private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
+
     private Typeface yunGothicFont; //윤고딕폰트
     // 리스트에 들어갈 이미지를 가져올때 쓰이는 변수들
     TextView txtvRecListTerm;
     TextView txtvRecListRecNum;
-    WebView webView ;
+    ImageView webView ;
 
     //phpGetImage getImage = new phpGetImage();
     String imgUrl = "http://218.150.181.131/seo/image/";
@@ -1205,6 +1215,15 @@ class List_Adapter extends BaseAdapter {
         this.inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data=data;
         this.layout=layout;
+    }
+
+    public void recycle() {
+        for (WeakReference<View> ref : mRecycleList) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
+        for (WeakReference<ImageView> ref : mRecycleList2) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
     }
     @Override
     public int getCount(){return data.size();}
@@ -1219,19 +1238,19 @@ class List_Adapter extends BaseAdapter {
         }
         RecruitListItem listviewitem=data.get(position);
 
-        webView = (WebView)convertView.findViewById(R.id.recruit_list_webView);
+        webView = (ImageView)convertView.findViewById(R.id.recruit_list_webView);
 
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webView.setBackgroundColor(0);
         // 웹뷰 설정
         webView.setVerticalScrollBarEnabled(false);
-        webView.setVerticalScrollbarOverlay(false);
+        //webView.setVerticalScrollbarOverlay(false);
         webView.setHorizontalScrollBarEnabled(false);
-        webView.setHorizontalScrollbarOverlay(false);
+        //webView.setHorizontalScrollbarOverlay(false);
         webView.setFocusableInTouchMode(false);
         webView.setHorizontalScrollBarEnabled(false);
         webView.setVerticalScrollBarEnabled(false);
-        webView.setInitialScale(100);
+        //webView.setInitialScale(100);
         webView.setFocusable(false);
 
         String ImageURL = listviewitem.getImageURL();
@@ -1242,7 +1261,11 @@ class List_Adapter extends BaseAdapter {
             loadingURL = imgUrl + listviewitem.getImageURL();
         }
 
-        webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
+
+        new DownloadImageTask(webView)
+                    .execute(loadingURL);
+
+        //webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
         Log.e("list image path", loadingURL);
 
         TextView name=(TextView)convertView.findViewById(R.id.list_missionName);
@@ -1255,6 +1278,9 @@ class List_Adapter extends BaseAdapter {
         txtvRecListRecNum.setTypeface(yunGothicFont);
         txtvRecListRecNum.setText(Integer.toString(listviewitem.getJoinedNum()) + " / " + Integer.toString(listviewitem.getRecruitNum()) + " 명");
 
+        //메모리 해제할 View를 추가
+        mRecycleList.add(new WeakReference<View>(convertView));
+        mRecycleList2.add(new WeakReference<ImageView>(webView));
         return convertView;
     }
 

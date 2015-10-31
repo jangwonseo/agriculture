@@ -13,15 +13,22 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
+import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
 import vivz.slidenerd.agriculture.R;
+import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.service_prepare;
 
 public class RecruitPopupActivity extends Activity implements View.OnClickListener {
@@ -41,7 +48,8 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     //동적인 텍스트뷰
     TextView txtvVilageName, txtvMissionName, txtvRecruitNum, txtvRecruitContent, txtvRecruitTerm, txtvReward;
 
-    WebView webvRecPopup;
+    ImageView webvRecPopup;
+    private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
 
     Button btnPhoneCall;
     Button btnMissionJoin;
@@ -130,16 +138,16 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         txtvReward.setTypeface(yunGothicFont);
         txtvReward.setText(item.getReward());
 
-        webvRecPopup = (WebView) findViewById(R.id.webvRecPopup);
+        webvRecPopup = (ImageView) findViewById(R.id.webvRecPopup);
 
         webvRecPopup.setVerticalScrollBarEnabled(false);
-        webvRecPopup.setVerticalScrollbarOverlay(false);
+        //webvRecPopup.setVerticalScrollbarOverlay(false);
         webvRecPopup.setHorizontalScrollBarEnabled(false);
-        webvRecPopup.setHorizontalScrollbarOverlay(false);
+        //webvRecPopup.setHorizontalScrollbarOverlay(false);
         webvRecPopup.setFocusableInTouchMode(false);
         webvRecPopup.setHorizontalScrollBarEnabled(false);
         webvRecPopup.setVerticalScrollBarEnabled(false);
-        webvRecPopup.setInitialScale(100);
+        //webvRecPopup.setInitialScale(100);
         webvRecPopup.setFocusable(false);
 
         String ImageURL = item.getImageURL();
@@ -150,13 +158,21 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             loadingURL = imgUrl + item.getImageURL();
         }
 
-        webvRecPopup.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
+        new DownloadImageTask_NoCircle(webvRecPopup)
+                .execute(loadingURL);
+       // webvRecPopup.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
         Log.e("list image path", loadingURL);
 
 
         myJoinHandler = new JoinHandler();
 
+        mRecycleList2.add(new WeakReference<ImageView>(webvRecPopup));
+    }
 
+    public void recycle() {
+        for (WeakReference<ImageView> ref : mRecycleList2) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
     }
 
     // 리스트 뷰 항목에 들어가는 웹뷰 이미지 화면을 웹뷰크기에 맞게 조절
@@ -171,7 +187,14 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         sb.append("</HTML>");
         return sb.toString();
     }
+    @Override
+    protected void onDestroy() {
+        RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        System.gc();
+        recycle();
 
+        super.onDestroy();
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
