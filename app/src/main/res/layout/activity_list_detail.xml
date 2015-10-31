@@ -100,7 +100,7 @@
                             android:id="@+id/experienceVilage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="체&#160;험&#160;&#160;&#160;마&#160;을"
+                            android:text="체&#160;험&#160;&#160;&#160;이&#160;름"
                             android:textSize="15dp"
                             android:textColor="#1D917B"
                             />

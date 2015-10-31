@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -62,8 +63,8 @@ public class VideoListActivity extends ActionBarActivity {
     public static Context mContext;
     // listview
     private ListView vilageList;
-    ArrayList<Item> data = new ArrayList<>();
-    List_Adapter adapter;
+    ArrayList<VideoItem> data = new ArrayList<>();
+    Video_List_Adapter adapter;
     //폰트설정
     public Typeface yunGothicFont;
 
@@ -106,7 +107,7 @@ public class VideoListActivity extends ActionBarActivity {
         keys.setText("생생한 체험 이야기");
 
         // ListView에 어댑터 연결
-        adapter = new List_Adapter(this, R.layout.list_item, data);
+        adapter = new Video_List_Adapter(this, R.layout.list_item, data);
         vilageList.setAdapter(adapter);
 
         vilageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -127,7 +128,7 @@ public class VideoListActivity extends ActionBarActivity {
             }
         });
 
-        task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
+        task.execute("http://218.150.181.131/seo/dataVideo.php");
     }
 
     @Override
@@ -203,15 +204,10 @@ public class VideoListActivity extends ActionBarActivity {
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
 
-                    Log.d("seojang", "정보확인하기 : " + vilageName.getString("exprnProgrmNm"));
-
-                    Item item = new Item(vilageName.getString("thumbUrlCours1"), vilageName.getString("exprnDstncId"), vilageName.getString("chargerMoblphonNo"),
-                            vilageName.getString("exprnProgrmNm"), vilageName.getString("exprnLiverStgDc"), vilageName.getString("adres1"),
-                            vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"), vilageName.getString("tableName"),
-                            vilageName.getString("operEraBegin"), vilageName.getString("operEraEnd"), vilageName.getString("nmprCoMumm")
-                            , vilageName.getString("nmprCoMxmm"), vilageName.getString("operTimeMnt"), vilageName.getString("pc"),
-                            vilageName.getString("onlineResvePosblAt"));
-                    Log.d("seojang", "정보확인하기 : 끝 ");
+                    Log.d("seojang", "VideoListActivity : " + vilageName.getString("vilageNm"));
+                    VideoItem item = new VideoItem(vilageName.getString("thumbUrlCours1"), vilageName.getString("prcafsManMoblphon"), vilageName.getString("vilageKndNm"),
+                            vilageName.getString("vilageSlgn"), vilageName.getString("adres1"), vilageName.getString("vilageHmpgEnnc"),
+                            vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"));
 
                     data.add(item);
                 }
@@ -227,7 +223,7 @@ public class VideoListActivity extends ActionBarActivity {
 
 class Video_List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
-    private ArrayList<Item> data;
+    private ArrayList<VideoItem> data;
 
     //멤버변수로 해제할 Set을 생성
     private List<WeakReference<View>> mRecycleList = new ArrayList<WeakReference<View>>();
@@ -246,7 +242,7 @@ class Video_List_Adapter extends BaseAdapter {
     SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyyMMdd");
     String strCurDate = CurDateFormat.format(date);
 
-    public Video_List_Adapter(Context context, int layout, ArrayList<Item> data) {
+    public Video_List_Adapter(Context context, int layout, ArrayList<VideoItem> data) {
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -270,7 +266,7 @@ class Video_List_Adapter extends BaseAdapter {
     }
 
     @Override
-    public Item getItem(int position) {
+    public VideoItem getItem(int position) {
         return data.get(position);
     }
 
@@ -289,7 +285,7 @@ class Video_List_Adapter extends BaseAdapter {
         isRecruit = (Button) convertView.findViewById(R.id.isrecruit);
         isRecruit.setBackground(null);
 
-        Item listviewitem = data.get(position);
+        VideoItem listviewitem = data.get(position);
 
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
@@ -315,8 +311,8 @@ class Video_List_Adapter extends BaseAdapter {
         // 마을 이름
         TextView Ename = (TextView) convertView.findViewById(R.id.ExpgName);
         Ename.setTypeface(yunGothicFont);
-        Ename.setText(listviewitem.getExprnProgrmNm());
-        Log.e("ExpgName", listviewitem.getExprnProgrmNm());
+        Ename.setText(listviewitem.getVilageNm());
+
 //
 //        // 텍스트 짤림방지
 //        if (listviewitem.getName().length() <= 9)
@@ -345,7 +341,7 @@ class Video_List_Adapter extends BaseAdapter {
         // 마을 간단 소개
         TextView vilageAccount = (TextView) convertView.findViewById(R.id.vilageAccount);
         vilageAccount.setTypeface(yunGothicFont);
-        vilageAccount.setText(listviewitem.getOperEraBegin() + " ~ " + listviewitem.getOperEraEnd());
+        vilageAccount.setText(listviewitem.getVilageSlgn());
         // 마을 주소
         TextView addr = (TextView) convertView.findViewById(R.id.vilageAddr);
         addr.setTypeface(yunGothicFont);
@@ -384,5 +380,59 @@ class Video_List_Adapter extends BaseAdapter {
         sb.append("</BODY>");
         sb.append("</HTML>");
         return sb.toString();
+    }
+}
+
+class VideoItem implements Serializable {
+    private String thumbUrlCours1;
+    private String prcafsManMoblphon;
+    private String vilageKndNm;
+    private String vilageSlgn;
+    private String adres1;
+    private String vilageHmpgEnnc;
+    private String vilageHmpgUrl;
+    private String vilageNm;
+
+    public VideoItem(String thumbUrlCours1, String prcafsManMoblphon, String vilageKndNm, String vilageSlgn, String adres1, String vilageHmpgEnnc, String vilageHmpgUrl, String vilageNm) {
+        this.thumbUrlCours1 = thumbUrlCours1;
+        this.prcafsManMoblphon = prcafsManMoblphon;
+        this.vilageKndNm = vilageKndNm;
+        this.vilageSlgn = vilageSlgn;
+        this.adres1 = adres1;
+        this.vilageHmpgEnnc = vilageHmpgEnnc;
+        this.vilageHmpgUrl = vilageHmpgUrl;
+        this.vilageNm = vilageNm;
+    }
+
+    public String getThumbUrlCours1() {
+        return thumbUrlCours1;
+    }
+
+    public String getPrcafsManMoblphon() {
+        return prcafsManMoblphon;
+    }
+
+    public String getVilageKndNm() {
+        return vilageKndNm;
+    }
+
+    public String getVilageSlgn() {
+        return vilageSlgn;
+    }
+
+    public String getAdres1() {
+        return adres1;
+    }
+
+    public String getVilageHmpgEnnc() {
+        return vilageHmpgEnnc;
+    }
+
+    public String getVilageHmpgUrl() {
+        return vilageHmpgUrl;
+    }
+
+    public String getVilageNm() {
+        return vilageNm;
     }
 }

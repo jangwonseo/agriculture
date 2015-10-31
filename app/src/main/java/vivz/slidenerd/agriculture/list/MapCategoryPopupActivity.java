@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.list;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,7 +18,7 @@ public class MapCategoryPopupActivity extends Activity {
     //숙박,식당,현금,주유소 버튼
     private Button accommodationButton, restaurantButton, moneyButton, oilstationButton;
 
-    Item i;
+    String addr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,8 @@ public class MapCategoryPopupActivity extends Activity {
         oilstationButton.setOnClickListener(categoryClickListener);
 
         Intent intent = getIntent();
-        Serializable item = intent.getSerializableExtra("item");
-        i = (Item)item;
-
+        Log.e("addr..", intent.getExtras().getString("addr"));
+        addr = intent.getExtras().getString("addr");
     }
 
     Button.OnClickListener categoryClickListener = new View.OnClickListener()
@@ -50,7 +50,7 @@ public class MapCategoryPopupActivity extends Activity {
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_accommodation;
                     Intent intentAccommodation = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentAccommodation.putExtra("addr", i.getAdres1());
+                    intentAccommodation.putExtra("addr", addr);
                     // Log.i("asd", "addr : " + i.getAddr());
                     intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentAccommodation);
@@ -60,7 +60,7 @@ public class MapCategoryPopupActivity extends Activity {
                     Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intentRestaurant.putExtra("addr", i.getAdres1());
+                    intentRestaurant.putExtra("addr", addr);
                     startActivity(intentRestaurant);
                     finish();
                     break;
@@ -68,7 +68,7 @@ public class MapCategoryPopupActivity extends Activity {
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_bank;
                     Intent intentBank = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentBank.putExtra("addr", i.getAdres1());
+                    intentBank.putExtra("addr", addr);
                     // Log.i("asd", "addr : " + i.getAddr());
                     intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentBank);
@@ -77,7 +77,7 @@ public class MapCategoryPopupActivity extends Activity {
                     NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_gasStation;
                     Intent intentGasStation = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentGasStation.putExtra("addr", i.getAdres1());
+                    intentGasStation.putExtra("addr", addr);
                     // Log.i("asd", "addr : " + i.getAddr());
                     intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentGasStation);

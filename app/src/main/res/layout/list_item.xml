@@ -125,7 +125,8 @@
                     android:text="Sub Title"
                     android:textColor="#FFFFFF"
                     android:textSize="12dp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:scrollbars="vertical"/>
 
 
 
@@ -151,7 +152,8 @@
                     android:text="Sub Title"
                     android:textColor="#FFFFFF"
                     android:textSize="12dp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:scrollbars="vertical"/>
                 <!--android:textColor="#BB6622"-->
 
             </LinearLayout>

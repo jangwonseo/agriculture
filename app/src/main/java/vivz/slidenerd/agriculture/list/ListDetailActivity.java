@@ -71,7 +71,6 @@ public class ListDetailActivity extends ActionBarActivity {
     Button myDiary;
     Button vod;
     phpUp recruitTask;
-    phpDown task;
     dupChecker dupChecker;
     Button accommodation;
     Button bank;
@@ -88,7 +87,6 @@ public class ListDetailActivity extends ActionBarActivity {
 
 
     boolean dupChk;
-    String vodUrls;
     String vilageId;
     String id;
 
@@ -261,14 +259,6 @@ public class ListDetailActivity extends ActionBarActivity {
 
         // 체험 비디오 가져오기가져오기
 
-        try {
-            task=new phpDown();
-            //String str = URLEncoder.encode(i.getName(), "UTF-8");
-            task.execute("http://218.150.181.131/seo/getUrl.php?vilageId=" + URLEncoder.encode(i.getExprnProgrmNm(), "UTF-8") + "");
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
         // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
         dupChecker = new dupChecker();
         dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
@@ -369,19 +359,10 @@ public class ListDetailActivity extends ActionBarActivity {
                         }
                     }
                     break;
-                case R.id.btn_vod:
-                    if(vodUrls==null) {
-                        Toast toasts = Toast.makeText(getApplicationContext(), "동영상 정보가 없습니다.", Toast.LENGTH_SHORT);
-                        toasts.show();
-                    }
-                    else
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("http://" + vodUrls )));
-                    break;
 
                 case R.id.findmap:
                     Intent mapIntent = new Intent(getApplicationContext(), MapCategoryPopupActivity.class);
-                    mapIntent.putExtra("item", i);
+                    mapIntent.putExtra("addr", i.getAdres1());
                     startActivity(mapIntent);
                     break;
 
@@ -528,70 +509,6 @@ public class ListDetailActivity extends ActionBarActivity {
     }
 */
 
-
-    public class phpDown extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            StringBuilder jsonHtml = new StringBuilder();
-            String line = "";
-            try {
-                // 텍스트 연결 url 설정
-                URL url = new URL(urls[0]);
-                // 이미지 url
-
-                // URL 페이지 커넥션 객체 생성
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                // 연결되었으면.
-
-                if (conn != null) {
-                    conn.setConnectTimeout(10000);
-                    conn.setUseCaches(false);
-                    // 연결되었음 코드가 리턴되면.
-
-                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                        for (; ; ) {
-                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
-                            line = br.readLine();
-                            if (line == null) break;
-                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
-                            jsonHtml.append(line);
-
-                        }
-
-                        br.close();
-                    }
-                    conn.disconnect();
-
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return jsonHtml.toString();
-        }
-
-        protected void onPostExecute(String str) {
-            // JSON 구문을 파싱해서 JSONArray 객체를 생성
-            try {
-
-                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
-
-                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
-                    JSONObject vodUrl = jAr.getJSONObject(i);
-
-                    vodUrls=vodUrl.getString("cn");
-                    Log.e("zzzzzzzz",vodUrls);
-
-                }
-
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-        }
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

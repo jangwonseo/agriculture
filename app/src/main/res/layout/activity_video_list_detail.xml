@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_weight="70">
             <Button
-                android:id="@+id/listDeail_backbutton"
+                android:id="@+id/videolistDeail_backbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_pressback"/>
@@ -36,7 +36,7 @@
             android:layout_weight="81"
             >
             <Button
-                android:id="@+id/listdetail_menubutton"
+                android:id="@+id/videolistdetail_menubutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/btn_movetohome"/>
@@ -77,7 +77,7 @@
                 android:background="#ffffff">
 
                 <ImageView
-                    android:id="@+id/thumb"
+                    android:id="@+id/videothumb"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"/>
@@ -100,7 +100,7 @@
                             android:id="@+id/experienceVilage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="체&#160;험&#160;&#160;&#160;마&#160;을"
+                            android:text="마&#160;을&#160;&#160;&#160;이&#160;름"
                             android:textSize="15dp"
                             android:textColor="#1D917B"
                             />
@@ -110,7 +110,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2.5">
                         <TextView
-                            android:id="@+id/vilageNameDown"
+                            android:id="@+id/videovilageNameDown"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
@@ -138,7 +138,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2.5">
                         <TextView
-                            android:id="@+id/vilageHomepage"
+                            android:id="@+id/videovilageHomepage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15dp"
@@ -162,7 +162,7 @@
                     android:layout_weight="160"
                     >
                     <Button
-                        android:id="@+id/call"
+                        android:id="@+id/videocall"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/btn_phonecall"
@@ -174,10 +174,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="160">
                     <Button
-                        android:id="@+id/addmydiary"
+                        android:id="@+id/showvideo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/btn_addmydiary"/>
+                        android:background="@drawable/information_6"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -202,7 +202,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:text="체험 프로그램 정보"
+                    android:text="마을 정보"
                     android:textSize="15dp"
                     android:textColor="#1D917B"
                     android:gravity="bottom"/>
@@ -210,14 +210,11 @@
             </LinearLayout>
             <!--list scroll-->
 
-            <ListView
-                android:id="@+id/contentList"
+            <WebView
+                android:id="@+id/webvContent"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="365"
-                android:dividerHeight="2dp"
-                android:divider="#DDDDDD"
-                ></ListView>
+                android:layout_weight="365"></WebView>
 
             <LinearLayout
                 android:layout_width="match_parent"
