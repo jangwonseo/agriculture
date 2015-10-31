@@ -186,13 +186,7 @@
                 android:layout_weight="64"
                 android:orientation="horizontal"
                 >
-                <Button
-                    android:id="@+id/eventbutton"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="- 이벤트 알림- 클릭!"
-                    android:background="@null"
-                    />
+
 
             </LinearLayout>
 

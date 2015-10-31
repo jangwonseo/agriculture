@@ -252,6 +252,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
          //     .execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
         //webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
+        /*
         eventButton = (Button) findViewById(R.id.eventbutton);
         eventButton.setTypeface(yunGothicFont);
         eventButton.setOnClickListener(new View.OnClickListener() {
@@ -261,6 +262,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                 startActivity(intent);
             }
         });
+        */
     }
 
     @Override
