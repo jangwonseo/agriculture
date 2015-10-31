@@ -191,6 +191,8 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
     public final static  int isClicked_restaurant = 4;
     public static int isClicked_menu1 = isClicked_none;
     Intent intent = null;
+    Bitmap b;
+    Bitmap b2;
 
     Typeface yunGothicFont;
 
@@ -288,6 +290,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
 
         srcTextView =(TextView) findViewById(R.id.srcTextView);
         srcTextView.setTypeface(yunGothicFont);
+
+        b =  BitmapFactory.decodeResource(getResources(), R.drawable.poi_dot);
+        b2 = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.end);
 
         Spinner spinner = (Spinner)findViewById(R.id.spinner);
         String[] items = new String[]{"선택", "버스", "은행", "병원 / 약국", "편의점"};
@@ -641,6 +646,11 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         }
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
+        b.recycle();
+        b = null;
+
+        b2.recycle();
+        b2 = null;
         /*
         recycleBitmap(tutorialImageView);
         recycleBitmap(_accommodation);
@@ -1456,14 +1466,20 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         adapterMarker.notifyDataSetChanged();
         TMapMarkerItem marker1;
         String strID;
+
+
         for (int i = 0; i < poiItem.size(); i++) {
 
             marker1 = new TMapMarkerItem();
             strID = String.format("%s", poiItem.get(i).getPOIName());
             //String strID = String.format("%02d", i);
 
+
+
             marker1.setID(strID);
-            marker1.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.poi_dot));
+            //marker1.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.poi_dot));
+            marker1.setIcon(b);
+
             //marker1.setIcon(BitmapFactory.decodeResource(getResources(), R.drawable.map_pin_red));
             marker1.setTMapPoint(poiItem.get(i).getPOIPoint());
             // marker1.setTMapPoint(randomTMapPoint());
@@ -1477,13 +1493,14 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 list = new ArrayList<Bitmap>();
             }
 
-            list.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.poi_dot));
-            list.add(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.end));
+            list.add(b);
+            list.add(b2);
 
             //marker1.setAnimationIcons(list);
             mMapView.addMarkerItem(strID, marker1);
             mArrayMarkerID.add(strID);
         }
+
 
         mMapView.setOnMarkerClickEvent(new TMapView.OnCalloutMarker2ClickCallback() {
             @Override
