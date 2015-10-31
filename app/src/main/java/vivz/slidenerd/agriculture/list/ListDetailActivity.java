@@ -48,16 +48,7 @@ import org.json.JSONObject;
 
 
 public class ListDetailActivity extends ActionBarActivity {
-    /*
-       TextView vilageName;
-       TextView vilageAddr;
-       TextView vilageAddrInfo;
-       TextView mbphone;
-       TextView mbphoneInfo;
-       TextView vilageHmpgEnnc;
-       TextView vilageHmpgUrl;
-       String line;
-   */
+
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
@@ -76,7 +67,7 @@ public class ListDetailActivity extends ActionBarActivity {
     Button accommodation;
     Button bank;
     Button gasStation;
-    Button restaurant;
+    Button findmap;
 
     NonLeakingWebView main2Web;
     ImageView thumb;
@@ -119,8 +110,8 @@ public class ListDetailActivity extends ActionBarActivity {
         //bank.setOnClickListener(mClickListener);
         //gasStation = (Button) findViewById(R.id.gasStation);
         //gasStation.setOnClickListener(mClickListener);
-        restaurant = (Button) findViewById(R.id.findmap);
-        restaurant.setOnClickListener(mClickListener);
+        findmap = (Button) findViewById(R.id.findmap);
+        findmap.setOnClickListener(mClickListener);
         // 제스처를 사용하기 위해 미리 선언.
         gestureDetector = new GestureDetector(this, new SwipeGestureDetector(){
             @Override
@@ -427,44 +418,11 @@ public class ListDetailActivity extends ActionBarActivity {
                         startActivity(new Intent(Intent.ACTION_VIEW,
                                 Uri.parse("http://" + vodUrls )));
                     break;
-                /*
-                case R.id.accommodation:
-                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_accommodation;
-                    Intent intentAccommodation = new Intent(getApplicationContext(), NavigateActivity.class);
-                    intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentAccommodation.putExtra("addr", i.getAddr());
-                    // Log.i("asd", "addr : " + i.getAddr());
-                    intentAccommodation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentAccommodation);
-                    break;
 
-                case R.id.bank:
-                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_bank;
-                    Intent intentBank = new Intent(getApplicationContext(), NavigateActivity.class);
-                    intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentBank.putExtra("addr", i.getAddr());
-                    // Log.i("asd", "addr : " + i.getAddr());
-                    intentBank.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentBank);
-                    break;
-                case R.id.gasStation:
-                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_gasStation;
-                    Intent intentGasStation = new Intent(getApplicationContext(), NavigateActivity.class);
-                    intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentGasStation.putExtra("addr", i.getAddr());
-                    // Log.i("asd", "addr : " + i.getAddr());
-                    intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intentGasStation);
-                    break;
-                    */
                 case R.id.findmap:
-                    NavigateActivity.isClicked_menu1 = NavigateActivity.isClicked_restaurant;
-                    Intent intentRestaurant = new Intent(getApplicationContext(), NavigateActivity.class);
-                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentRestaurant.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intentRestaurant.putExtra("addr", i.getAdres1());
-                    startActivity(intentRestaurant);
-                    finish();
+                    Intent mapIntent = new Intent(getApplicationContext(), MapCategoryPopupActivity.class);
+                    mapIntent.putExtra("item", i);
+                    startActivity(mapIntent);
                     break;
 
             }
