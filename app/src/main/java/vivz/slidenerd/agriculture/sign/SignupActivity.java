@@ -782,6 +782,7 @@ public class SignupActivity extends FragmentActivity {
             }
 
             //close the streams //
+            byteArrayInputStream.close();
             dos.flush();
             dos.close();
 

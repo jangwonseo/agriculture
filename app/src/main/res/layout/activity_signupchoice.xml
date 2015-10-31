@@ -54,7 +54,6 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:background="#00ff0000"
-                android:text=""
                 fb:com_facebook_login_text=""
                 fb:com_facebook_logout_text=""
                 />
