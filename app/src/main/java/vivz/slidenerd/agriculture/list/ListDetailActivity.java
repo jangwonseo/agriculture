@@ -1,8 +1,12 @@
 package vivz.slidenerd.agriculture.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
@@ -11,13 +15,17 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -37,6 +45,7 @@ import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
+import vivz.slidenerd.agriculture.service_prepare;
 
 
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -83,7 +92,6 @@ public class ListDetailActivity extends ActionBarActivity {
     String vilageId;
     String id;
 
-
     //sharedPreference 선언부
     public SharedPreferences setting;
     public SharedPreferences.Editor editor;
@@ -91,8 +99,10 @@ public class ListDetailActivity extends ActionBarActivity {
     //폰트
     Typeface yunGothicFont;
 
-    // 체험 세부내용
-    TextView exprnLiverStgDc, operEra, posiblePeople, operTime, price, onlineResve, adres1;
+    // 세부내용 리스트
+    private ListView contentList;
+    ArrayList<ContentItem> data = new ArrayList<>();
+    Content_Adapter adapter;
 
     //phpDown phpJson;
     @Override
@@ -104,12 +114,7 @@ public class ListDetailActivity extends ActionBarActivity {
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         btnView=(View)findViewById(R.id.btnView);
-        //accommodation = (Button) findViewById(R.id.accommodation);
-        //accommodation.setOnClickListener(mClickListener);
-        //bank = (Button) findViewById(R.id.bank);
-        //bank.setOnClickListener(mClickListener);
-        //gasStation = (Button) findViewById(R.id.gasStation);
-        //gasStation.setOnClickListener(mClickListener);
+
         findmap = (Button) findViewById(R.id.findmap);
         findmap.setOnClickListener(mClickListener);
         // 제스처를 사용하기 위해 미리 선언.
@@ -132,7 +137,6 @@ public class ListDetailActivity extends ActionBarActivity {
             }
         };
 
-
         // 일단은 다이어리에서 넘어온게 아니라고 가정하고 초기화
         isDiary = false;
 
@@ -148,6 +152,28 @@ public class ListDetailActivity extends ActionBarActivity {
         Log.e("aaa","다이어리 넘어왔냐는 건 "+isDiary);
         i = (Item)item;
         vilageId=i.getExprnDstncId();
+
+        // 세부내용 리스트
+        contentList = (ListView)findViewById(R.id.contentList);
+        data = new ArrayList<>();
+        adapter = new Content_Adapter(this, R.layout.content_list_item, data);
+
+        // 체험 세부내용 리스트에 넣기
+        data.add(new ContentItem("세부내용", i.getExprnLiverStgDc()));
+        data.add(new ContentItem("체험기간", i.getOperEraBegin() + " ~ " + i.getOperEraEnd()));
+        data.add(new ContentItem("체험인원", i.getNmprCoMumm() + " ~ " + i.getNmprCoMxmm() + " 명"));
+        data.add(new ContentItem("소요시간", i.getOperTimeMnt() + " 분"));
+        data.add(new ContentItem("가격", i.getPc() + " 원"));
+        String online;
+        if (i.getOnlineResvePosblAt().contains("Y")) {
+            online = "가능";
+        } else {
+            online = "불가능";
+        }
+        data.add(new ContentItem("온라인예약", online));
+        data.add(new ContentItem("체험마을주소", i.getAdres1()));
+
+        contentList.setAdapter(adapter);
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -184,28 +210,6 @@ public class ListDetailActivity extends ActionBarActivity {
         vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
         Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
 
-        // 체험 세부내용
-        exprnLiverStgDc = (TextView)findViewById(R.id.exprnLiverStgDc);
-        exprnLiverStgDc.setTypeface(yunGothicFont);
-        exprnLiverStgDc.setText("체험설명 " + i.getExprnLiverStgDc());
-        operEra = (TextView)findViewById(R.id.operEra);
-        operEra.setTypeface(yunGothicFont);
-        operEra.setText("체험기간 " + i.getOperEraBegin() + " ~ " + i.getOperEraEnd());
-        posiblePeople = (TextView)findViewById(R.id.posiblePeople);
-        posiblePeople.setTypeface(yunGothicFont);
-        posiblePeople.setText("체험인원 " + i.getNmprCoMumm() + " ~ " + i.getNmprCoMxmm());
-        operTime = (TextView)findViewById(R.id.operTime);
-        operTime.setTypeface(yunGothicFont);
-        operTime.setText("소요시간 " + i.getOperTimeMnt() + "분");
-        price = (TextView)findViewById(R.id.price);
-        price.setTypeface(yunGothicFont);
-        price.setText("가격 " + i.getPc() + "원");
-        onlineResve = (TextView)findViewById(R.id.onlineResve);
-        onlineResve.setTypeface(yunGothicFont);
-        onlineResve.setText("온라인예약유무 " + i.getOnlineResvePosblAt());
-        adres1 = (TextView)findViewById(R.id.adres1);
-        adres1.setTypeface(yunGothicFont);
-        adres1.setText("체험마을주소 " + i.getAdres1());
 
         // 전화 걸기 버튼
         call = (Button)findViewById(R.id.call);
@@ -221,7 +225,6 @@ public class ListDetailActivity extends ActionBarActivity {
                         (Uri.parse("tel:" + phoneNumber.toString())));  // 전화 바로 걸린다.
             }
         });
-
 
         myDiary= (Button) findViewById(R.id.addmydiary);
         myDiary.setOnClickListener(mClickListener);
@@ -251,51 +254,10 @@ public class ListDetailActivity extends ActionBarActivity {
                    .execute("http://www.welchon.com" + i.getThumbUrlCours1());
         }
 
-/*
-        vilageName = (TextView)findViewById(R.id.txt1); // 마을 이름
-        vilageName.setText(i.getName());  // Main에서 가져온 마을 이름
-
-        vilageAddr = (TextView)findViewById(R.id.vilageAddr2); // 주소
-        vilageAddrInfo = (TextView)findViewById(R.id.vilageAddrInfo); // 주소 내용
-        vilageAddrInfo.setText(i.getAddr());
-
-        mbphone = (TextView)findViewById(R.id.phone); // 폰번호
-        mbphoneInfo = (TextView)findViewById(R.id.phoneInfo); // 폰번호 내용
-        mbphoneInfo.setText(i.getPrcafsManMoblphon());
-
-        vilageHmpgEnnc = (TextView)findViewById(R.id.hmpgUrl); // 마을 홈페이지
-        vilageHmpgUrl = (TextView)findViewById(R.id.hmpgUrlInfo); // 마을 홈페이지 내용
-        vilageHmpgUrl.setText(i.getVilageHmpgUrl());
-        Linkify.addLinks(vilageHmpgUrl, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
-*/
-
-//        main2Web = (WebView)findViewById(R.id.main2Web);
-//
-//        //웹뷰의 글씨들 크기 조정해줌. good;
-//        main2Web.getSettings().setDefaultFontSize(40);
-//
-//        // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
-//        main2Web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//        main2Web.getSettings().setLoadWithOverviewMode(true);
-//        main2Web.getSettings().setUseWideViewPort(true);
-//        main2Web.getSettings().setJavaScriptEnabled(true);
-//
-//        //체험 정보 가져오기
-//        main2Web.loadUrl("http://218.150.181.131/seo/infomation.php?tableName=" + i.getTableName() + "&vilageId=" + i.getVilageId());
-//
-//
-//
-//        // 제스처 등록
-//
-//        main2Web.setOnTouchListener(gestureListener);
         thumb.setOnTouchListener(gestureListener);
         vilageHomepage.setOnTouchListener(gestureListener);
         vilageNameDown.setOnTouchListener(gestureListener);
 
-
-        // 보류
-        //phpJson = new phpDown();
-        //phpJson.execute("http://218.150.181.131/seo/infomation.php?vilageName="+vilageName);
 
         // 체험 비디오 가져오기가져오기
 
@@ -307,11 +269,9 @@ public class ListDetailActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-
         // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
         dupChecker = new dupChecker();
         dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
-
 
         mRecycleList2.add(new WeakReference<ImageView>(thumb));
     }
@@ -765,6 +725,87 @@ class SwipeGestureDetector extends SimpleOnGestureListener {
 
 
     }
+}
 
+class Content_Adapter extends BaseAdapter {
+    private LayoutInflater inflater;
+    private ArrayList<ContentItem> data;
 
+    //멤버변수로 해제할 Set을 생성
+    private List<WeakReference<View>> mRecycleList = new ArrayList<WeakReference<View>>();
+    private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
+
+    int i = 0;
+    private int layout;
+    //NonLeakingWebView thumb;
+    Typeface yunGothicFont;
+
+    TextView name, content;
+
+    public Content_Adapter(Context context, int layout, ArrayList<ContentItem> data) {
+        //윤고딕 폰트
+        yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.data = data;
+        this.layout = layout;
+    }
+
+//onDestory에서 쉽게 해제할 수 있도록 메소드 생성
+    public void recycle() {
+        for (WeakReference<View> ref : mRecycleList) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
+        for (WeakReference<ImageView> ref : mRecycleList2) {
+            RecycleUtils.recursiveRecycle(ref.get());
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public ContentItem getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = inflater.inflate(layout, parent, false);
+        }
+
+        name = (TextView)convertView.findViewById(R.id.txtvName);
+        name.setTypeface(yunGothicFont);
+        name.setText(data.get(position).getName());
+        content = (TextView)convertView.findViewById(R.id.txtvContent);
+        content.setTypeface(yunGothicFont);
+        content.setText(data.get(position).getContent());
+
+        return convertView;
+    }
+}
+
+class ContentItem {
+    private String name;
+    private String content;
+
+    public ContentItem(String name, String content) {
+        this.name = name;
+        this.content = content;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

@@ -209,67 +209,13 @@
 
             </LinearLayout>
             <!--list scroll-->
-            <ScrollView
+
+            <ListView
+                android:id="@+id/contentList"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="365"
-                android:background="#ffffff">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/exprnLiverStgDc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/operEra"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/posiblePeople"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/operTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/onlineResve"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"
-                        android:paddingBottom="8dp"/>
-                    <TextView
-                        android:id="@+id/adres1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="#1D917B"/>
-                </LinearLayout>
-            </ScrollView>
+                ></ListView>
 
             <LinearLayout
                 android:layout_width="match_parent"
