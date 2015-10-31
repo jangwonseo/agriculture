@@ -180,6 +180,11 @@
             android:label="@string/title_activity_video_list"
             android:theme="@style/Theme.AppCompat.NoActionBar" >
         </activity>
+        <activity
+            android:name=".list.VideoListDetailActivity"
+            android:label="@string/title_activity_video_list_detail"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

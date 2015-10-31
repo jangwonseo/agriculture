@@ -74,7 +74,6 @@ public class VideoListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_video_list);
         task = new phpDown();
         mContext = this;
-        Intent themeIntent = getIntent();
 
         //폰트 설정 초기화(윤고딕330)
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
@@ -104,9 +103,7 @@ public class VideoListActivity extends ActionBarActivity {
             }
         });
 
-
         keys.setText("생생한 체험 이야기");
-
 
         // ListView에 어댑터 연결
         adapter = new List_Adapter(this, R.layout.list_item, data);
@@ -118,8 +115,7 @@ public class VideoListActivity extends ActionBarActivity {
 
                 /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
 
-                Intent intent = new Intent(getApplicationContext(),
-                        ListDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), VideoListDetailActivity.class);
                 intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
                 intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
@@ -130,19 +126,8 @@ public class VideoListActivity extends ActionBarActivity {
 
             }
         });
-        // 만약에 테마 쪽에서 넘어오면 테마에 관련된 php로 연결하기! 지도쪽에서 넘어왔다면 지도 관련 php로 연결하기
-        if (themeName.equals("experience") || themeName.equals("nature") || themeName.equals("traditional") ||
-                themeName.equals("wellBeing"))
-            task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
 
-        else if (themeName.equals("kangwon") || themeName.equals("kyungki") || themeName.equals("chungnam") ||
-                themeName.equals("chungbuk") || themeName.equals("jeonnam") || themeName.equals("jeonbuk") ||
-                themeName.equals("kyungnam") || themeName.equals("kyungbuk"))
-            task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
-
-        else if (themeName.equals("video"))
-            task.execute("http://218.150.181.131/seo/phpListVideo.php");
-
+        task.execute("http://218.150.181.131/seo/dataEx.php?theme=" + themeName + "");
     }
 
     @Override
@@ -170,17 +155,6 @@ public class VideoListActivity extends ActionBarActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
-
-    // AsyncTask는 generic 클래스이기 때문에 타입을 지정해주어야 한다. < Params, Progress, Result > 부분
-    /*
-        AsyncTask 사용해 background작업을 구현 시 꼭 지켜야 하는 사항
-        AsyncTask클래스는 항상 "subclassing" 하여 사용하여야 한다.
-        AsyncTask 인스턴스는 항상 UI 스레드에서 생성한다.
-        AsyncTask:execute(…) 메소드는 항상 UI 스레드에서 호출한다.
-        AsyncTask:execute(…) 메소드는 생성된 AsyncTask 인스턴스 별로 꼭 한번만 사용 가능하다. 같은 인스턴스가 또 execute(…)를 실행하면 exception이 발생하며, 이는 AsyncTask:cancel(…) 메소드에 의해 작업완료 되기 전 취소된 AsyncTask 인스턴스라도 마찬가지이다. 그럼으로 background 작업이 필요할 때마다 new 연산자를 이용해 해당 작업에 대한 AsyncTask 인스턴스를 새로 생성해야 한다.
-        AsyncTask의 callback 함수 onPreExecute(), doInBackground(…), onProgressUpdate(…), onPostExecute(…)는 직접 호출 하면 안 된다. (꼭 callback으로만 사용)
-     */
     class phpDown extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -215,22 +189,17 @@ public class VideoListActivity extends ActionBarActivity {
                         br.close();
                     }
                     conn.disconnect();
-
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str) {
             // JSON 구문을 파싱해서 JSONArray 객체를 생성
             try {
-                Log.d("seojang", "this is a apple55555");
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
-                Log.d("seojang", "JAr 갯수 : " + jAr.length());
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
 
@@ -256,7 +225,7 @@ public class VideoListActivity extends ActionBarActivity {
     }
 }
 
-class List_Adapterr extends BaseAdapter {
+class Video_List_Adapter extends BaseAdapter {
     private LayoutInflater inflater;
     private ArrayList<Item> data;
 
@@ -277,7 +246,7 @@ class List_Adapterr extends BaseAdapter {
     SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyyMMdd");
     String strCurDate = CurDateFormat.format(date);
 
-    public List_Adapterr(Context context, int layout, ArrayList<Item> data) {
+    public Video_List_Adapter(Context context, int layout, ArrayList<Item> data) {
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -318,33 +287,11 @@ class List_Adapterr extends BaseAdapter {
         }
 
         isRecruit = (Button) convertView.findViewById(R.id.isrecruit);
-
-        isRecruit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.mContext, service_prepare.class);
-                ListActivity.mContext.startActivity(intent);
-            }
-        });
+        isRecruit.setBackground(null);
 
         Item listviewitem = data.get(position);
 
-        // 깃발 활성화/비활성화
-        LinearLayout linearLayout = (LinearLayout)convertView.findViewById(R.id.listDateFlag);
-        if (strCurDate.compareTo(listviewitem.getOperEraBegin()) >= 0 && strCurDate.compareTo(listviewitem.getOperEraEnd()) <= 0) {
-            linearLayout.setBackground(convertView.getResources().getDrawable(R.drawable.list8_));
-        } else {
-            linearLayout.setBackground(convertView.getResources().getDrawable(R.drawable.list9_));
-        }
-
-        listviewitem.getOperEraBegin();
-        listviewitem.getOperEraEnd();
-
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
-        //thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
-
-        //i++;
-        // Log.i("asd123", " i : " + i + " W : " + thumb.getWidth() + " H : " + thumb.getHeight());
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
         // 웹뷰 설정
@@ -438,11 +385,4 @@ class List_Adapterr extends BaseAdapter {
         sb.append("</HTML>");
         return sb.toString();
     }
-
 }
-
-
-/**
- * 리스트의 데이터 클래스
- */
-

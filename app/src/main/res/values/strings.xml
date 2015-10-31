@@ -37,6 +37,7 @@
     <string name="title_activity_list_activity_">ListActivity_</string>
     <string name="title_activity_map_category_popup">MapCategoryPopupActivity</string>
     <string name="title_activity_video_list">VideoListActivity</string>
+    <string name="title_activity_video_list_detail">VideoListDetailActivity</string>
 
 
     <!--    <string name="com_facebook_loginview_log_in_button_long">Login</string>

@@ -21,8 +21,7 @@
                 android:id="@+id/txtvName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="aaaa"
-                android:textColor="#1DB17B"
+                android:textColor="#68d1bd"
                 android:textSize="15dp"
                 android:gravity="center_vertical|center_horizontal"/>
         </LinearLayout>
