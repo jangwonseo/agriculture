@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,7 +39,9 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.DownloadImageTask;
@@ -307,6 +310,12 @@ class List_Adapter extends BaseAdapter {
     ImageView thumb;
     Typeface yunGothicFont;
     Button isRecruit;
+
+    // 오늘 날짜
+    Date date = new Date();
+    SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyyMMdd");
+    String strCurDate = CurDateFormat.format(date);
+
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
@@ -315,9 +324,7 @@ class List_Adapter extends BaseAdapter {
         this.layout = layout;
     }
 
-//onDestory에서 쉽게 해제할 수 있도록 메소드 생성
-
-
+    // onDestroy에서 쉽게 해제할 수 있도록 함수 생성
      public void recycle() {
            for (WeakReference<View> ref : mRecycleList) {
              RecycleUtils.recursiveRecycle(ref.get());
@@ -359,9 +366,18 @@ class List_Adapter extends BaseAdapter {
             }
         });
 
-
-
         Item listviewitem = data.get(position);
+
+        // 깃발 활성화/비활성화
+        LinearLayout linearLayout = (LinearLayout)convertView.findViewById(R.id.listDateFlag);
+        if (strCurDate.compareTo(listviewitem.getOperEraBegin()) >= 0 && strCurDate.compareTo(listviewitem.getOperEraEnd()) <= 0) {
+            linearLayout.setBackground(convertView.getResources().getDrawable(R.drawable.list8_));
+        } else {
+            linearLayout.setBackground(convertView.getResources().getDrawable(R.drawable.list9_));
+        }
+
+        listviewitem.getOperEraBegin();
+        listviewitem.getOperEraEnd();
 
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
         //thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
@@ -386,9 +402,6 @@ class List_Adapter extends BaseAdapter {
                     .execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
        }
 
-
-
-
         //icon.setImageResource(listviewitem.getIcon());
 
         // 마을 이름
@@ -408,7 +421,6 @@ class List_Adapter extends BaseAdapter {
 //            name.setText(listviewitem.getName().substring(0, 8)
 //                    + "\n" + listviewitem.getName().substring(9));
 //
-
 
         // 마을 종류
         //jangwon
