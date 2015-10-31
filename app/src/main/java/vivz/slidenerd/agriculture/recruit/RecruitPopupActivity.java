@@ -18,9 +18,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,6 +40,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.DownloadImageTask;
@@ -35,6 +48,7 @@ import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.service_prepare;
+import vivz.slidenerd.agriculture.sign.SignupActivity;
 
 public class RecruitPopupActivity extends Activity implements View.OnClickListener {
 
@@ -49,12 +63,19 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
     // 페이스북 객체
     ShareDialog shareDialog;
+    LoginButton loginButton;
+    CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
 
     //정적 텍스트뷰(고정)
     TextView static_txtvVilageName, static_txtvMissionName, static_txtvRecruitNum, static_txtvRecruitContent, static_txtvRecruitTerm, static_txtvReward;
 
     //동적인 텍스트뷰
     TextView txtvVilageName, txtvMissionName, txtvRecruitNum, txtvRecruitContent, txtvRecruitTerm, txtvReward;
+
+    // 줄바꿈
+    String lineEnding = null;
 
     ImageView webvRecPopup;
     private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
@@ -79,6 +100,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_recruit_popup);
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
@@ -88,20 +110,18 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
 
         shareButton = (Button) findViewById(R.id.shareButton);
-//        shareButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(RecruitPopupActivity.this, service_prepare.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        // 페이스북 공유버튼 누를 시
+        //로그인 된 경우 바로 포스팅 화면
+        // 안되어있는 경우 로그인 화면
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if(isLoggedIn())
                     feed();
-
+                else
+                     loginButton.performClick();
             }
         });
 
@@ -151,7 +171,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
 
         // 줄바꿈
-        String lineEnding = item.getRecruitContent().replace("99line99end99", "\n");
+        lineEnding = item.getRecruitContent().replace("99line99end99", "\n");
         txtvRecruitContent = (TextView) findViewById(R.id.txtvRecruitContent);
         txtvRecruitContent.setTypeface(yunGothicFont);
         txtvRecruitContent.setText(lineEnding);
@@ -189,6 +209,77 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         myJoinHandler = new JoinHandler();
 
         mRecycleList2.add(new WeakReference<ImageView>(webvRecPopup));
+
+
+        // 페이스북 로그인
+        loginButton = (LoginButton)findViewById(R.id.facebooklogin_button);
+        loginButton.setReadPermissions(Arrays.asList("public_profile, email, user_birthday"));
+        loginButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+
+                // 정보 받아오는 graph api
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                Log.e("aaa", " 로그인");
+
+
+                                // 로그인 성공, 완료시 포스팅화면으로 이동
+                                feed();
+
+
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+        Log.e("aaa", " 로그인 직전4");
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+
+
+                // Set the access token using
+                // currentAccessToken when it's loaded or set.
+            }
+        };
+        // If the access token is available already assign it.
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile,
+                    Profile currentProfile) {
+                // App code
+            }
+        };
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void recycle() {
@@ -212,6 +303,8 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
+        accessTokenTracker.stopTracking();
+        profileTracker.stopTracking();
         System.gc();
         recycle();
 
@@ -341,12 +434,20 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     private void feed()
     {
         Log.e("aaa","포스트 준비");
+        StringBuilder messageData = new StringBuilder().append("모집기간 : ")
+                .append(item.getTermStart()).append(" ~ ").append(item.getTermEnd()).append('\n')
+                .append("모집인원 : ").append(item.getJoinedNum()).append(" / ").append(Integer.toString(item.getJoinedNum()))
+                .append("\n").append(item.getRecruitContent());
+// Message
         try
         {
             ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                    .setContentTitle(item.getVilageName() + "에 함께 가요!!")
-                    .setContentDescription(item.getRecruitContent())
-                    .setImageUrl(Uri.parse(loadingURL))
+                    .setContentTitle(item.getVilageName() + "에 함께 가요!!")    // 제목
+                    .setContentDescription("모집기간 : " +item.getTermStart() + " ~ " + item.getTermEnd() +
+                            "\r\n" + "모집인원 : " + item.getJoinedNum() + " / " +
+                            Integer.toString(item.getRecruitNum()) + " 명\r\n" + System.getProperty("line.separator") +
+                            item.getRecruitContent())                           // 내용
+                    .setImageUrl(Uri.parse(loadingURL))                         // 이미지 URL
                     .build();
             Log.e("aaa","내용 준비");
             shareDialog.show(linkContent);

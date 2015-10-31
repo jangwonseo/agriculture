@@ -31,16 +31,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_weight="25">
+                android:layout_weight="25"
+                android:orientation="horizontal">
 
                 <!-- 마을이 있다면(검색어를 입력했다면) 추가-->
                 <TextView
                     android:id="@+id/txtvVilageName"
-                    android:layout_width="match_parent"
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
+                    android:layout_weight="500"
                     android:textSize="18dp"
                     android:textColor="#5A5A5D"
                     />
+                <com.facebook.login.widget.LoginButton
+                    xmlns:fb="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/facebooklogin_button"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:layout_centerInParent="true"
+                    android:background="#00ff0000"
+                    fb:com_facebook_login_text=""
+                    fb:com_facebook_logout_text=""
+                    android:visibility="invisible"
+                    />
+
 
             </LinearLayout>
             <LinearLayout
