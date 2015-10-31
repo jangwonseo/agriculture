@@ -205,9 +205,12 @@ public class ListDetailActivity extends ActionBarActivity {
 
         vilageHomepage = (TextView)findViewById(R.id.vilageHomepage); // 마을 홈페이지
         vilageHomepage.setTypeface(yunGothicFont);
-        vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
-        Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
-
+        if (i.getVilageHmpgUrl().equals("") ) {
+            vilageHomepage.setText("없음");
+        } else {
+            vilageHomepage.setText(i.getVilageHmpgUrl());  // 가져온 마을 홈페이지
+            Linkify.addLinks(vilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
+        }
 
         // 전화 걸기 버튼
         call = (Button)findViewById(R.id.call);

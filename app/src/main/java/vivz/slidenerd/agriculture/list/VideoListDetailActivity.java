@@ -143,9 +143,12 @@ public class VideoListDetailActivity extends ActionBarActivity {
 
         videovilageHomepage = (TextView)findViewById(R.id.videovilageHomepage);
         videovilageHomepage.setTypeface(yunGothicFont);
-        videovilageHomepage.setText(videoItem.getVilageHmpgUrl());  // Main에서 가져온 마을 이름
-        Linkify.addLinks(videovilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
-
+        if (videoItem.getVilageHmpgUrl().equals("") ) {
+            videovilageHomepage.setText("없음");
+        } else {
+            videovilageHomepage.setText(videoItem.getVilageHmpgUrl());  // Main에서 가져온 마을 이름
+            Linkify.addLinks(videovilageHomepage, Linkify.WEB_URLS);  // 마을 홈페이지 url 링크 설정
+        }
 
         videocall = (Button)findViewById(R.id.videocall);
         final String phoneNumber = videoItem.getPrcafsManMoblphon();
