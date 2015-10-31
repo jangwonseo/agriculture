@@ -215,6 +215,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="365"
+                android:dividerHeight="2dp"
+                android:divider="#DDDDDD"
                 ></ListView>
 
             <LinearLayout
