@@ -3,6 +3,7 @@ package vivz.slidenerd.agriculture.list;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -34,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
@@ -315,7 +317,7 @@ class List_Adapter extends BaseAdapter {
     Date date = new Date();
     SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyyMMdd");
     String strCurDate = CurDateFormat.format(date);
-
+    DownloadImageTask downloadImageTask;
     public List_Adapter(Context context, int layout, ArrayList<Item> data) {
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(context.getAssets(), "fonts/yungothic330.ttf");
@@ -380,6 +382,7 @@ class List_Adapter extends BaseAdapter {
         listviewitem.getOperEraEnd();
 
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
+        downloadImageTask = new DownloadImageTask(thumb);
         //thumb = (NonLeakingWebView) convertView.findViewById(R.id.thumb);
 
         //i++;
@@ -397,11 +400,12 @@ class List_Adapter extends BaseAdapter {
        // thumb.setInitialScale(100);
         thumb.setFocusable(false);
 
-        if (thumb != null) {
-            new DownloadImageTask(thumb)
-                    .execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
-       }
-
+        //if (thumb != null) {
+            //new DownloadImageTask(thumb)
+                    //.execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
+        //thumb.setImageBitmap(processBitmap("http://www.welchon.com" + listviewitem.getThumbUrlCours1()));
+       //}
+        downloadImageTask.execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
         //icon.setImageResource(listviewitem.getIcon());
 
         // 마을 이름
