@@ -304,8 +304,8 @@ public class Recruit extends Activity implements TextWatcher{
                         searchMission.add(searchMissionItem); // 새로운 배열에 추가
                     }
                 }
-                List_Adapter searchAdapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, searchMission);
-                recruit_list.setAdapter(searchAdapter);
+                adapter = new List_Adapter(getApplicationContext(), R.layout.recruit_item, searchMission);
+                recruit_list.setAdapter(adapter);
             }
         });
 
@@ -432,7 +432,16 @@ public class Recruit extends Activity implements TextWatcher{
                 recruitClick.execute("http://218.150.181.131/seo/RecruitClickUpdate.php?" + cleckedListItem.toString());
 
                 Intent intent = new Intent(getApplicationContext(), RecruitPopupActivity.class);
-                intent.putExtra("item", cleckedListItem); // 리스트를 클릭하면 현재 클릭한 모집에 대한 Item 클래스를 넘겨준다.
+
+                for ( int i=0 ; i < data.size() ; i++ ) {
+                    if ( cleckedListItem.getIdRecruit() == (data.get(i).getIdRecruit())) {
+                        Log.e("positnItem", cleckedListItem.getIdRecruit() + ", " + data.get(i).getIdRecruit());
+                        intent.putExtra("item", data.get(i));
+                        break;
+                    }
+                }
+                adapter = new List_Adapter(getApplicationContext(), R.layout.list_item, data);
+                //intent.putExtra("item", cleckedListItem); // 리스트를 클릭하면 현재 클릭한 모집에 대한 Item 클래스를 넘겨준다.
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 startActivity(intent);
             }

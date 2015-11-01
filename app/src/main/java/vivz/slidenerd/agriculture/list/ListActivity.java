@@ -179,7 +179,7 @@ public class ListActivity extends ActionBarActivity {
                         break;
                     }
                 }
-
+                adapter = new List_Adapter(getApplicationContext(), R.layout.list_item, data);
                 intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -219,7 +219,6 @@ public class ListActivity extends ActionBarActivity {
                     searchExpnItem = data.get(i); // data(현재 체험리스트)에 있는 각 하나 하나의 요소들을 꺼내어
                     if (searchExpnItem.getExprnProgrmNm().contains(getString)) { // 선택한 체험의 이름을 포함하고 있다면
                         searchExpn.add(searchExpnItem); // 새로운 배열에 추가
-                        clickPosition = searchExpnItem.getExprnDstncId();
                     }
                 }
                 adapter = new List_Adapter(getApplicationContext(), R.layout.list_item, searchExpn);
