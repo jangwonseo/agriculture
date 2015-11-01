@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -96,7 +97,7 @@ public class VideoListDetailActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(moveToHomeIntent);
                 finish();
             }
@@ -164,13 +165,12 @@ public class VideoListDetailActivity extends ActionBarActivity {
         showvideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vodUrls==null) {
+                if (vodUrls == null) {
                     Toast toasts = Toast.makeText(getApplicationContext(), "동영상 정보가 없습니다.", Toast.LENGTH_SHORT);
                     toasts.show();
-                }
-                else
+                } else
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://" + vodUrls )));
+                            Uri.parse("http://" + vodUrls)));
             }
         });
 
@@ -185,7 +185,13 @@ public class VideoListDetailActivity extends ActionBarActivity {
         });
 
         webvContent = (WebView)findViewById(R.id.webvContent);
-
+        //웹뷰의 글씨들 크기 조정해줌. good;
+        webvContent.getSettings().setDefaultFontSize(40);
+        // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
+        webvContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webvContent.getSettings().setLoadWithOverviewMode(true);
+        webvContent.getSettings().setUseWideViewPort(true);
+        webvContent.getSettings().setJavaScriptEnabled(true);
 
         try {
             webvContent.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/information.php?vilageName="+ URLEncoder.encode(videoItem.getVilageNm(), "UTF-8")), "text/html", "utf-8", null);
@@ -279,72 +285,6 @@ public class VideoListDetailActivity extends ActionBarActivity {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
-
-        }
-    }
-
-
-   // json 파싱하려고 했지만 잘 모르겠음
-   // MainActivity 에서는 line = br.. 이 잘 되는데, 여기서는 안됨 url에 접속해서 코드를 하나도 가져오지 못하는데 원인을 모르겠음
-   // 나중에 수정하려면 information.php 에서 css 불러오는 코드 삭제해야함,,,,
-    public class phpContent extends AsyncTask<String, Integer,String> {
-
-        @Override
-        protected String doInBackground(String... urls) {
-            StringBuilder jsonHtml = new StringBuilder();
-            String line ="";
-            try{
-                // 텍스트 연결 url 설정
-                URL url = new URL(urls[0]);
-                // url 로그 출력
-                Log.e("tag", "url : "+urls[0]);
-                // URL 페이지 커넥션 객체 생성
-                HttpURLConnection conn1 = (HttpURLConnection)url.openConnection();
-                // 연결되었으면.
-
-                if(conn1 != null){
-                    conn1.setConnectTimeout(10000);
-                    conn1.setUseCaches(false);
-                    // 연결되었음 코드가 리턴되면.
-                    Log.e("tag", "setUseCaches is false");
-                    if(conn1.getResponseCode() == HttpURLConnection.HTTP_OK){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn1.getInputStream(), "UTF-8"));
-                        for(;;){
-                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
-                            line = br.readLine();
-                            if(line == null) break;
-                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
-                            jsonHtml.append(line);
-                        }
-                        br.close();
-                    }
-                    conn1.disconnect();
-                }
-            } catch(Exception ex){
-                ex.printStackTrace();
-                Log.e("Tag", "Main2_doinBacground_ERR");
-            }
-            return jsonHtml.toString();
-
-
-        }
-
-        protected void onPostExecute(String str){
-
-            // JSON 구문을 파싱해서 JSONArray 객체를 생성
-            Log.e("Tag", str);
-            try {
-                JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
-                for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
-                    JSONObject vilageName = jAr.getJSONObject(i);
-                    String scnOrgn = vilageName.getString("scnOrgn");
-                    webvContent.loadData(scnOrgn, "text/html", "utf-8");
-                }
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Log.e("Tag", "Main2_onPostExcute_ERR");
             }
 
         }
