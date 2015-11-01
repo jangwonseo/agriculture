@@ -248,8 +248,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         webvProfile.setFocusable(false);
 
         webvProfile.setImageDrawable(null);
-        //new DownloadImageTask(webvProfile)
-         //     .execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
+        new DownloadImageTask(webvProfile).execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
         //webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
         /*
