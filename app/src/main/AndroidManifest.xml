@@ -109,11 +109,6 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".home.MyDiaryActivity"
-            android:label="@string/title_activity_my_diary"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-        </activity>
-        <activity
             android:name=".mydiary.MyDiaryActivity__"
             android:label="@string/title_activity_my_diary"
             android:theme="@style/Theme.AppCompat.NoActionBar" >

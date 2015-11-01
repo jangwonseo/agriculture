@@ -486,31 +486,6 @@ public class MyDiaryActivity__ extends ActionBarActivity {
             // 마을 이름
             TextView name = (TextView) convertView.findViewById(R.id.vilageName);
             name.setText(listviewitem.getExprnProgrmNm());
-//
-//        // 텍스트 짤림방지
-//        if (listviewitem.getName().length() <= 9)
-//            name.setText(listviewitem.getName());.
-//        else if (listviewitem.getName().length() > 9 && listviewitem.getName().length() <= 14) {
-//            int stringEnd = listviewitem.getName().length() - 1;
-//            name.setText(listviewitem.getName().substring(0, stringEnd - 4)
-//                    + "\n" + listviewitem.getName().substring(stringEnd - 4));
-//        } else
-//            name.setText(listviewitem.getName().substring(0, 8)
-//                    + "\n" + listviewitem.getName().substring(9));
-//
-
-
-            // 마을 종류
-            //jangwon
-            //TextView vilageKind =(TextView)convertView.findViewById(R.id.vilageKind);
-//        if(listviewitem.getVilageKndNm().contains(","))
-//        {
-//            String[] result = listviewitem.getVilageKndNm().split(",");
-//            vilageKind.setText(result[0]);
-//        }
-//        else
-//            vilageKind.setText(listviewitem.getVilageKndNm());
-
 
             // 마을 간단 소개
             TextView vilageAccount = (TextView) convertView.findViewById(R.id.vilageAccount);

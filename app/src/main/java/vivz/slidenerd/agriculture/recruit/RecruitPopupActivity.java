@@ -96,6 +96,10 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     JoinHandler myJoinHandler;
     DownloadImageTask_NoCircle downloadImageTask_NoCircle;
 
+    // 삭제 또는 참여하기 버튼
+    boolean recruitUser; // true 면 삭제, false면 참여하기
+    CancelHandler cancelHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +169,14 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
 
         btnPhoneCall = (Button) findViewById(R.id.btnPhoneCall);
         btnMissionJoin = (Button) findViewById(R.id.btnMissionJoin);
+
+        if ( sharedUserId.equals(item.getUserId()) ) {
+            recruitUser = true;
+            btnMissionJoin.setBackground(getResources().getDrawable(R.drawable.joinin10_));
+        } else {
+            recruitUser = false;
+            btnMissionJoin.setBackground(getResources().getDrawable(R.drawable.joinin10));
+        }
 
         btnPhoneCall.setOnClickListener(this);
         btnMissionJoin.setOnClickListener(this);
@@ -273,8 +285,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             }
         };
 
-
-
+        cancelHandler = new CancelHandler();
     }
 
     @Override
@@ -319,24 +330,159 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
                 break;
 
             case R.id.btnMissionJoin:
-                missionJoin = new phpMissionJoin();
-                if (sharedUserId.equals("")) {
-                    Toast.makeText(getApplicationContext(), "로그인을 하십시오", Toast.LENGTH_SHORT).show();
-                    break;
-                }else if(item.getRecruitNum() <= item.getJoinedNum() && !(item.getRecruitNum()==0))  {
-                    Toast.makeText(getApplicationContext(), "참가인원을 초과하였습니다.", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                else {
-                    MissionItem missionItem = new MissionItem(sharedUserId, item.getIdRecruit());
-                    missionJoin.execute("http://218.150.181.131/seo/phpMissionJoin.php?" + missionItem.toString());
+                if ( recruitUser ) { // 모집하기한 본인이라면
+                    phpMyDiaryListCancel myCancel = new phpMyDiaryListCancel();
+                    myCancel.execute("http://218.150.181.131/seo/recruitDelete.php?userId=" + sharedUserId + "&recruitId=" + item.getIdRecruit());
+                } else { // 모집하기 본인이 아니라면
+                    missionJoin = new phpMissionJoin();
+                    if (sharedUserId.equals("")) {
+                        Toast.makeText(getApplicationContext(), "로그인을 하십시오", Toast.LENGTH_SHORT).show();
+                        break;
+                    }else if(item.getRecruitNum() <= item.getJoinedNum() && !(item.getRecruitNum()==0))  {
+                        Toast.makeText(getApplicationContext(), "참가인원을 초과하였습니다.", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    else {
+                        MissionItem missionItem = new MissionItem(sharedUserId, item.getIdRecruit());
+                        missionJoin.execute("http://218.150.181.131/seo/phpMissionJoin.php?" + missionItem.toString());
+                    }
                 }
                 break;
         }
     }
 
+    // MydiaryDetail 부분에서 취소하기
+    public class phpMyDiaryListCancel extends AsyncTask<String, Integer,String> {
+
+        Message msg = cancelHandler.obtainMessage(); // 취소 성공/실패를 위한 핸들러
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line ="";
+            try{
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                // 연결되었으면.
+
+                if(conn != null){
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for(;;){
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if(line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+                }
+            } catch(Exception ex){
+                ex.printStackTrace();
+            }
+            return jsonHtml.toString();
+        }
+
+        protected void onPostExecute(String str){
+            if ( str.contains("recruit deleted") )
+                msg.what = 2;
+            else
+                msg.what = 1;
+            cancelHandler.sendMessage(msg);
+        }
+    }
+
+    // Handler 클래스
+    class CancelHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case 2:
+                    Toast.makeText(getApplicationContext(), "모집이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+                case 1:
+                    Toast.makeText(getApplicationContext(), "모집취소에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+    };
+
     // 참가하기 php
     public class phpMissionJoin extends AsyncTask<String, Integer, String> {
+
+        Message msg = myJoinHandler.obtainMessage(); // 참가 성공 실패 핸들러
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder jsonHtml = new StringBuilder();
+            String line = "";
+            try {
+                // 텍스트 연결 url 설정
+                URL url = new URL(urls[0]);
+                // 이미지 url
+                Log.e("tag", "url : " + urls[0]);
+                // URL 페이지 커넥션 객체 생성
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                // 연결되었으면.
+
+                if (conn != null) {
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+                    // 연결되었음 코드가 리턴되면.
+                    Log.e("tag", "setUseCaches is false");
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        for (; ; ) {
+                            // 웹상에 보여지는 텍스트를 라인단위로 읽어 저장.
+                            line = br.readLine();
+                            if (line == null) break;
+                            // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
+                            jsonHtml.append(line);
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+                }
+                msg.what = joinSucceed;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                msg.what = joinNoSucceed;
+            }
+            return jsonHtml.toString();
+        }
+
+        protected void onPostExecute(String str) {
+
+            if (!str.contains("1 record added")) {
+                msg.what = joinNoSucceed;
+            }
+
+            if (str.contains("key 'PRIMARY'")) {
+                msg.what = joinAlreadyIn;
+            }
+
+            myJoinHandler.sendMessage(msg);
+
+        }
+    }
+
+    // 참가하기 php
+    public class phpMissionDelete extends AsyncTask<String, Integer, String> {
 
         Message msg = myJoinHandler.obtainMessage(); // 참가 성공 실패 핸들러
 
