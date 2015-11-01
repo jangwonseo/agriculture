@@ -193,7 +193,9 @@
                                 android:textSize="12dp"
                                 android:paddingLeft="5dp"
                                 android:paddingTop="2dp"
-                                android:textColorHint="#9C9C9C"/>
+                                android:textColorHint="#9C9C9C"
+                                android:textCursorDrawable="@null"
+                                android:cursorVisible="true"/>
 
                         </LinearLayout>
                         <!-- x button -->
@@ -415,7 +417,9 @@
                                     android:hint="마을(체험)을 검색하세요"
                                     android:textSize="12dp"
                                     android:paddingLeft="5dp"
-                                    android:textColorHint="#9C9C9C"/>
+                                    android:textColorHint="#9C9C9C"
+                                    android:textCursorDrawable="@null"
+                                    android:cursorVisible="true"/>
 
                             </LinearLayout>
                             <LinearLayout
@@ -482,7 +486,9 @@
                             android:textSize="12dp"
                             android:paddingLeft="5dp"
                             android:hint="미션이름을 입력하세요!"
-                            android:textColorHint="#9C9C9C"/>
+                            android:textColorHint="#9C9C9C"
+                            android:textCursorDrawable="@null"
+                            android:cursorVisible="true"/>
 
                     </LinearLayout>
 
@@ -558,7 +564,9 @@
                         android:textColor="#4C4C4C"
                         android:textSize="12dp"
                         android:paddingLeft="5dp"
-                        android:paddingTop="5dp"/>
+                        android:paddingTop="5dp"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -654,7 +662,9 @@
                             android:hint="숫자만"
                             android:textSize="12dp"
                             android:paddingLeft="5dp"
-                            android:textColorHint="#9C9C9C"/>
+                            android:textColorHint="#9C9C9C"
+                            android:textCursorDrawable="@null"
+                            android:cursorVisible="true"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -675,7 +685,9 @@
                             android:hint="'-'없이 입력"
                             android:textSize="12dp"
                             android:paddingLeft="5dp"
-                            android:textColorHint="#9C9C9C"/>
+                            android:textColorHint="#9C9C9C"
+                            android:textCursorDrawable="@null"
+                            android:cursorVisible="true"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -698,7 +710,10 @@
                         android:layout_height="match_parent"
                         android:textColor="#4C4C4C"
                         android:textSize="12dp"
-                        android:paddingLeft="5dp"/>
+                        android:paddingLeft="5dp"
+                        android:textCursorDrawable="@null"
+                        android:cursorVisible="true"
+                        />
 
                 </LinearLayout>
                 <LinearLayout
