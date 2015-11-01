@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -17,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,6 +57,7 @@ import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
 import vivz.slidenerd.agriculture.navigate.NavigateActivity;
 import vivz.slidenerd.agriculture.navigate.navigateSettingPopupActivity;
+import vivz.slidenerd.agriculture.recruit.RecruitListItem;
 import vivz.slidenerd.agriculture.service_prepare;
 
 public class ListActivity extends ActionBarActivity {
@@ -72,6 +77,11 @@ public class ListActivity extends ActionBarActivity {
     //폰트설정
     public Typeface yunGothicFont;
 
+    // 검색하기
+    // phpListAutoText listAutoComTask;// DB에서 불러오기 => 기존의 검색한 php를 이용하면???
+    private ArrayList<String> search_list_item = new ArrayList<String>();
+    AutoCompleteTextView list_autoComplete; // 리스트 검색 자동완성
+    String clickPosition = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +171,15 @@ public class ListActivity extends ActionBarActivity {
 
                 Intent intent = new Intent(getApplicationContext(),
                         ListDetailActivity.class);
-                intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+
+                for ( int i=0 ; i < data.size() ; i++ ) {
+                    if ( adapter.getItem(position).getExprnDstncId().equals(data.get(i).getExprnDstncId())) {
+                        Log.e("positnItem", adapter.getItem(position).getExprnDstncId() + ", " + data.get(i).getExprnDstncId());
+                        intent.putExtra("item", data.get(i));
+                        break;
+                    }
+                }
+
                 intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -181,8 +199,33 @@ public class ListActivity extends ActionBarActivity {
                 themeName.equals("kyungnam") || themeName.equals("kyungbuk"))
             task.execute("http://218.150.181.131/seo/mapList.php?theme=" + themeName + "");
 
-        else if (themeName.equals("video"))
-            task.execute("http://218.150.181.131/seo/phpListVideo.php");
+        list_autoComplete = (AutoCompleteTextView)findViewById(R.id.list_autoComplete);
+        list_autoComplete.setTypeface(yunGothicFont);
+        //list_autoComplete.addTextChangedListener(this);
+        list_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_list_item));
+        //list_autoComplete.setTextColor(Color.BLACK);
+        list_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String getString = (String) adapterView.getItemAtPosition(position); // 미션이름을 가지고 온다.
+                Log.e("recLstAutoClk", getString);
+
+                // 클릭한 아이템의 미션이름을 가져와서, 그 이름이 들어간 모든 체험들을 찾는다.
+                ArrayList<Item> searchExpn = new ArrayList<Item>();
+                Item searchExpnItem;
+
+                for (int i = 0; i < data.size(); i++) {
+                    Log.e("data", Integer.toString(data.size()) + ", " + data.get(i).getExprnProgrmNm() + ", " + i);
+                    searchExpnItem = data.get(i); // data(현재 체험리스트)에 있는 각 하나 하나의 요소들을 꺼내어
+                    if (searchExpnItem.getExprnProgrmNm().contains(getString)) { // 선택한 체험의 이름을 포함하고 있다면
+                        searchExpn.add(searchExpnItem); // 새로운 배열에 추가
+                        clickPosition = searchExpnItem.getExprnDstncId();
+                    }
+                }
+                adapter = new List_Adapter(getApplicationContext(), R.layout.list_item, searchExpn);
+                vilageList.setAdapter(adapter);
+            }
+        });
 
     }
 
@@ -250,20 +293,15 @@ public class ListActivity extends ActionBarActivity {
                             if (line == null) break;
                             // 저장된 텍스트 라인을 jsonHtml에 붙여넣음
                             jsonHtml.append(line);
-
                         }
-
                         br.close();
                     }
                     conn.disconnect();
-
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str) {
@@ -285,7 +323,9 @@ public class ListActivity extends ActionBarActivity {
                             vilageName.getString("onlineResvePosblAt"));
                     Log.d("seojang", "정보확인하기 : 끝 ");
 
+
                     data.add(item);
+                    search_list_item.add(item.getExprnProgrmNm());
                 }
                 vilageList.setAdapter(adapter);
 
@@ -377,9 +417,6 @@ class List_Adapter extends BaseAdapter {
         } else {
             linearLayout.setBackground(convertView.getResources().getDrawable(R.drawable.list9_));
         }
-
-        listviewitem.getOperEraBegin();
-        listviewitem.getOperEraEnd();
 
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
         downloadImageTask = new DownloadImageTask(thumb);

@@ -909,19 +909,15 @@ public class Recruit extends Activity implements TextWatcher{
                         br.close();
                     }
                     conn.disconnect();
-
                 }
             } catch(Exception ex){
                 ex.printStackTrace();
             }
             return jsonHtml.toString();
-
-
         }
 
         protected void onPostExecute(String str){
             // JSON 구문을 파싱해서 JSONArray 객체를 생성
-
             try {
                 JSONArray jAr = new JSONArray(str); // doInBackground 에서 받아온 문자열을 JSONArray 객체로 생성
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
@@ -1060,9 +1056,6 @@ public class Recruit extends Activity implements TextWatcher{
         int maxBufferSize = 1 * 1024 * 1024;
         File sourceFile = new File(sourceFileUri);
 
-
-
-
         if (!sourceFile.isFile()) {
 
             dialog.dismiss();
@@ -1074,9 +1067,7 @@ public class Recruit extends Activity implements TextWatcher{
                     Log.e("upload message : ", "Source File not exist :" + imagepath);
                 }
             });
-
             return 0;
-
         }
         else
         {
