@@ -167,8 +167,6 @@ public class MyDiaryActivity__ extends ActionBarActivity {
             task.execute("http://218.150.181.131/seo/getMyDiary.php?userId=" + id);
         }
 
-
-
         // 신청 중 관련 처리
         pTask = new phpRecruitList();
         procList = (ListView) findViewById(R.id.procList);
@@ -270,6 +268,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         protected String doInBackground(String... urls) {
             StringBuilder jsonHtml = new StringBuilder();
             String line = "";
+            Log.e("mydiary", "recruitURL : " + urls);
             try {
                 // 텍스트 연결 url 설정
                 URL url = new URL(urls[0]);
@@ -498,15 +497,11 @@ public class MyDiaryActivity__ extends ActionBarActivity {
             btnMydiaryListCancle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String VilageName = null;
-                    try {
-                        VilageName  = URLEncoder.encode(data.get(position).getExprnProgrmNm(), "UTF-8");
-                    }catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+
                     phpMyDiaryInterestCancel myCancel = new phpMyDiaryInterestCancel();
 
-                    myCancel.execute("http://218.150.181.131/seo/phpMydiaryVilageCancel.php?userId=" + id + "&name=" + VilageName);
+                    myCancel.execute("http://218.150.181.131/seo/phpMydiaryVilageCancel.php?userId=" + id + "&name=" + data.get(position).getExprnDstncId());
                     data.remove(position);
                     notifyDataSetChanged();
                 }

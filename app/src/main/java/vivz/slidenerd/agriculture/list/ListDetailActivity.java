@@ -268,6 +268,11 @@ public class ListDetailActivity extends ActionBarActivity {
         dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
 
         mRecycleList2.add(new WeakReference<ImageView>(thumb));
+
+        // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
+        dupChecker = new dupChecker();
+        dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
+        Log.e("dupChecker", "http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
     }
 
     @Override
@@ -322,6 +327,7 @@ public class ListDetailActivity extends ActionBarActivity {
                         // 만약 로그인 되어있다면 다이어리에서 넘어온 데이터인지 검사
                         if (!isDiary) {
                             try {
+
                                 // 이미 마이다이어리에 있는지 중복 검사
                                 if (!dupChk) {
 
@@ -346,9 +352,7 @@ public class ListDetailActivity extends ActionBarActivity {
 //                        Log.d("seojang", "22222");
                                     Log.e("data<RecruitItem>", i.toString());
                                     Toast.makeText(getApplicationContext(), "해당 내용이 다이어리에 추가됐습니다.", Toast.LENGTH_SHORT).show();
-                                    // 마이다이어리에 추가할 때 마을이 중복되는지 체크하기 위해 실행
-                                    dupChecker = new dupChecker();
-                                    dupChecker.execute("http://218.150.181.131/seo/SearchDiaryDup.php?userId=" + id);
+
 
                                 } else
                                     Toast.makeText(getApplicationContext(), "이미 추가된 마을입니다.", Toast.LENGTH_SHORT).show();
@@ -430,9 +434,10 @@ public class ListDetailActivity extends ActionBarActivity {
                 for (int i = 0; i < jAr.length(); i++) {  // JSON 객체를 하나씩 추출한다.
                     JSONObject vilageName = jAr.getJSONObject(i);
 
-                    if(vilageId.compareTo(vilageName.getString("vilageId"))==0)
+                    if(vilageId.compareTo(vilageName.getString("ExprnDstncId"))==0)
                     {
                         dupChk=true;
+                        Log.e("dupChk", Boolean.toString(dupChk));
                         break;
                     }
 
