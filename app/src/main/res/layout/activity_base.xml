@@ -33,21 +33,29 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="349"
-                android:background="@drawable/menu_title">
+                android:background="@drawable/menu_title"
+                android:orientation="horizontal">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="40"
-                android:background="#41B8A6">
-
-                <Button
-                    android:id="@+id/base_tutorialButton"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/i" />
+                    android:layout_weight="283"></LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="66">
+
+                    <Button
+                        android:id="@+id/base_tutorialButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/i" />
+                </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"

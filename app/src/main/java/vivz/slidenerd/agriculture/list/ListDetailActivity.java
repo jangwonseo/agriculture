@@ -65,6 +65,10 @@ public class ListDetailActivity extends ActionBarActivity {
     boolean isDiary;
     TextView vilageHomepage;
     TextView vilageNameDown;
+    TextView experienceVilage;
+    TextView _vilageHomepage;
+    TextView information_program;
+
     View btnView;
     Button call;
     Button backButton,menuButton;
@@ -112,6 +116,13 @@ public class ListDetailActivity extends ActionBarActivity {
 
         //윤고딕 폰트
         yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
+        experienceVilage = (TextView) findViewById(R.id.experienceVilage);
+        _vilageHomepage= (TextView) findViewById(R.id._vilageHomepage);
+        information_program= (TextView) findViewById(R.id.information_program);
+
+        experienceVilage.setTypeface(yunGothicFont);
+        _vilageHomepage.setTypeface(yunGothicFont);
+        information_program.setTypeface(yunGothicFont);
 
         btnView=(View)findViewById(R.id.btnView);
 
