@@ -94,7 +94,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
     public static final int joinAlreadyIn = 2;
 
     JoinHandler myJoinHandler;
-
+    DownloadImageTask_NoCircle downloadImageTask_NoCircle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +181,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         txtvReward.setText(item.getReward());
 
         webvRecPopup = (ImageView) findViewById(R.id.webvRecPopup);
+        downloadImageTask_NoCircle = new DownloadImageTask_NoCircle(webvRecPopup);
 
         webvRecPopup.setVerticalScrollBarEnabled(false);
         //webvRecPopup.setVerticalScrollbarOverlay(false);
@@ -199,9 +200,9 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
         } else {
             loadingURL = imgUrl + item.getImageURL();
         }
-
-        new DownloadImageTask_NoCircle(webvRecPopup)
-                .execute(loadingURL);
+        downloadImageTask_NoCircle.execute(loadingURL);
+      //  new DownloadImageTask_NoCircle(webvRecPopup)
+        //        .execute(loadingURL);
        // webvRecPopup.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
         Log.e("list image path", loadingURL);
 

@@ -1204,6 +1204,7 @@ class List_Adapter extends BaseAdapter {
     TextView txtvRecListTerm;
     TextView txtvRecListRecNum;
     ImageView webView ;
+    DownloadImageTask downloadImageTask;
 
     //phpGetImage getImage = new phpGetImage();
     String imgUrl = "http://218.150.181.131/seo/image/";
@@ -1239,6 +1240,7 @@ class List_Adapter extends BaseAdapter {
         RecruitListItem listviewitem=data.get(position);
 
         webView = (ImageView)convertView.findViewById(R.id.recruit_list_webView);
+        downloadImageTask = new DownloadImageTask(webView);
 
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webView.setBackgroundColor(0);
@@ -1261,9 +1263,7 @@ class List_Adapter extends BaseAdapter {
             loadingURL = imgUrl + listviewitem.getImageURL();
         }
 
-
-        new DownloadImageTask(webView)
-                    .execute(loadingURL);
+        downloadImageTask.execute(loadingURL);
 
         //webView.loadDataWithBaseURL(null, creHtmlBody(loadingURL), "text/html", "utf-8", null);
         Log.e("list image path", loadingURL);

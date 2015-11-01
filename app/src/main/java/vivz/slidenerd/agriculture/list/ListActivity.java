@@ -328,7 +328,7 @@ class List_Adapter extends BaseAdapter {
 
     // onDestroy에서 쉽게 해제할 수 있도록 함수 생성
      public void recycle() {
-           for (WeakReference<View> ref : mRecycleList) {
+         for (WeakReference<View> ref : mRecycleList) {
              RecycleUtils.recursiveRecycle(ref.get());
          }
          for (WeakReference<ImageView> ref : mRecycleList2) {

@@ -79,6 +79,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
     NonLeakingWebView main2Web;
     ImageView thumb;
+    DownloadImageTask_NoCircle downloadImageTask_NoCircle;
+
 
     private List<WeakReference<ImageView>> mRecycleList2 = new ArrayList<WeakReference<ImageView>>();
 
@@ -234,6 +236,7 @@ public class ListDetailActivity extends ActionBarActivity {
         //vod.setOnClickListener(mClickListener);
 
         thumb = (ImageView)findViewById(R.id.thumb);
+        downloadImageTask_NoCircle = new DownloadImageTask_NoCircle(thumb);
 
         // 웹뷰 설정
         thumb.setVerticalScrollBarEnabled(false);
@@ -250,9 +253,7 @@ public class ListDetailActivity extends ActionBarActivity {
 
         if(thumb != null)
         {
-            //thumb.loadDataWithBaseURL(null, creHtmlBody("http://www.welchon.com" + i.getThumbUrlCours1()), "text/html", "utf-8", null);
-            new DownloadImageTask_NoCircle(thumb)
-                   .execute("http://www.welchon.com" + i.getThumbUrlCours1());
+            downloadImageTask_NoCircle.execute("http://www.welchon.com" + i.getThumbUrlCours1());
         }
 
         thumb.setOnTouchListener(gestureListener);

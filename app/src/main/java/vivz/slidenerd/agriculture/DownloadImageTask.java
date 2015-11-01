@@ -21,24 +21,9 @@ import vivz.slidenerd.agriculture.list.ListDetailActivity;
  */
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
-    public static int width = 0;
-    public static int height = 0;
 
     public DownloadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
-
-        final ImageView tempThumb = bmImage;
-
-        if(width==0 && height==0) {
-            tempThumb.post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("asd", "width : " + width + " height : " + height);
-                    width = tempThumb.getWidth();
-                    height = tempThumb.getHeight();
-                }
-            });
-        }
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -46,16 +31,13 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         Bitmap mIcon11 = null;
         try {
             InputStream in = new java.net.URL(urldisplay).openStream();
-            //mIcon11 = BitmapFactory.decodeStream(in);
-            Log.i("asd", "W : " + width + " H : " + height);
-            return getRoundedCornerBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeStream(in), width , height, false), 347);
+            return getRoundedCornerBitmap(Bitmap.createScaledBitmap(BitmapFactory.decodeStream(in), 339 , 347, false), 347);//339, 347
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
         return null;
-        //return Bitmap.createScaledBitmap(mIcon11, 100, 100, false);
     }
     protected void onPostExecute(Bitmap result) {
         bmImage.setImageBitmap(result);
