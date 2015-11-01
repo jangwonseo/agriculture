@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.List;
 
 import vivz.slidenerd.agriculture.DownloadImageTask;
+import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
 import vivz.slidenerd.agriculture.NonLeakingWebView;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
@@ -277,6 +278,8 @@ class Video_List_Adapter extends BaseAdapter {
     private int layout;
     //NonLeakingWebView thumb;
     ImageView thumb;
+    DownloadImageTask downloadImageTask;
+
     Typeface yunGothicFont;
     Button isRecruit;
 
@@ -331,6 +334,8 @@ class Video_List_Adapter extends BaseAdapter {
         VideoItem listviewitem = data.get(position);
 
         thumb = (ImageView) convertView.findViewById(R.id.thumb);
+        downloadImageTask = new DownloadImageTask(thumb);
+
         //웹뷰가 둥글게 처리되었을 때 뒤에 하얗게 나오는데 이걸 투명하게 만들어줌
         thumb.setBackgroundColor(0);
         // 웹뷰 설정
@@ -345,8 +350,8 @@ class Video_List_Adapter extends BaseAdapter {
         thumb.setFocusable(false);
 
         if (thumb != null) {
-            new DownloadImageTask(thumb)
-                    .execute("http://www.welchon.com" + listviewitem.getThumbUrlCours1());
+            downloadImageTask.execute(listviewitem.getThumbUrlCours1());
+            Log.d("Asd", "d : " +"http://www.welchon.com" + listviewitem.getThumbUrlCours1() );
         }
 
         //icon.setImageResource(listviewitem.getIcon());
