@@ -259,7 +259,7 @@ public class VideoListActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 }

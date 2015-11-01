@@ -399,6 +399,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             else
                 msg.what = 1;
             cancelHandler.sendMessage(msg);
+            this.cancel(false);
         }
     }
 
@@ -477,7 +478,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             }
 
             myJoinHandler.sendMessage(msg);
-
+            this.cancel(false);
         }
     }
 

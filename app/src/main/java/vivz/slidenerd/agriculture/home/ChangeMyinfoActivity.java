@@ -340,7 +340,7 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 
@@ -494,6 +494,7 @@ public class ChangeMyinfoActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }*/
+            this.cancel(false);
 
         }
     }

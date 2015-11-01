@@ -234,6 +234,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
 
         protected void onPostExecute(String str){
             cancelHandler.sendMessage(msg);
+            this.cancel(false);
         }
     }
 
@@ -322,6 +323,7 @@ public class MyDiaryDetailActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            this.cancel(false);
         }
     }
 

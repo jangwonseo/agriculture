@@ -328,7 +328,7 @@ public class ListActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 }

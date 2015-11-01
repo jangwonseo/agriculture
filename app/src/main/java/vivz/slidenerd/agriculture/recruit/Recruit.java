@@ -771,6 +771,7 @@ public class Recruit extends Activity implements TextWatcher{
 
         protected void onPostExecute(String str){
             myRegistHandler.sendMessage(msg);
+            this.cancel(false);
         }
     }
 
@@ -819,6 +820,7 @@ public class Recruit extends Activity implements TextWatcher{
 
         protected void onPostExecute(String str){
             Log.e("RecLstClick", str);
+            this.cancel(false);
         }
     }
 
@@ -881,7 +883,7 @@ public class Recruit extends Activity implements TextWatcher{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 
@@ -942,7 +944,7 @@ public class Recruit extends Activity implements TextWatcher{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 
@@ -1008,7 +1010,7 @@ public class Recruit extends Activity implements TextWatcher{
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 

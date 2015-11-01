@@ -123,7 +123,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
         //imgvMydiaryProfile.setInitialScale(100);
         imgvMydiaryProfile.setFocusable(false);
         //imgvMydiaryProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+id+"Profile.jpg"), "text/html", "utf-8", null);
-        downloadImageTask.execute("http://218.150.181.131/seo/image/"+id+"Profile.jpg");
+        downloadImageTask.execute("http://218.150.181.131/seo/image/" + id + "Profile.jpg");
         // 뒤로가기 버튼
         mydiarybackbutton = (Button)findViewById(R.id.mydiarybackbutton);
         mydiarybackbutton.setOnClickListener(mClickListener);
@@ -578,6 +578,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
             protected void onPostExecute(String str){
                 cancelHandler.sendMessage(msg);
+                this.cancel(false);
             }
         }
     }
@@ -714,6 +715,7 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
             protected void onPostExecute(String str){
                 cancelHandler.sendMessage(msg);
+                this.cancel(false);
             }
         }
 

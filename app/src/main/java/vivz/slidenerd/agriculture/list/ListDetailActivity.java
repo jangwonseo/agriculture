@@ -459,7 +459,7 @@ public class ListDetailActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 
@@ -528,6 +528,11 @@ class phpUp extends AsyncTask<String, Integer,String> {
         }
         return jsonHtml.toString();
 
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        this.cancel(false);
     }
 }
 

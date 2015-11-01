@@ -500,7 +500,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
                 ex.printStackTrace();
             }
 
-            this.cancel(true);
+            this.cancel(false);
         }
     }
 //

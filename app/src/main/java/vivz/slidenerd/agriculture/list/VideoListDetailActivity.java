@@ -198,7 +198,7 @@ public class VideoListDetailActivity extends ActionBarActivity {
         webvContent.loadUrl("ImageUrl");
 
         try {
-            webvContent.loadUrl("http://218.150.181.131/seo/information.php?vilageName="+ URLEncoder.encode(videoItem.getVilageNm(), "UTF-8"));
+            webvContent.loadUrl("http://218.150.181.131/seo/information.php?vilageName=" + URLEncoder.encode(videoItem.getVilageNm(), "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -304,7 +304,7 @@ public class VideoListDetailActivity extends ActionBarActivity {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
+            this.cancel(false);
         }
     }
 }
