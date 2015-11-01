@@ -1,6 +1,7 @@
 package vivz.slidenerd.agriculture.region_theme;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
@@ -27,10 +29,16 @@ public class RegionChoiceActivity extends ActionBarActivity {
     private View kyungnamBtn;
     private View kyungbukBtn;
 
+    private LinearLayout mapContent;
+
+
+    int sdk = android.os.Build.VERSION.SDK_INT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_region_choice);
+
+        mapContent = (LinearLayout)findViewById(R.id.mapcontent);
 
         kangwonBtn=findViewById(R.id.btn_kangwon);
         kangwonBtn.setOnClickListener(mClickListener);
@@ -84,6 +92,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
             switch (v.getId())
             {
                 case R.id.btn_kangwon:
+                    mapContent.setBackgroundResource(R.drawable.map3_);
 
                     intentTheme.putExtra("themeflag","kangwon");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -93,6 +102,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     break;
                 case R.id.btn_kyungki:
 
+                    mapContent.setBackgroundResource(R.drawable.map2_);
                     intentTheme.putExtra("themeflag","kyungki");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -101,6 +111,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     break;
                 case R.id.btn_chungnam:
 
+                    mapContent.setBackgroundResource(R.drawable.map9_);
                     intentTheme.putExtra("themeflag","chungnam");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -108,7 +119,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btn_chungbuk:
-
+                    mapContent.setBackgroundResource(R.drawable.map8_);
                     intentTheme.putExtra("themeflag","chungbuk");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -116,7 +127,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btn_jeonnam:
-
+                    mapContent.setBackgroundResource(R.drawable.map6_);
                     intentTheme.putExtra("themeflag","jeonnam");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -124,7 +135,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btn_jeonbuk:
-
+                    mapContent.setBackgroundResource(R.drawable.map7_);
                     intentTheme.putExtra("themeflag","jeonbuk");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -132,7 +143,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btn_kyungnam:
-
+                    mapContent.setBackgroundResource(R.drawable.map5_);
                     intentTheme.putExtra("themeflag", "kyungnam");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -140,7 +151,7 @@ public class RegionChoiceActivity extends ActionBarActivity {
                     finish();
                     break;
                 case R.id.btn_kyungbuk:
-
+                    mapContent.setBackgroundResource(R.drawable.map4_);
                     intentTheme.putExtra("themeflag","kyungbuk");
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentTheme.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

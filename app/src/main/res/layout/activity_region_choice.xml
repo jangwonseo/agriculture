@@ -11,19 +11,20 @@
         android:layout_height="0px"
         android:layout_weight="66"
         android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="70"
-            >
+            android:layout_weight="70">
 
             <Button
                 android:id="@+id/regionchoice_backbutton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/btn_pressback"/>
+                android:background="@drawable/btn_pressback" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
@@ -31,10 +32,12 @@
             android:background="@drawable/menu_title">
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="81">
+
             <Button
                 android:id="@+id/regionchoice_menubutton"
                 android:layout_width="match_parent"
@@ -48,342 +51,254 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="894"
-        android:orientation="vertical"
-        android:background="@drawable/map5">
+        android:background="@drawable/map11_"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="184">
+            android:layout_weight="90">
 
         </LinearLayout>
-        <!--gangwon -->
+
         <LinearLayout
+            android:id="@+id/mapcontent"
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
+            android:layout_weight="680"
+            android:background="@drawable/map1_"
+            android:orientation="vertical">
+
+
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="280">
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="54"
+                android:orientation="horizontal">
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="80">
 
-                <Button
-                    android:id="@+id/btn_kangwon"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="140"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_gangwon"/>
+                    android:layout_weight="140">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="180">
-
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="20">
-
-        </LinearLayout>
-        <!-- gyeonggi-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="165">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="95">
-
-                <Button
-                    android:id="@+id/btn_kyungki"
-                    android:layout_width="match_parent"
+                </LinearLayout>
+                <!-- gyeong gi-->
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_gyeonggi"/>
+                    android:layout_weight="130">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="280">
+                    <Button
+                        android:id="@+id/btn_kyungki"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="30">
-
-        </LinearLayout>
-        <!-- choongbuk -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="220">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="70">
-
-                <Button
-                    android:id="@+id/btn_chungbuk"
-                    android:layout_width="match_parent"
+                <!--gangwon -->
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_choongbuk"/>
+                    android:layout_weight="150">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="250">
+                    <Button
+                        android:id="@+id/btn_kangwon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
-        <!-- choongnam-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="130">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="95">
-
-                <Button
-                    android:id="@+id/btn_chungnam"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_choongnam"/>
+                    android:layout_weight="120">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="315">
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-        <!-- gyeongbuk -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
             <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="315">
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="140"
+                android:orientation="horizontal">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="95">
-
-                <Button
-                    android:id="@+id/btn_kyungbuk"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_gyeongbuk"/>
+                    android:layout_weight="120">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="130">
+                </LinearLayout>
 
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="15">
-
-        </LinearLayout>
-        <!--geonbuk-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="170">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="70">
-
-                <Button
-                    android:id="@+id/btn_jeonbuk"
-                    android:layout_width="match_parent"
+                <!-- choongnam-->
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_geonbuk"/>
+                    android:layout_weight="115">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="300">
+                    <Button
+                        android:id="@+id/btn_chungnam"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="15">
-
-        </LinearLayout>
-        <!-- gyeongnam -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="280">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="95">
-
-                <Button
-                    android:id="@+id/btn_kyungnam"
-                    android:layout_width="match_parent"
+                <!-- choongbuk -->
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_gyeongnam"/>
+                    android:layout_weight="70"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="165">
+                    <Button
+                        android:id="@+id/btn_chungbuk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
 
-            </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="10">
+                </LinearLayout>
 
-        </LinearLayout>
-        <!-- geonnam -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="130">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="95">
-
-                <Button
-                    android:id="@+id/btn_jeonnam"
-                    android:layout_width="match_parent"
+                <!-- gyeongbuk -->
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_geonnam"/>
+                    android:layout_weight="165">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="315">
+                    <Button
+                        android:id="@+id/btn_kyungbuk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="140">
-
-        </LinearLayout>
-        <!-- jeju-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="40"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="80">
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="80">
-<!--
-                <Button
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_jeju"/>
--->
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="380">
+                    android:layout_weight="105">
+
+                </LinearLayout>
+
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="70"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="150">
+
+                </LinearLayout>
+                <!--geonbuk-->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="120">
+
+                    <Button
+                        android:id="@+id/btn_jeonbuk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="270">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="125"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="100">
+
+                </LinearLayout>
+
+                <!-- geonnam -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="170">
+
+                    <Button
+                        android:id="@+id/btn_jeonnam"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <!-- gyeongnam -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="165">
+
+                    <Button
+                        android:id="@+id/btn_kyungnam"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="105">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="171">
+
+            </LinearLayout>
+
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="120">
+            android:layout_weight="104">
+
 
         </LinearLayout>
+
+        <!-- map intenal contents -->
+
+
     </LinearLayout>
 </LinearLayout>
