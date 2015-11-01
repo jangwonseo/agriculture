@@ -39,6 +39,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import vivz.slidenerd.agriculture.DownloadImageTask;
+import vivz.slidenerd.agriculture.DownloadImageTask_NoCircle;
 import vivz.slidenerd.agriculture.R;
 import vivz.slidenerd.agriculture.RecycleUtils;
 import vivz.slidenerd.agriculture.home.HomeActivity;
@@ -73,8 +75,8 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
 
     // 프로필 사진
-    WebView imgvMydiaryProfile;
-
+    ImageView imgvMydiaryProfile;
+    DownloadImageTask downloadImageTask;
     // x 버튼 핸들러
     CancelHandler cancelHandler;
 
@@ -105,21 +107,23 @@ public class MyDiaryActivity__ extends ActionBarActivity {
 
 
         // 프로필 사진
-        imgvMydiaryProfile = (WebView)findViewById(R.id.imgvMydiaryProfile);
+        imgvMydiaryProfile = (ImageView)findViewById(R.id.imgvMydiaryProfile);
+        downloadImageTask = new DownloadImageTask(imgvMydiaryProfile);
+
         // 웹뷰 설정
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         imgvMydiaryProfile.setBackgroundColor(0);
         imgvMydiaryProfile.setVerticalScrollBarEnabled(false);
-        imgvMydiaryProfile.setVerticalScrollbarOverlay(false);
+        //imgvMydiaryProfile.setVerticalScrollbarOverlay(false);
         imgvMydiaryProfile.setHorizontalScrollBarEnabled(false);
-        imgvMydiaryProfile.setHorizontalScrollbarOverlay(false);
+        //imgvMydiaryProfile.setHorizontalScrollbarOverlay(false);
         imgvMydiaryProfile.setFocusableInTouchMode(false);
         imgvMydiaryProfile.setHorizontalScrollBarEnabled(false);
         imgvMydiaryProfile.setVerticalScrollBarEnabled(false);
-        imgvMydiaryProfile.setInitialScale(100);
+        //imgvMydiaryProfile.setInitialScale(100);
         imgvMydiaryProfile.setFocusable(false);
-        imgvMydiaryProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+id+"Profile.jpg"), "text/html", "utf-8", null);
-
+        //imgvMydiaryProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/"+id+"Profile.jpg"), "text/html", "utf-8", null);
+        downloadImageTask.execute("http://218.150.181.131/seo/image/"+id+"Profile.jpg");
         // 뒤로가기 버튼
         mydiarybackbutton = (Button)findViewById(R.id.mydiarybackbutton);
         mydiarybackbutton.setOnClickListener(mClickListener);
