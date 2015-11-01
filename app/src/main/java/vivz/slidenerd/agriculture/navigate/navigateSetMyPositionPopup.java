@@ -43,7 +43,7 @@ public class navigateSetMyPositionPopup extends Activity {
             public void onClick(View v) {
                 NavigateActivity.srcButton.setText("지정 출발지");
                 navigateSettingPopupActivity.srcPoint = new TMapPoint(i2.getLat(),i2.getLon());
-                onBackPressed();
+                finish();
                 Toast.makeText(getApplicationContext(), "출발지로 설정되었습니다.", Toast.LENGTH_LONG).show();
 
                 TMapPoint point = NavigateActivity.mMapView.getCenterPoint();
@@ -71,7 +71,7 @@ public class navigateSetMyPositionPopup extends Activity {
             public void onClick(View v) {
                 NavigateActivity.desButton.setText("지정 도착지");
                 navigateSettingPopupActivity.desPoint = new TMapPoint(i2.getLat(), i2.getLon());
-                onBackPressed();
+                finish();
                 Toast.makeText(getApplicationContext(), "도착지로 설정되었습니다.", Toast.LENGTH_LONG).show();
 
                 TMapPoint point = NavigateActivity.mMapView.getCenterPoint();

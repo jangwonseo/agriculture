@@ -149,6 +149,7 @@ public class NavigateSearch extends Activity {
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 Log.i("asd", "intent " + intent);
                 startActivity(intent);
+                finish();
 
             }
 

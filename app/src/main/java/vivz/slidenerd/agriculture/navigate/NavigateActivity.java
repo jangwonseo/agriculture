@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
+import android.os.Bundle;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -30,9 +30,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -301,6 +304,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         adapter.setDropDownViewResource(R.layout.dropdown_item);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 switch (parentView.getItemAtPosition(position).toString()) {
@@ -380,12 +384,14 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Log.i("asd", "step1");
                 switch (parentView.getItemAtPosition(position).toString()) {
                     case "1km":
                         nRadius = 1;
                         search_radius.setText("1km");
                         break;
                     case "3km":
+                        Log.i("asd", "step2");
                         nRadius = 3;
                         search_radius.setText("3km");
                         break;
@@ -450,6 +456,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             }
         });
     }
+
 
     public void listRead(ArrayList<TMapPOIItem> poiItem){
         data.clear();

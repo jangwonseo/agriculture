@@ -33,18 +33,20 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="349"
-                android:background="@drawable/menu_title"></LinearLayout>
+                android:background="@drawable/menu_title">
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="40"
-                >
+                android:background="#41B8A6">
 
                 <Button
                     android:id="@+id/base_tutorialButton"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/btn_movetohome" />
+                    android:background="@drawable/i" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0px"
