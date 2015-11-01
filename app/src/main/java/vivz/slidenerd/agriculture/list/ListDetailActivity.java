@@ -288,6 +288,8 @@ public class ListDetailActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
+        adapter = null;
+        data.clear();
         RecycleUtils.recursiveRecycle(getWindow().getDecorView());
         System.gc();
         recycle();
