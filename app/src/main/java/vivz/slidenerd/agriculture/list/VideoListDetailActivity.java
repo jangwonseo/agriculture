@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class VideoListDetailActivity extends ActionBarActivity {
 
     phpDown task;
 
-    DownloadImageTask downloadImageTask;
+    DownloadImageTask_NoCircle downloadImageTask_NoCircle;
 
 
     @Override
@@ -97,7 +98,7 @@ public class VideoListDetailActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
                 startActivity(moveToHomeIntent);
                 finish();
             }
@@ -124,8 +125,8 @@ public class VideoListDetailActivity extends ActionBarActivity {
             new DownloadImageTask_NoCircle(videothumb).execute("http://www.welchon.com" + videoItem.getThumbUrlCours1());
         }
 */
-        downloadImageTask = new DownloadImageTask(videothumb);
-        downloadImageTask.execute("http://www.welchon.com" + videoItem.getThumbUrlCours1());
+        downloadImageTask_NoCircle = new DownloadImageTask_NoCircle(videothumb);
+        downloadImageTask_NoCircle.execute(videoItem.getThumbUrlCours1());
 
         videothumb.setOnTouchListener(gestureListener);
 
@@ -165,12 +166,13 @@ public class VideoListDetailActivity extends ActionBarActivity {
         showvideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (vodUrls == null) {
+                if(vodUrls==null) {
                     Toast toasts = Toast.makeText(getApplicationContext(), "동영상 정보가 없습니다.", Toast.LENGTH_SHORT);
                     toasts.show();
-                } else
+                }
+                else
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://" + vodUrls)));
+                            Uri.parse("http://" + vodUrls )));
             }
         });
 
@@ -185,18 +187,34 @@ public class VideoListDetailActivity extends ActionBarActivity {
         });
 
         webvContent = (WebView)findViewById(R.id.webvContent);
-        //웹뷰의 글씨들 크기 조정해줌. good;
-        webvContent.getSettings().setDefaultFontSize(40);
-        // 웹뷰 내용이 스마트폰 크기에 맞춰지도록 세팅
+        WebSettings webSettings = webvContent.getSettings();
+        webSettings.setJavaScriptEnabled(true);                                                 //자바 스크립트 허용
         webvContent.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webvContent.setFocusable(false);
+        webvContent.getSettings().setDefaultZoom(WebSettings.ZoomDensity.FAR);
         webvContent.getSettings().setLoadWithOverviewMode(true);
         webvContent.getSettings().setUseWideViewPort(true);
-        webvContent.getSettings().setJavaScriptEnabled(true);
+        webvContent.getSettings().setBuiltInZoomControls(true);
+        webvContent.loadUrl("ImageUrl");
 
         try {
-            webvContent.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/information.php?vilageName="+ URLEncoder.encode(videoItem.getVilageNm(), "UTF-8")), "text/html", "utf-8", null);
+            webvContent.loadUrl("http://218.150.181.131/seo/information.php?vilageName="+ URLEncoder.encode(videoItem.getVilageNm(), "UTF-8"));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+
+    }
+    private class WebViewClientClass extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            try {
+                view.loadUrl("http://218.150.181.131/seo/information.php?vilageName="+ URLEncoder.encode(videoItem.getVilageNm(), "UTF-8"));
+            } catch ( Exception e) {
+                e.printStackTrace();
+            }
+
+            return true;
         }
     }
     public String creHtmlBody(String imgUrl) {
