@@ -81,7 +81,6 @@ public class ListActivity extends ActionBarActivity {
     // phpListAutoText listAutoComTask;// DB에서 불러오기 => 기존의 검색한 php를 이용하면???
     private ArrayList<String> search_list_item = new ArrayList<String>();
     AutoCompleteTextView list_autoComplete; // 리스트 검색 자동완성
-    String clickPosition = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

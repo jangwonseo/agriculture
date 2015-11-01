@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -68,6 +70,10 @@ public class VideoListActivity extends ActionBarActivity {
     //폰트설정
     public Typeface yunGothicFont;
 
+    // 검색하기
+    private ArrayList<String> search_video_item = new ArrayList<String>();
+    AutoCompleteTextView videolist_autoComplete; // 리스트 검색 자동완성
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,13 +104,13 @@ public class VideoListActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent moveToHomeIntent = new Intent(getApplicationContext(), HomeActivity.class);
                 moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP );
+                moveToHomeIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(moveToHomeIntent);
                 finish();
             }
         });
 
-        keys.setText("생생한 체험 이야기");
+        keys.setText("생생한 마을 이야기");
 
         // ListView에 어댑터 연결
         adapter = new Video_List_Adapter(this, R.layout.list_item, data);
@@ -117,7 +123,16 @@ public class VideoListActivity extends ActionBarActivity {
                 /** 이부분이 리스트 클릭 시 다른 액티비티를 띄우는 부분 **/
 
                 Intent intent = new Intent(getApplicationContext(), VideoListDetailActivity.class);
-                intent.putExtra("item", adapter.getItem(position)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+
+                for ( int i=0 ; i < data.size() ; i++ ) {
+                    if ( adapter.getItem(position).getVilageNm().equals(data.get(i).getVilageNm())) {
+                        Log.e("positnItem", adapter.getItem(position).getVilageNm() + ", " + data.get(i).getVilageNm());
+                        intent.putExtra("item", data.get(i));
+                        break;
+                    }
+                }
+                adapter = new Video_List_Adapter(getApplicationContext(), R.layout.list_item, data);
+
                 intent.putExtra("isDairy", false);
                 // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -129,6 +144,33 @@ public class VideoListActivity extends ActionBarActivity {
         });
 
         task.execute("http://218.150.181.131/seo/dataVideo.php");
+
+        videolist_autoComplete = (AutoCompleteTextView)findViewById(R.id.videolist_autoComplete);
+        videolist_autoComplete.setTypeface(yunGothicFont);
+        //list_autoComplete.addTextChangedListener(this);
+        videolist_autoComplete.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_item, search_video_item));
+        //list_autoComplete.setTextColor(Color.BLACK);
+        videolist_autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                String getString = (String) adapterView.getItemAtPosition(position); // 미션이름을 가지고 온다.
+                Log.e("recLstAutoClk", getString);
+
+                // 클릭한 아이템의 미션이름을 가져와서, 그 이름이 들어간 모든 체험들을 찾는다.
+                ArrayList<VideoItem> searchExpn = new ArrayList<VideoItem>();
+                VideoItem searchExpnItem;
+
+                for (int i = 0; i < data.size(); i++) {
+                    Log.e("data", Integer.toString(data.size()) + ", " + data.get(i).getVilageNm() + ", " + i);
+                    searchExpnItem = data.get(i); // data(현재 체험리스트)에 있는 각 하나 하나의 요소들을 꺼내어
+                    if (searchExpnItem.getVilageNm().contains(getString)) { // 선택한 체험의 전화번호 ( 여기는 고유번호가 전화번호밖에..)을 포함하고 있다면
+                        searchExpn.add(searchExpnItem); // 새로운 배열에 추가
+                    }
+                }
+                adapter = new Video_List_Adapter(getApplicationContext(), R.layout.list_item, searchExpn);
+                vilageList.setAdapter(adapter);
+            }
+        });
     }
 
     @Override
@@ -210,6 +252,7 @@ public class VideoListActivity extends ActionBarActivity {
                             vilageName.getString("vilageHmpgUrl"), vilageName.getString("vilageNm"));
 
                     data.add(item);
+                    search_video_item.add(item.getVilageNm());
                 }
                 vilageList.setAdapter(adapter);
 
