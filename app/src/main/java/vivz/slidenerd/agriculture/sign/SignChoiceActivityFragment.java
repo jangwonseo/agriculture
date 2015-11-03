@@ -133,7 +133,7 @@ public class SignChoiceActivityFragment extends Fragment {
         setupSignupButton(view);
 
         //
-        tempFBLoginButton(view);
+       // tempFBLoginButton(view);
 
     }
 
@@ -228,18 +228,18 @@ public class SignChoiceActivityFragment extends Fragment {
         });
     }
     //임시 페북 로긴 버튼
-    private void tempFBLoginButton(View view){
-        //임시 페북 로긴 버튼
-        Button tempButton = (Button) view.findViewById(R.id.fbloginbutton);
-        tempButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), service_prepare.class);
-                startActivity(intent);
-            }
-        });
-        /////////////////////////////
-    }
+//    private void tempFBLoginButton(View view){
+//        //임시 페북 로긴 버튼
+//        Button tempButton = (Button) view.findViewById(R.id.fbloginbutton);
+//        tempButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getActivity(), service_prepare.class);
+//                startActivity(intent);
+//            }
+//        });
+//        /////////////////////////////
+//    }
 
     private void setupSignupButton(View view){
         mSignuupButton = (Button)view.findViewById(R.id.signup_button);
