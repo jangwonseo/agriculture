@@ -227,9 +227,8 @@ public class ListActivity extends ActionBarActivity {
 
     @Override
     protected void onDestroy() {
-
-//Adapter가 있으면 어댑터에서 생성한 recycle메소드를 실행
-
+        Log.d("seojangjang","list destroy");
+        //Adapter가 있으면 어댑터에서 생성한 recycle메소드를 실행
         if (adapter != null) {
             adapter.recycle();
         }

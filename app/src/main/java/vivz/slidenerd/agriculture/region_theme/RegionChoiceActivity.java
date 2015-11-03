@@ -1,6 +1,9 @@
 package vivz.slidenerd.agriculture.region_theme;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import vivz.slidenerd.agriculture.R;
@@ -183,6 +187,16 @@ public class RegionChoiceActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private static void recycleBitmap(ImageView iv) {
+        Drawable d = iv.getDrawable();
+        if (d instanceof BitmapDrawable) {
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            b.recycle();
+        } // 현재로서는 BitmapDrawable 이외의 drawable 들에 대한 직접적인 메모리 해제는 불가능하다.
+
+        d.setCallback(null);
     }
 
     @Override

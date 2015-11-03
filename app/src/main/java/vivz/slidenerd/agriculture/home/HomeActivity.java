@@ -67,7 +67,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     private LinearLayout slidingPage01;
 
     // 홈에 추천 마을(체험) 이미지
-    private ImageView webvHomeImage;
     private ArrayList<Item> recommendItems = new ArrayList<>();
     //ArrayList<Item> recommendItems10 = new ArrayList<>();
 
@@ -84,9 +83,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     private LinearLayout HomeBackGround;
     private String userId;
-    private Button eventButton;
-
-    private Typeface yunGothicFont; //윤고딕폰트
 
     //이미지 슬라이더 관련
     private SliderLayout mDemoSlider;
@@ -143,9 +139,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         //////////////////////////
 
         sha = new SHA256();
-
-        //윤고딕 폰트
-        yunGothicFont = Typeface.createFromAsset(getAssets(), "fonts/yungothic330.ttf");
 
         //sharedPreference로 전역 공유공간을 만듬
         setting = getSharedPreferences("setting", MODE_PRIVATE);
@@ -238,30 +231,15 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         // 배경이 하얕게 나오는데 투명하게 만들어줌
         webvProfile.setBackgroundColor(0);
         webvProfile.setVerticalScrollBarEnabled(false);
-        //webvProfile.setVerticalScrollbarOverlay(false);
         webvProfile.setHorizontalScrollBarEnabled(false);
-        //webvProfile.setHorizontalScrollbarOverlay(false);
         webvProfile.setFocusableInTouchMode(false);
         webvProfile.setHorizontalScrollBarEnabled(false);
         webvProfile.setVerticalScrollBarEnabled(false);
-        //webvProfile.setInitialScale(100);
         webvProfile.setFocusable(false);
 
         webvProfile.setImageDrawable(null);
         new DownloadImageTask(webvProfile).execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
-        //webvProfile.loadDataWithBaseURL(null, creHtmlBody("http://218.150.181.131/seo/image/" + userId + "Profile.jpg"), "text/html", "utf-8", null);
 
-        /*
-        eventButton = (Button) findViewById(R.id.eventbutton);
-        eventButton.setTypeface(yunGothicFont);
-        eventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EventWindow.class);
-                startActivity(intent);
-            }
-        });
-        */
     }
 
     @Override
@@ -310,11 +288,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     @Override
     protected void onResume() {
         mDemoSlider.startAutoCycle();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            findViewById(R.id.homebackground).setBackground(getResources().getDrawable(R.drawable.home1));
-        }else{
-            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
-        }
         System.gc();
         super.onResume();
     }
@@ -323,11 +296,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     protected void onStop() {
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         mDemoSlider.stopAutoCycle();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            findViewById(R.id.homebackground).setBackground(null);
-        }else{
-            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
-        }
         System.gc();
         super.onStop();
     }
@@ -335,11 +303,6 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
     @Override
     protected void onPause() {
         mDemoSlider.stopAutoCycle();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            findViewById(R.id.homebackground).setBackground(null);
-        }else{
-            findViewById(R.id.homebackground).setBackgroundResource(R.drawable.home1);
-        }
         System.gc();
 
         super.onPause();
@@ -347,6 +310,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     @Override
     protected void onDestroy() {
+        Log.d("seojangjang","home destroy");
         mDemoSlider.destroyDrawingCache();
         mDemoSlider.stopAutoCycle();
         recycleBitmap(mDemoSlider);
@@ -367,6 +331,7 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
         }
         d = null;
     }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
