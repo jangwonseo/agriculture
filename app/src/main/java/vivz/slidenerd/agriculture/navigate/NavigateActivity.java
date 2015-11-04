@@ -1134,13 +1134,14 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
             return;
         final String addr2 = addr;
         TMapData tmapdata = new TMapData();
+
         tmapdata.findAllPOI(addr2, new FindAllPOIListenerCallback() {
             @Override
             public void onFindAllPOI(ArrayList<TMapPOIItem> poiItem) {
                 if (poiItem.size() == 0) {
                     return;
                 }
-
+                showMarkerPoint(poiItem.get(0).getPOIPoint().getLatitude(), poiItem.get(0).getPOIPoint().getLongitude());
                 mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
 
                 TMapData tmapdata = new TMapData();
@@ -1180,7 +1181,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 if (poiItem.size() == 0) {
                     return;
                 }
-
+                showMarkerPoint(poiItem.get(0).getPOIPoint().getLatitude(), poiItem.get(0).getPOIPoint().getLongitude());
                 mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
 
                 TMapData tmapdata = new TMapData();
@@ -1220,7 +1221,7 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                 if (poiItem.size() == 0) {
                     return;
                 }
-
+                showMarkerPoint(poiItem.get(0).getPOIPoint().getLatitude(), poiItem.get(0).getPOIPoint().getLongitude());
                 mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
 
                 TMapData tmapdata = new TMapData();
@@ -1261,11 +1262,9 @@ public class NavigateActivity extends BaseActivity implements onLocationChangedC
                     return;
                 }
 
-               try {
-                   mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
-               }catch(Exception ex) {
-                    ex.printStackTrace();
-                }
+                showMarkerPoint(poiItem.get(0).getPOIPoint().getLatitude(), poiItem.get(0).getPOIPoint().getLongitude());
+                mMapView.setCenterPoint(poiItem.get(0).getPOIPoint().getLongitude(), poiItem.get(0).getPOIPoint().getLatitude(), true);
+
                 TMapData tmapdata = new TMapData();
                 tmapdata.findAroundNamePOI(poiItem.get(0).getPOIPoint(), "한식;중식;일식;TV맛집;양식", nRadius, 33, new FindAroundNamePOIListenerCallback() {
 

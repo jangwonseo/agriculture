@@ -78,7 +78,7 @@ public class MapCategoryPopupActivity extends Activity {
                     Intent intentGasStation = new Intent(getApplicationContext(), NavigateActivity.class);
                     intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intentGasStation.putExtra("addr", addr);
-                    // Log.i("asd", "addr : " + i.getAddr());
+                    Log.i("asd", "addr : " + addr);
                     intentGasStation.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intentGasStation);
                     break;
