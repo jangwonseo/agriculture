@@ -196,6 +196,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:focusable="false"
+                android:clickable="false"
                  />
 
         </LinearLayout>

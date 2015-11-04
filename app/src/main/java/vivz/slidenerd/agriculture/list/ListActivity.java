@@ -395,14 +395,6 @@ class List_Adapter extends BaseAdapter {
 
         isRecruit = (Button) convertView.findViewById(R.id.isrecruit);
 
-        isRecruit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListActivity.mContext, service_prepare.class);
-                ListActivity.mContext.startActivity(intent);
-            }
-        });
-
         Item listviewitem = data.get(position);
 
         // 깃발 활성화/비활성화
