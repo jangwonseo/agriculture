@@ -170,6 +170,7 @@ public class ListDetailActivity extends ActionBarActivity {
         adapter = new Content_Adapter(this, R.layout.content_list_item, data);
 
         // 체험 세부내용 리스트에 넣기
+        data.add(new ContentItem("마을이름", i.getVilageNm()));
         data.add(new ContentItem("세부내용", i.getExprnLiverStgDc()));
         data.add(new ContentItem("체험기간", i.getOperEraBegin() + " ~ " + i.getOperEraEnd()));
         data.add(new ContentItem("체험인원", i.getNmprCoMumm() + " ~ " + i.getNmprCoMxmm() + " 명"));
