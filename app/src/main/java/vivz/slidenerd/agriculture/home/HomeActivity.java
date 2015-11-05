@@ -449,26 +449,26 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
             switch (selectedSlide) {
                 case 0:
-                    i = 0;
+                    i = 1;
                     break;
                 case 1:
-                    i = 1;
+                    i = 5;
                     break;
                 case 2:
                     i = 2;
                     break;
                 case 3:
-                    i = 3;
+                    i = 0;
                     break;
                 case 4:
-                    i = 2;
+                    i = 3;
                     break;
                 case 5:
                     i = 4;
                     break;
             }
 
-            HomeIntent.putExtra("item", recommendItems.get(selectedSlide)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
+            HomeIntent.putExtra("item", recommendItems.get(i)); // 리스트를 클릭하면 현재 클릭한 마을에 대한 Item 클래스를 넘겨준다.
             // 인텐트로 넘겨주기 위해서는 Item 클레스에 implements Serializable 을 해줘야 함
             startActivity(HomeIntent);
         } catch (Exception e) {
