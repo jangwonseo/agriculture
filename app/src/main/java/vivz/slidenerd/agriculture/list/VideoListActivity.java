@@ -114,7 +114,7 @@ public class VideoListActivity extends ActionBarActivity {
         keys.setText("생생한 마을 이야기");
 
         // ListView에 어댑터 연결
-        adapter = new Video_List_Adapter(this, R.layout.list_item, data);
+        adapter = new Video_List_Adapter(this, R.layout.video_list_item, data);
         vilageList.setAdapter(adapter);
 
         vilageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -326,9 +326,6 @@ class Video_List_Adapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(layout, parent, false);
         }
-
-        isRecruit = (Button) convertView.findViewById(R.id.isrecruit);
-        isRecruit.setBackground(null);
 
         VideoItem listviewitem = data.get(position);
 
