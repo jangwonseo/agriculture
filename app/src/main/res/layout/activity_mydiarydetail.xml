@@ -229,12 +229,18 @@
                     android:layout_height="0px"
                     android:layout_weight="135"
                     android:background="#ffffff">
-                    <TextView
-                        android:id="@+id/mission"
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="#000000"
-                        android:text="준비중입니다."/>
+                        android:scrollbars="vertical">
+                        <TextView
+                            android:id="@+id/mission"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"
+                            android:text="미션이 없습니다."/>
+                    </ScrollView>
+
 
                 </LinearLayout>
                 <LinearLayout
@@ -254,12 +260,18 @@
                     android:layout_height="0px"
                     android:layout_weight="205"
                     android:background="#ffffff">
-                    <TextView
-                        android:id="@+id/colleague"
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textColor="#000000"
-                        android:text="준비중입니다."/>
+                        android:scrollbars="vertical">
+                        <TextView
+                            android:id="@+id/colleague"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#000000"
+                            android:text="참여중인 사람이 없습니다."/>
+                    </ScrollView>
+
 
                 </LinearLayout>
                 <LinearLayout
