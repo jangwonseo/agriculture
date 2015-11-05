@@ -600,6 +600,7 @@ public class RecruitPopupActivity extends Activity implements View.OnClickListen
             Log.e("aaa","내용 준비");
             shareDialog.show(linkContent);
             Log.e("aaa", "포스트");
+            Toast.makeText(getApplicationContext(), "페이스북에 공유하였습니다.", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e)
         {
