@@ -100,6 +100,8 @@
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
+    <orderEntry type="module" module-name="MarketVersionChecker" exported="" />
+    <orderEntry type="module" module-name="jsoup-1.7.3" exported="" />
     <orderEntry type="module" module-name="ImageSliderLibrary" exported="" />
     <orderEntry type="module" module-name="com.skp.Tmap_1.0.33" exported="" />
   </component>
