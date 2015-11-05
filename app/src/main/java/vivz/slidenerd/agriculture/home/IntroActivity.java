@@ -38,6 +38,7 @@ public class IntroActivity extends Activity {
 
     String rtn, verSion;
     AlertDialog.Builder alt_bld;
+    Boolean isUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,11 @@ public class IntroActivity extends Activity {
         introHandler = new Handler();
         introHandler.postDelayed(irun, 1000);//약 1.0초동안 인트로 화면
         setting = getSharedPreferences("setting", MODE_PRIVATE);
-        editor= setting.edit();
+        editor = setting.edit();
 
         Log.d("seojang", "gogogogogogo : " + setting.getString("info_Id", ""));
     }
+
     private class Version extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -101,6 +103,7 @@ public class IntroActivity extends Activity {
             rtn = result;
 
             if (!verSion.equals(rtn)) {
+                isUpdate = true;
                 alt_bld.setMessage("업데이트 후 사용해주세요.")
                         .setCancelable(false)
                         .setPositiveButton("업데이트 바로가기",
@@ -116,24 +119,25 @@ public class IntroActivity extends Activity {
                 AlertDialog alert = alt_bld.create();
                 alert.setTitle("안 내");
                 alert.show();
-            }else{
-                Toast.makeText(getApplicationContext(), "asd", Toast.LENGTH_LONG).show();
             }
             super.onPostExecute(result);
 
         }
 
     }
+
+
     Runnable irun = new Runnable() {
         @Override
         public void run() {
-            Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
-            startActivity(introIntent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish();
+            if(!isUpdate) {
+                Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(introIntent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
         }
     };
-
     @Override
     protected void onDestroy() {
 
