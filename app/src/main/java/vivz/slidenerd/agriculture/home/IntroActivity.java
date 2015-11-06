@@ -40,6 +40,8 @@ public class IntroActivity extends Activity {
     AlertDialog.Builder alt_bld;
     Boolean isUpdate = false;
 
+    Runnable irun;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,6 +121,18 @@ public class IntroActivity extends Activity {
                 AlertDialog alert = alt_bld.create();
                 alert.setTitle("안 내");
                 alert.show();
+            }else{
+                irun = new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!isUpdate) {
+                            Intent introIntent = new Intent(IntroActivity.this, HomeActivity.class);
+                            startActivity(introIntent);
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            finish();
+                        }
+                    }
+                };
             }
             super.onPostExecute(result);
 
@@ -127,17 +141,7 @@ public class IntroActivity extends Activity {
     }
 
 
-    Runnable irun = new Runnable() {
-        @Override
-        public void run() {
-            if(!isUpdate) {
-                Intent introIntent = new Intent(IntroActivity.this, HomeActivity.class);
-                startActivity(introIntent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-            }
-        }
-    };
+
     @Override
     protected void onDestroy() {
 

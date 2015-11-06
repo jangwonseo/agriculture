@@ -1,1 +1,1 @@
-include 'ImageSliderLibrary', ':jsoup-1.7.3', ':MarketVersionChecker', ':ImageSliderLibrary', ':app', ':com.skp.Tmap_1.0.33'
+include 'ImageSliderLibrary', ':jsoup-1.7.3', ':MarketVersionChecker',':ImageSliderLibrary', ':app', ':com.skp.Tmap_1.0.33'
