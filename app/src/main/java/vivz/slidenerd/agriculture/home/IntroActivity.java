@@ -131,7 +131,7 @@ public class IntroActivity extends Activity {
         @Override
         public void run() {
             if(!isUpdate) {
-                Intent introIntent = new Intent(getApplicationContext(), HomeActivity.class);
+                Intent introIntent = new Intent(IntroActivity.this, HomeActivity.class);
                 startActivity(introIntent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
