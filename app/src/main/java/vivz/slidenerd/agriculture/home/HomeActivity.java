@@ -107,12 +107,16 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
     private SHA256 sha;
 
+    String rtn, verSion;
+    AlertDialog.Builder alt_bld;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        alt_bld = new AlertDialog.Builder(this);
+        new Version().execute();
         /*
         MarketVersionChecker mChecker = new MarketVersionChecker();
         mChecker.getMarketVersionFast("vivz.slidenerd.agriculture");
@@ -255,6 +259,76 @@ public class HomeActivity extends Activity implements BaseSliderView.OnSliderCli
 
         webvProfile.setImageDrawable(null);
         new DownloadImageTask(webvProfile).execute("http://218.150.181.131/seo/image/" + userId + "Profile.jpg");
+
+    }
+
+    private class Version extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+
+        protected String doInBackground(Void... params) {
+            // Confirmation of market information in the Google Play Store
+            try {
+                Document doc = Jsoup
+                        .connect(
+                                "https://play.google.com/store/apps/details?id=vivz.slidenerd.agriculture")
+                        .get();
+
+                Elements Version = doc.select(".content");
+
+                for (Element v : Version) {
+                    if (v.attr("itemprop").equals("softwareVersion")) {
+                        rtn = v.text();
+                    }
+                }
+                return rtn;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+
+        protected void onPostExecute(String result) {
+            // Version check the execution application.
+            PackageInfo pi = null;
+            try {
+                pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            verSion = pi.versionName;
+            rtn = result;
+            Log.i("asd","step1");
+            if (!verSion.equals(rtn)) {
+                alt_bld.setMessage("업데이트 후 사용해주세요.")
+                        .setCancelable(false)
+                        .setPositiveButton("업데이트 바로가기",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent marketLaunch = new Intent(Intent.ACTION_VIEW);
+                                        marketLaunch.setData(Uri.parse("https://play.google.com/store/apps/details?id=vivz.slidenerd.agriculture"));
+                                        startActivity(marketLaunch);
+                                        finish();
+                                    }
+                                });
+
+                AlertDialog alert = alt_bld.create();
+                alert.setTitle("안 내");
+                alert.show();
+                Log.i("asd", "step2-1");
+            }
+            Log.i("asd","step3");
+            super.onPostExecute(result);
+
+        }
 
     }
 
